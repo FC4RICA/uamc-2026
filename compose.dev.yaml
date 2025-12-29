@@ -58,9 +58,9 @@ services:
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     environment:
-      - POSTGRES_DB=${POSTGRES_DATABASE:-app}
-      - POSTGRES_USER=${POSTGRES_USERNAME:-laravel}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-secret}
+      - POSTGRES_DB=${DB_DATABASE:-app}
+      - POSTGRES_USER=${DB_USERNAME:-laravel}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-secret}
     volumes:
       - postgres-data-development:/var/lib/postgresql/data
     networks:
@@ -69,7 +69,7 @@ services:
       test: 
         [
           "CMD-SHELL",
-          "pg_isready -U ${POSTGRES_USERNAME:-laravel} -d ${POSTGRES_DATABASE:-app}"
+          "pg_isready -U ${DB_USERNAME:-laravel} -d ${DB_DATABASE:-app}"
         ]
       interval: 5s
       timeout: 5s
