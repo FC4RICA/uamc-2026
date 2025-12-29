@@ -1,0 +1,135 @@
+@extends('layouts.base')
+
+@section('header')
+@include('partials.nav-admin')
+@endsection
+
+@section('body')
+<div id="myContainer" class="row no-gutters">
+    <div id="adminmenu" class="col-12 col-lg-2 Menu">
+        @include('partials.sidebar-admin')
+    </div>
+
+    <div class="col-12 col-lg-10 Board overflow-auto">
+        @include('partials.carousel')
+        @yield('content')
+    </div>
+</div>
+@endsection
+
+{{-- <!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/popper.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/control.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/form-validate.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('fontawesome/css/all.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <title>@yield('title')</title>
+</head>
+
+<body>
+    <div class="header">
+        <span class="topbar">The 9th Undergraduate in Applied Mathematics Conference</span>
+        <nav id="adminMode" class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand" href="/"><img src="{{ asset('img/60year-fsci.png') }}" alt="kmutt-fsci"></a>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent" lang="th">
+                    <ul class="navbar-nav">
+                        <li class="nav-item @yield('dashboard')">
+                            <a href='{{ url("admin") }}' class="nav-link">หน้าแรก</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('/') }}" class="nav-link">กลับหน้าเว็บหลัก</a>
+                        </li>
+                        <li class="nav-item @yield('paper')">
+                            <a href="{{ url('admin/paper') }}" class="nav-link">จัดการบทคัดย่อ</a>
+                        </li>
+                        <li class="nav-item @yield('committee')">
+                            <a href="{{ url('admin/committee') }}" class="nav-link">จัดการคณะกรรมการ</a>
+                        </li>
+                        <li class="nav-item @yield('attended')">
+                            <a href="{{ url('admin/attend') }}" class="nav-link">จัดการผู้ลงทะเบียน</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('signout') }}" class="nav-link">ออกจากระบบ</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div id="myContainer" class="row no-gutters">
+        <div id="adminmenu" class="col-12 col-lg-2 Menu">
+            <nav class="navbar navbar-dark">
+                <div class="container">
+                    <a class="navbar-brand" href="#"><img src="{{ asset('img/60year-fsci.png') }}" alt="kmutt-fsci"></a>
+                    <div lang="th">
+                        <ul class="navbar-nav">
+                            <li class="nav-item @yield('dashboard')">
+                                <a href='{{ url("admin") }}' class="nav-link">หน้าแรก</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/') }}" class="nav-link">กลับหน้าเว็บหลัก</a>
+                            </li>
+                            <li class="nav-item @yield('paper')">
+                                <a href="{{ url('admin/paper') }}" class="nav-link">จัดการบทคัดย่อ</a>
+                            </li>
+                            <li class="nav-item @yield('committee')">
+                                <a href="{{ url('admin/committee') }}" class="nav-link">จัดการคณะกรรมการ</a>
+                            </li>
+                            <li class="nav-item @yield('attended')">
+                                <a href="{{ url('admin/attend') }}" class="nav-link">จัดการผู้ลงทะเบียน</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('signout') }}" class="nav-link">ออกจากระบบ</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div id="myContent" class="col-12 col-lg-10 Board overflow-auto">
+            <div id="imgSlide" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{{ asset('img/banner.jpg') }}" class="d-block w-100" />
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{ asset('img/slide1-2.jpg') }}" class="d-block w-100">
+                    </div>
+                    <a class="carousel-control-prev" href="#imgSlide" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#imgSlide" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+
+            @yield('content')
+        </div>
+    </div>
+
+    @include('components.pdpa')
+    
+    <x-footer />
+
+</body>
+
+</html> --}}
