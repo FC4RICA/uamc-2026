@@ -53,7 +53,7 @@ Route::prefix('member')
         Route::get('/', [MemberController::class, 'index'])
             ->name('index');
 
-        Route::get('/profile', [MemberController::class, 'editProfile'])
+        Route::get('/profile', [MemberController::class, 'indexProfile'])
             ->name('profile.index');
 
         Route::put('/profile', [MemberController::class, 'updateProfile'])
