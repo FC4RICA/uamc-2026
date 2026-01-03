@@ -109,7 +109,7 @@
                 </div>
             </div>
         </div>
-        @if(Auth::user()->participation_type === ParticipationType::Oral)
+        @if(Auth::user()->participation_type === ParticipationType::ORAL)
             <div class="row">
                 <div class="col-12 col-lg-12">
                     <label for="proceedingAgreement"><strong>ต้องการเผยแพร่ผลงานฉบับเต็มลงใน Book of Proceedings หรือไม่*</strong></label>
@@ -156,7 +156,7 @@
                     <p class="text-center">ส่ง VDO นำเสนอผ่าน Google drive link</p>
                 </div>
             </div>
-        @elseif(Auth::user()->participation_type === ParticipationType::Poster)
+        @elseif(Auth::user()->participation_type === ParticipationType::POSTER)
             <div class="row">
                 <div class="col-12 col-lg-12 col-md-12">
                     <div class="form-group">

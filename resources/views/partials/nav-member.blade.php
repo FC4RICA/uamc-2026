@@ -20,7 +20,7 @@
                 <li class="nav-item @yield('profile')">
                     <a href="{{ route('member.profile.index') }}" class="nav-link">ข้อมูลส่วนตัว</a>
                 </li>
-                @if(in_array(Auth::user()->participation_type, [ParticipationType::Oral, ParticipationType::Poster]))
+                @if(in_array(Auth::user()->participation_type, [ParticipationType::ORAL, ParticipationType::POSTER]))
                     <li class="nav-item @yield('check')">
                         <a href="{{ route('member.submission.index') }}" class="nav-link">ตรวจสอบการส่งบทคัดย่อ และผลการพิจารณา</a>
                     </li>

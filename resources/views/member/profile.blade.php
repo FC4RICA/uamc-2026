@@ -228,9 +228,9 @@
                         <label for="type">ประเภทการเข้าร่วม</label>
                         <select id="type" name="type" class="custom-select" required>
                             <option value="">เลือก</option>
-                            <option value="1" @selected(Auth::user()->participation_type == ParticipationType::Attendee)>เข้าร่วมงาน</option>
-                            <option value="2" @selected(Auth::user()->participation_type == ParticipationType::Oral)>นำเสนอแบบบรรยาย (Oral Presentation)</option>
-                            <option value="3" @selected(Auth::user()->participation_type == ParticipationType::Poster)>นำเสนอแบบโปสเตอร์ (Poster Presentation)</option>
+                            <option value="1" @selected(Auth::user()->participation_type == ParticipationType::ATTENDEE)>เข้าร่วมงาน</option>
+                            <option value="2" @selected(Auth::user()->participation_type == ParticipationType::ORAL)>นำเสนอแบบบรรยาย (Oral Presentation)</option>
+                            <option value="3" @selected(Auth::user()->participation_type == ParticipationType::POSTER)>นำเสนอแบบโปสเตอร์ (Poster Presentation)</option>
                         </select>
                     </div>
                 </div>

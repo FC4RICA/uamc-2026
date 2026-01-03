@@ -57,7 +57,7 @@ class AdminController extends Controller
         $research->research_id = 1;
         $research->name_th = 'แบบจำลองทางคณิตศาสตร์ของการลุกลามและการแพร่กระจายของมะเร็งรวมทั้งการรักษาโดยการกำจัดเซลล์ต้นกำเนิดมะเร็ง';
         $research->name_en = 'Mathematical modeling of cancer invasion and spread, including treatment through the elimination of cancer stem cells';
-        $research->participation_type = ParticipationType::Oral;
+        $research->participation_type = ParticipationType::ORAL;
         $research->category = 'Mathematical Modelling';
         $research->category_id = 2;
         $research->category_id2 = 0;
@@ -128,7 +128,7 @@ class AdminController extends Controller
         $research->research_id = 1;
         $research->name_th = 'แบบจำลองทางคณิตศาสตร์ของการลุกลามและการแพร่กระจายของมะเร็งรวมทั้งการรักษาโดยการกำจัดเซลล์ต้นกำเนิดมะเร็ง';
         $research->name_en = 'Mathematical modeling of cancer invasion and spread, including treatment through the elimination of cancer stem cells';
-        $research->participation_type = ParticipationType::Oral;
+        $research->participation_type = ParticipationType::ORAL;
         $research->category = 'Mathematical Modelling';
         $research->category_id = 2;
         $research->category_id2 = 0;
@@ -153,7 +153,7 @@ class AdminController extends Controller
         $user->name = 'จิรายุ';
         $user->lastname = 'รัตนประเสริฐ';
         $user->email = 'staging@example.com';
-        $user->participation_type = ParticipationType::Oral;
+        $user->participation_type = ParticipationType::ORAL;
         $user->prefix = 'นาย';
         $user->position = 1;
         $user->education = 1;

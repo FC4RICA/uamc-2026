@@ -134,7 +134,7 @@
                 <a href="{{ url($en_url) }}" class="btn btn-primary ml-2"><i class="fas fa-file-download mr-3"></i>ดาวน์โหลดบทคัดย่อภาษาอังกฤษ</a>
             </div>
         </div>
-        @if($research->participation_type == ParticipationType::Oral)
+        @if($research->participation_type == ParticipationType::ORAL)
             <div class="row">
                 <div class="col-12 col-lg-12">
                     <label for="agreement">ต้องการเผยแพร่ผลงานฉบับเต็มผ่าน Book of Proceedings หรือไม่</label>
@@ -185,7 +185,7 @@
                     <a href="{{ url($ex_url) }}" class="btn btn-primary ml-2 <?php if ($research->agreement === 1 || $research->extended_abstract === null) echo 'disabled'; ?>"><i class="fas fa-file-download mr-3"></i>ดาวน์โหลดบทคัดย่อแบบขยาย</a>
                 </div>
             </div>
-        @elseif($research->participation_type == ParticipationType::Poster)
+        @elseif($research->participation_type == ParticipationType::POSTER)
             <div class="row">
                 <div class="col-12 col-lg-9 col-md-9">
                     <div class="form-group">

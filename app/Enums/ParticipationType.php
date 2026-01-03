@@ -4,16 +4,16 @@ namespace App\Enums;
 
 enum ParticipationType:int
 {
-    case Attendee = 1;
-    case Oral = 2;
-    case Poster = 3;
+    case ATTENDEE = 1;
+    case ORAL = 2;
+    case POSTER = 3;
 
     public function label(): string
     {
         return match ($this) {
-            self::Attendee => 'ผู้เข้าร่วม',
-            self::Oral => 'นำเสนอแบบบรรยาย (Oral Presentation)',
-            self::Poster => 'นำเสนอแบบโปสเตอร์ (Poster Presentation)',
+            self::ATTENDEE => 'ผู้เข้าร่วม',
+            self::ORAL => 'นำเสนอแบบบรรยาย (Oral Presentation)',
+            self::POSTER => 'นำเสนอแบบโปสเตอร์ (Poster Presentation)',
         };
     }
 }
