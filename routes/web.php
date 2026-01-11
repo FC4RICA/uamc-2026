@@ -5,26 +5,20 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MemberController;
-use App\Http\Middleware\MockAuthUser;
 use Illuminate\Support\Facades\Redirect;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// public route 
 Route::name('public.')
     ->group(function () {
 
         Route::view('/', 'public.home')->name('home');
 
-        Route::view('/announcement', 'public.announcement')->name('announcement');
         Route::view('/schedule', 'public.schedule')->name('schedule');
         Route::view('/criteria', 'public.criteria')->name('criteria');
         Route::view('/about', 'public.about')->name('about');
         Route::view('/rules', 'public.rules')->name('rules');
         Route::view('/templates', 'public.form-template')->name('templates');
 
+        // Authentication
         Route::get('/register', [AuthController::class, 'showRegister'])->name('register.show');
         Route::get('/signin', [AuthController::class, 'showSignin'])->name('signin.show');
         Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -134,15 +128,6 @@ Route::prefix('admin')
 
         Route::get('/submission/{id}', [AdminController::class, 'showSubmission'])
             ->name('submission.show');
-
-        Route::get('/committee', [AdminController::class, 'indexCommittee'])
-            ->name('committee.index');
-
-        Route::get('/committee/create', [AdminController::class, 'createCommittee'])
-            ->name('committee.create');
-
-        Route::get('/committee/{id}', [AdminController::class, 'showCommittee'])
-            ->name('committee.show');
         
         Route::get('/attendee', [AdminController::class, 'indexAttendee'])
             ->name('attendee.index');

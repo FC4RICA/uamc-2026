@@ -16,9 +16,6 @@
                 <li class="nav-item @yield('paper')">
                     <a href="{{ route('admin.submission.index') }}" class="nav-link">จัดการบทคัดย่อ</a>
                 </li>
-                <li class="nav-item @yield('committee')">
-                    <a href="{{ route('admin.committee.index') }}" class="nav-link">จัดการคณะกรรมการ</a>
-                </li>
                 <li class="nav-item @yield('attended')">
                     <a href="{{ route('admin.attendee.index') }}" class="nav-link">จัดการผู้ลงทะเบียน</a>
                 </li>
