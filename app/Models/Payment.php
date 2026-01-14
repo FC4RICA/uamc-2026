@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Organization extends Model
+class Payment extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,6 +12,7 @@ class Organization extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'user_id',
+        'receipt_path',
     ];
 }

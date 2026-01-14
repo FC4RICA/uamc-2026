@@ -60,21 +60,23 @@ body {
     font-size: 0.75em;
 }
 
-.accountBTN {
+.accountBTN{
     padding: 0.25em 0.5em 0.25em 0.5em;
     border-radius: 0.5em;
     background-color: #ffd110;
     font-weight: bold;
+    color: black;
 }
 
-.accountBTN a{
+.accountBTN a, a.accountBtn{
     text-decoration: none;
     color: inherit;
 }
 
-.accountBTN:hover{
+.accountBTN:hover, a.accountBtn:hover{
     color: white;
     background-color: #ffd11050;
+    text-decoration: none;
 }
 
 nav img {
@@ -109,7 +111,7 @@ hr {
     background-color: #4CAF50;
 }
 
-label.error {
+label.error, span.error{
     color: red;
     font-size: 1rem;
     display: block;

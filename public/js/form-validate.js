@@ -1,106 +1,21 @@
-let currentTab = 0
-let formvalid = true
+let formvalid = true;
 
 $(document).ready(function () {
-    showTab(currentTab)
-    validateRegis()
-    validateSignIn()
-    validateEditProfile()
-    validateSubmission()
-    validateEditPaper()
-    validateEditCommittee()
-    adminEditPaper()
-    adminEditSchedule()
-
-    // jQuery.validator.addMethod("notEqual", function (value, element, param) {
-    //     return this.positional(element) || value != param;
-    // }, "กรุณาเลือกกรรมการใหม่อีกครั้ง");
+    validateRegis();
+    validateLogin();
+    validateEditProfile();
+    validateSubmission();
+    validateEditPaper();
+    adminEditPaper();
 });
 
-jQuery.validator.addMethod("notEqual", function (value, element, param) {
+$.validator.addMethod("notEqual", function (value, element, param) {
     return this.positional(element) || value != param
-}, "กรุณาเลือกกรรมการใหม่อีกครั้ง")
 
+}, "กรุณาเลือกกรรมการใหม่อีกครั้ง");
 $.validator.addMethod('filesize', function (value, element, param) {
     return this.optional(element) || (element.files[0].size <= (param * 1000000))
 }, 'File size must be less than {0}');
-
-function showTab(n) {
-    let x = $('.tab');
-    x.eq(n).css("display", "block")
-
-    if (n == 0) {
-        $('#prevBtn').css("display", "none")
-    } else {
-        $('#prevBtn').css("display", "inline")
-    }
-
-    if (n == (x.length - 1)) {
-        $('#nextBtn').text("ยืนยัน")
-    } else {
-        $('#nextBtn').text("ถัดไป")
-    }
-
-    realtimeValidForm()
-    fixStepIndicator(n)
-}
-
-function nextPrev(n) {
-    let x = $('.tab');
-    let validate_form = (formvalid && validateForm())
-    let ex = (n == 1 && !validate_form)
-    // console.log("EX"+ex)
-    if (ex) return false
-
-    x.eq(currentTab).css("display", "none")
-    currentTab = currentTab + n
-
-    if (currentTab >= x.length) {
-        $('form[name="registration"]').submit()
-        // document.getElementById("registration").submit();
-        return false;
-    }
-    // console.log("FORM"+formvalid)
-    showTab(currentTab)
-}
-
-function validateForm() {
-    let x, y, i, valid = true
-    x = $('.tab');
-    y = x.eq(currentTab).children().find("input, select")
-
-    for (i = 0; i < y.length; i++) {
-        if (y.eq(i).val() == "") {
-            // console.log("invalid")
-            y.eq(i).addClass("inputerror")
-            // console.log(y.eq(i))
-            valid = false
-        } else {
-            y.eq(i).removeClass("inputerror")
-        }
-    }
-
-    if (valid) {
-        $('.step').eq(currentTab).addClass("stepfinish")
-    }
-    return valid
-}
-
-function realtimeValidForm() {
-    let x = $('.tab')
-    let y = x.eq(currentTab).find("input")
-}
-
-function fixStepIndicator(n) {
-
-    let i, x = $('.step')
-
-    for (i = 0; i < x.length; i++) {
-        x.eq(i).addClass("stepactive")
-    }
-
-    x.eq(n).addClass("stepactive")
-}
 
 function validateRegis() {
     $('form[name="registration"]').validate({
@@ -113,9 +28,8 @@ function validateRegis() {
                 required: true,
                 minlength: 8
             },
-            confirmpassword: {
+            password_confirmation: {
                 required: true,
-                minlength: 8,
                 equalTo: "#password"
             },
             firstname: {
@@ -124,76 +38,92 @@ function validateRegis() {
             lastname: {
                 required: true
             },
-            prefix: {
+            title: {
                 required: true
             },
-            position: {
+            academic_title: {
                 required: true
             },
             education: {
                 required: true
             },
-            occupation: {
-                required: true
-            },
-            organization: {
-                required: true
-            },
             phone: {
                 required: true
             },
-            type: {
+            occupation_id: {
                 required: true
+            },
+            occupation_other: {
+                required: () => $('#occupation_id').val() === 'other'
+            },
+            organization_id: {
+                required: true
+            },
+            organization_other: {
+                required: () => $('#organization_id').val() === 'other'
+            },
+            participation_type: {
+                required: true
+            },
+            presentation_type: {
+                required: () => $('#participation_type').val() == presenterId
             }
         },
         messages: {
             email: {
-                email: "email ควรอยู่ในรูปแบบ youremail@domain.domain",
-                required: "กรุณาใส่ข้อมูล",
-                remote: "email นี้มีการลงทะเบียนไปแล้ว"
+                email: "รูปแบบอีเมลไม่ถูกต้อง",
+                required: "กรุณากรอกอีเมล",
             },
             password: {
-                required: "กรุณาใส่รหัสผ่าน",
-                minlength: "กรุณาตั้งรหัสผ่านอย่างน้อย 8 ตัวอักษร"
+                required: "กรุณากรอกรหัสผ่าน",
+                minlength: "รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร"
             },
-            confirmpassword: {
-                required: "กรุณาใส่รหัสผ่าน",
-                minlength: "กรุณาตั้งรหัสผ่านอย่างน้อย 8 ตัวอักษร",
-                equalTo: "รหัสผ่านไม่ตรง"
+            password_confirmation: {
+                required: "กรุณากรอกรหัสผ่าน",
+                equalTo: "การยืนยันรหัสผ่านไม่ตรงกัน"
             },
             firstname: {
-                required: "กรุณาระบุชื่อ"
+                required: "กรุณากรอกชื่อ"
             },
             lastname: {
-                required: "กรุณาระบุนามสกุล"
+                required: "กรุณากรอกนามสกุล"
             },
-            prefix: {
-                required: "กรุณาระบุคำนำหน้า"
+            title: {
+                required: "กรุณาเลือกคำนำหน้า"
             },
-            position: {
-                required: "กรุณาระบุตำแหน่งทางวิชาการ"
+            academic_title: {
+                required: "กรุณาเลือกตำแหน่งทางวิชาการ"
             },
             education: {
-                required: "กรุณาระบุระดับการศึกษา"
-            },
-            occupation: {
-                required: "กรุณาระบุอาชีพ"
-            },
-            organization: {
-                required: "กรุณาระบุข้อมูลหน่วยงาน"
+                required: "กรุณาเลือกระดับการศึกษา"
             },
             phone: {
-                required: "กรุณาระบุเบอร์โทร"
+                required: "กรุณากรอกเบอร์โทร"
             },
-            type: {
-                required: "กรุณาระบุประเภทการเข้าร่วม"
+            occupation_id: {
+                required: "กรุณาเลือกอาชีพ"
+            },
+            occupation_other: {
+                required: "กรุณาระบุอาชีพ"
+            },
+            organization_id: {
+                required: "กรุณาเลือกหน่วยงาน"
+            },
+            organization_other: {
+                required: "กรุณาระบุหน่วยงาน"
+            },
+            participation_type: {
+                required: "กรุณาเลือกประเภทการเข้าร่วม"
+            },
+            presentation_type: {
+                required: "กรุณาเลือกประเภทการนำเสนอ"
             }
         }
     });
 }
 
-function validateSignIn() {
-    $('form[name="signin"]').validate({
+function validateLogin() {
+    $('form[name="login"]').validate({
         rules: {
             email: {
                 required: true,
@@ -205,11 +135,11 @@ function validateSignIn() {
         },
         messages: {
             email: {
-                email: "email ควรอยู่ในรูปแบบ youremail@domain.domain",
-                required: "กรุณาใส่ข้อมูล"
+                email: "รูปแบบอีเมลไม่ถูกต้อง",
+                required: "กรุณากรอกอีเมล"
             },
             password: {
-                required: "กรุณาใส่รหัสผ่าน"
+                required: "กรุณากรอกรหัสผ่าน"
             }
         }
     })
@@ -226,7 +156,7 @@ function validateEditProfile() {
                 required: true,
                 minlength: 8
             },
-            confirmpassword: {
+            password_confirmation: {
                 required: true,
                 minlength: 8,
                 equalTo: "#password"
@@ -237,10 +167,10 @@ function validateEditProfile() {
             lastname: {
                 required: true
             },
-            prefix: {
+            title: {
                 required: true
             },
-            position: {
+            academic_title: {
                 required: true
             },
             education: {
@@ -255,9 +185,12 @@ function validateEditProfile() {
             phone: {
                 required: true
             },
-            type: {
+            participation_type: {
                 required: true
-            }
+            },
+            presentation_type: {
+                required: true
+            },
         },
         messages: {
             email: {
@@ -268,7 +201,7 @@ function validateEditProfile() {
                 required: "กรุณาใส่รหัสผ่าน",
                 minlength: "กรุณาตั้งรหัสผ่านอย่างน้อย 8 อักขระ"
             },
-            confirmpassword: {
+            password_confirmation: {
                 required: "กรุณาใส่รหัสผ่าน",
                 minlength: "กรุณาตั้งรหัสผ่านอย่างน้อย 8 อักขระ",
                 equalTo: "รหัสผ่านไม่ตรง"
@@ -279,10 +212,10 @@ function validateEditProfile() {
             lastname: {
                 required: "กรุณาระบุนามสกุล"
             },
-            prefix: {
+            title: {
                 required: "กรุณาระบุคำนำหน้า"
             },
-            position: {
+            academic_title: {
                 required: "กรุณาระบุตำแหน่งทางวิชาการ"
             },
             education: {
@@ -297,7 +230,10 @@ function validateEditProfile() {
             phone: {
                 required: "กรุณาระบุข้อมูล"
             },
-            type: {
+            participation_type: {
+                required: "กรุณาระบุข้อมูล"
+            },
+            presentation_type: {
                 required: "กรุณาระบุข้อมูล"
             }
         }
@@ -310,7 +246,7 @@ function validateSubmission() {
             category: {
                 required: true
             },
-            type: {
+            presentation_type: {
                 required: true
             },
             name_th: {
@@ -349,7 +285,7 @@ function validateSubmission() {
             category: {
                 required: "กรุณาใส่ข้อมูล"
             },
-            type: {
+            presentation_type: {
                 required: "กรุณาใส่ข้อมูล"
             },
             name_th: {
@@ -393,7 +329,7 @@ function validateEditPaper() {
             category: {
                 required: true
             },
-            type: {
+            presentation_type: {
                 required: true
             },
             name_th: {
@@ -430,7 +366,7 @@ function validateEditPaper() {
             category: {
                 required: "กรุณาใส่ข้อมูล"
             },
-            type: {
+            presentation_type: {
                 required: "กรุณาใส่ข้อมูล"
             },
             name_th: {
@@ -461,45 +397,6 @@ function validateEditPaper() {
             poster: {
                 extension: "กรุณาอัพโหลดไฟล์ .pdf",
                 filesize: "ไฟล์มีขนาดมากกว่า 2 MB"
-            }
-        }
-    })
-}
-
-function validateEditCommittee() {
-    $('form[name="editcommittee"]').validate({
-        rules: {
-            prefix: {
-                required: true
-            },
-            position: {
-                required: true
-            },
-            firstname: {
-                required: true
-            },
-            lastname: {
-                required: true
-            },
-            organization: {
-                required: true
-            }
-        },
-        messages: {
-            prefix: {
-                required: "กรุณาใส่ข้อมูล"
-            },
-            position: {
-                required: "กรุณาใส่ข้อมูล"
-            },
-            firstname: {
-                required: "กรุณาใส่ข้อมูล"
-            },
-            lastname: {
-                required: "กรุณาใส่ข้อมูล"
-            },
-            organization: {
-                required: "กรุณาใส่ข้อมูล"
             }
         }
     })
@@ -508,7 +405,7 @@ function validateEditCommittee() {
 function adminEditPaper() {
     $('form[name=admineditpaper]').validate({
         rules: {
-            type: {
+            presentation_type: {
                 required: true
             },
             category: {
@@ -519,46 +416,13 @@ function adminEditPaper() {
             }
         },
         messages: {
-            type: {
+            presentation_type: {
                 required: "กรุณาใส่ข้อมูล"
             },
             category: {
                 required: "กรุณาใส่ข้อมูล"
             },
             decision: {
-                required: "กรุณาใส่ข้อมูล"
-            }
-        }
-    })
-}
-
-function adminEditSchedule() {
-    $('form[name=schedule]').validate({
-        rules: {
-            sche_name: {
-                required: true
-            },
-            sche_date: {
-                required: true
-            },
-            sche_detail: {
-                required: true
-            },
-            sche_type: {
-                required: true
-            }
-        },
-        messages: {
-            sche_name: {
-                required: "กรุณาใส่ข้อมูล"
-            },
-            sche_date: {
-                required: "กรุณาใส่ข้อมูล"
-            },
-            sche_detail: {
-                required: "กรุณาใส่ข้อมูล"
-            },
-            sche_type: {
                 required: "กรุณาใส่ข้อมูล"
             }
         }

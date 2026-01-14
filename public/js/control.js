@@ -105,29 +105,33 @@ function onProceedingChange() {
 }
 
 // cookie check
-function togglePdpaBox() {
-    $('#pdpa-box').toggleClass('pdpa-box-hide')
+function showPdpaBox() {
+    $('#pdpa-box').removeClass('d-none')
 }
 
-$('document').ready(() => {
-    let cookie = localStorage.getItem('acceptCookie')
-    if (cookie) {
-        togglePdpaBox()
+function hidePdpaBox() {
+    $('#pdpa-box').addClass('d-none')
+}
+
+
+$(document).ready(function () {
+    const consent = localStorage.getItem('acceptCookie')
+
+    if (consent === 'accepted' || consent === 'denied') {
+        hidePdpaBox()
+    } else {
+        showPdpaBox()
     }
 })
 
 function onCookieAccept() {
-    $('document').ready(() => {
-        localStorage.setItem('acceptCookie', 1)
-        togglePdpaBox()
-    })
+    localStorage.setItem('acceptCookie', 'accepted')
+    hidePdpaBox()
 }
 
 function onCookieDenied() {
-    $('document').ready(() => {
-        localStorage.setItem('acceptCookie', 0)
-        togglePdpaBox()
-    })
+    localStorage.setItem('acceptCookie', 'denied')
+    hidePdpaBox()
 }
 
 // open zoom link
@@ -136,27 +140,3 @@ function openZoomLink(url) {
         window.open(url, '_blank').focus()
     })
 }
-
-
-// function deleteAttended(id) {
-//     let url = mainURL + "/v1/deleteattended"
-//     let redirect_url = mainURL + "/admin/attend"
-
-//     $('#confirmdelete').on('click', () => {
-//         $.ajax({
-//             method: "GET",
-//             url: url,
-//             data: {
-//                 id: id
-//             }
-//         }).done(function (data) {
-//             // console.log(data)
-//             if (data == 1) {
-//                 alert("ลบสำเร็จ")
-//                 window.location.reload(true)
-//             } else {
-//                 alert("เกิดข้อผิดพลาดกรุณาดำเนินการใหม่ในภายหลัง")
-//             }
-//         })
-//     })
-// }

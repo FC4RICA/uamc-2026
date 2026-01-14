@@ -6,6 +6,13 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Enums\AcademicTitle;
+use App\Enums\Education;
+use App\Enums\ParticipationType;
+use App\Enums\PresentationType;
+use App\Enums\Title;
+use App\Models\Occupation;
+use App\Models\Organization;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -29,6 +36,22 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Fortify::loginView(function () {
+            return view('auth.login');
+        });
+        
+        Fortify::registerView(function () {
+            $titles = Title::cases();
+            $academicTitles = AcademicTitle::cases();
+            $education = Education::cases();
+            $participationType = ParticipationType::cases();
+            $presentationType = PresentationType::cases();
+            $organizations = Organization::all();
+            $occupations = Occupation::all();
+
+            return view('auth.register', compact('titles', 'academicTitles', 'education', 'participationType', 'presentationType', 'organizations', 'occupations'));
+        });
+    
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);

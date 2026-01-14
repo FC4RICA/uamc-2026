@@ -9,10 +9,10 @@
 
 @section('content')
 <div class="container">
-    <h1 class="text-center mt-5">สวัสดี {{ Auth::user()->name .' '. Auth::user()->lastname }}</h1>
+    <h1 class="text-center mt-5">สวัสดี {{ Auth::user()->profile->firstname .' '. Auth::user()->profile->lastname }}</h1>
     <div class="my-5">
         <div class="row">
-            @if(in_array(Auth::user()->participation_type, [ParticipationType::ORAL, ParticipationType::POSTER]))
+            @if(in_array(Auth::user()->participation_type, [ParticipationType::PRESENTER]))
                 <div class="col-4 text-center">
                     <a href="{{ route('member.submission.create') }}">
                         <div class="circle mx-auto">

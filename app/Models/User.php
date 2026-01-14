@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
 use App\Enums\ParticipationType;
+use App\Enums\PaymentStatus;
+use App\Enums\RegistrationStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -20,17 +22,12 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'lastname',
         'email',
-        'participation_type',
-        'prefix',
-        'position',
-        'organization',
-        'occupation',
-        'education',
-        'phone',
         'password',
+        'is_admin',
+        'payment_required',
+        'payment_status',
+        'registration_status',
     ];
 
     /**
@@ -53,7 +50,41 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'participation_type' => ParticipationType::class,
+            'is_admin' => 'boolean',
+            'payment_required' => 'boolean',
+            'payment_status' => PaymentStatus::class,
+            'registration_status' => RegistrationStatus::class,
         ];
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
+    }
+
+    public function profile(): HasOne
+    {
+        return $this->hasOne(Profile::class);
+    }
+    
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function needsPayment(): bool
+    {
+        return $this->payment_required
+            && $this->registrationStatus !== RegistrationStatus::REGISTERED;
+    }
+
+    public function isPresenter(): bool
+    {
+        return $this->profile?->participation_type === ParticipationType::PRESENTER;
+    }
+
+    public function canSubmitAbstract(): bool
+    {
+        return $this->registrationStatus === RegistrationStatus::REGISTERED;
     }
 }

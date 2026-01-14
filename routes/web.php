@@ -2,50 +2,28 @@
 
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MemberController;
-use Illuminate\Support\Facades\Redirect;
 
 Route::name('public.')
     ->group(function () {
-
         Route::view('/', 'public.home')->name('home');
-
         Route::view('/schedule', 'public.schedule')->name('schedule');
         Route::view('/criteria', 'public.criteria')->name('criteria');
         Route::view('/about', 'public.about')->name('about');
         Route::view('/rules', 'public.rules')->name('rules');
         Route::view('/templates', 'public.form-template')->name('templates');
-
-        // Authentication
-        Route::get('/register', [AuthController::class, 'showRegister'])->name('register.show');
-        Route::get('/signin', [AuthController::class, 'showSignin'])->name('signin.show');
-        Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     });
-
-// Route::view('', 'public.home');
-// Route::view('announcement', 'public.announcement');
-// Route::view('schedule', 'public.schedule');
-// Route::view('criteria', 'public.criteria');
-// Route::view('about', 'public.about');
-// Route::view('rules', 'public.rules');
-// Route::view('templates', 'public.form-template');
-
-// Route::get('register', [AuthController::class, 'showRegister']);
-// Route::post('register', fn() => redirect('/signin'));
-// Route::get('signin', [AuthController::class, 'showSignin']);
-// Route::post('signin', fn() => redirect('/member'));
-// Route::post('register', 'Auth\AuthController@createMember');
-// Route::post('signin', 'Auth\AuthController@memberLogin');
-// Route::get('signout', 'Auth\AuthController@memberlogout');
 
 // member
 Route::prefix('member')
+    ->middleware('auth')
     ->name('member.')
     ->group(function () {
         Route::get('/', [MemberController::class, 'index'])
             ->name('index');
+
+        Route::get('/payment', [MemberController::class, 'indexPayment'])
+            ->name('payment.index');
 
         Route::get('/profile', [MemberController::class, 'indexProfile'])
             ->name('profile.index');

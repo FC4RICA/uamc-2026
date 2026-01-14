@@ -2,6 +2,14 @@
 
 namespace App\Actions\Fortify;
 
+use App\Enums\AcademicTitle;
+use App\Enums\Education;
+use App\Enums\ParticipationType;
+use App\Enums\PaymentStatus;
+use App\Enums\PresentationType;
+use App\Enums\RegistrationStatus;
+use App\Enums\Title;
+use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -20,7 +28,8 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input): User
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
+            'firstname' => ['required', 'string', 'max:255'],
+            'lastname' => ['required', 'string', 'max:255'],
             'email' => [
                 'required',
                 'string',
@@ -29,12 +38,116 @@ class CreateNewUser implements CreatesNewUsers
                 Rule::unique(User::class),
             ],
             'password' => $this->passwordRules(),
-        ])->validate();
+            'phone' => ['required', 'string', 'max:255'],
+            'special_requirements' => ['nullable'],
+            'title' => ['required', Rule::enum(Title::class)],
+            'academic_title' => ['required', Rule::enum(AcademicTitle::class)],
+            'education' => ['required', Rule::enum(Education::class)],
+            'participation_type' => ['required', Rule::enum(ParticipationType::class)],
+            'presentation_type' => [
+                Rule::requiredIf(fn () => ($input['participation_type'] ?? null) == ParticipationType::PRESENTER->value),
+                Rule::when(
+                    ($input['participation_type'] ?? null) == ParticipationType::PRESENTER->value, 
+                    Rule::enum(PresentationType::class)
+                ),
+                'nullable',
+            ],
+            'organization_id' => ['required'],
+            'organization_other' => [
+                Rule::requiredIf(fn () => ($input['organization_id'] ?? null) === 'other'),
+                'nullable',
+                'string',
+                'max:255',
+            ],
+            'occupation_id' => ['required'],
+            'occupation_other' => [
+                Rule::requiredIf(fn () => ($input['occupation_id'] ?? null) === 'other'),
+                'nullable',
+                'string',
+                'max:255',
+            ],
+        ],
+        [
+            'firstname.required' => 'กรุณากรอกชื่อ',
+            'firstname.max' => 'ชื่อยาวเกิน 255 ตัวอักษร',
 
-        return User::create([
-            'name' => $input['name'],
+            'lastname.required' => 'กรุณากรอกนามสกุล',
+            'lastname.max' => 'นามสกุลยาวเกิน 255 ตัวอักษร',
+
+            'email.required' => 'กรุณากรอกอีเมล',
+            'email.email' => 'รูปแบบอีเมลไม่ถูกต้อง',
+            'email.max' => 'อีเมลยาวเกิน 255 ตัวอักษร',
+            'email.unique' => 'อีเมลนี้ถูกใช้งานแล้ว',
+
+            'password.required' => 'กรุณากรอกรหัสผ่าน',
+            'password.confirmed' => 'การยืนยันรหัสผ่านไม่ตรงกัน',
+            'password.min' => 'รหัสผ่านต้องมีความยาวอย่างน้อย :min ตัวอักษร',
+
+            'phone.required' => 'กรุณากรอกเบอร์โทรศัพท์',
+            'phone.string' => 'เบอร์โทรศัพท์ไม่ถูกต้อง',
+            'phone.max' => 'เบอร์โทรศัพท์ยาวเกิน 255 ตัวอักษร',
+
+            'title.required' => 'กรุณาเลือกคำนำหน้า',
+            'title.enum' => 'คำนำหน้าที่เลือกไม่ถูกต้อง',
+
+            'academic_title.required' => 'กรุณาเลือกตำแหน่งทางวิชาการ',
+            'academic_title.enum' => 'ตำแหน่งทางวิชาการที่เลือกไม่ถูกต้อง',
+
+            'education.required' => 'กรุณาเลือกระดับการศึกษา',
+            'education.enum' => 'ระดับการศึกษาที่เลือกไม่ถูกต้อง',
+
+            'participation_type.required' => 'กรุณาเลือกประเภทการเข้าร่วม',
+            'participation_type.enum' => 'ประเภทการเข้าร่วมไม่ถูกต้อง',
+
+            'presentation_type.required' => 'กรุณาเลือกประเภทการนำเสนอ',
+            'presentation_type.enum' => 'ประเภทการนำเสนอไม่ถูกต้อง',
+
+            'organization_id.required' => 'กรุณาเลือกหน่วยงาน / สถานที่ทำงาน',
+
+            'organization_other.required' => 'กรุณาระบุหน่วยงาน / สถานที่ทำงาน',
+            'organization_other.string' => 'ชื่อหน่วยงานไม่ถูกต้อง',
+            'organization_other.max' => 'ชื่อหน่วยงานยาวเกิน 255 ตัวอักษร',
+
+            'occupation_id.required' => 'กรุณาเลือกอาชีพ',
+
+            'occupation_other.required' => 'กรุณาระบุอาชีพ',
+            'occupation_other.string' => 'ชื่ออาชีพไม่ถูกต้อง',
+            'occupation_other.max' => 'ชื่ออาชีพยาวเกิน 255 ตัวอักษร',
+        ]
+        )->validate();
+
+        $user = User::create([
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'payment_required' => $input['organization_id'] === 'other',
+            'payment_status' => ($input['payment_required'] ?? null) 
+                ? PaymentStatus::PENDING : PaymentStatus::NOT_REQUIRED,
+            'registration_status' => ($input['payment_required'] ?? null) 
+                ? RegistrationStatus::PENDING_PAYMENT : RegistrationStatus::REGISTERED,
         ]);
+        
+        Profile::create([
+            'user_id' => $user->id,
+            'firstname' => $input['firstname'],
+            'lastname' => $input['lastname'],
+            'phone' => $input['phone'],
+            'special_requirements' => $input['special_requirements'],
+            'title' => $input['title'],
+            'academic_title' => $input['academic_title'],
+            'education' => $input['education'],
+            'participation_type' => $input['participation_type'],
+            'presentation_type' => $input['participation_type'] == ParticipationType::PRESENTER->value ? 
+                $input['participation_type'] : null,
+            'organization_id' => $input['organization_id'] === 'other' ? 
+                null : (int)$input['organization_id'] ,
+            'organization_other' => $input['organization_id'] === 'other' ? 
+                $input['organization_other'] : null,
+            'occupation_id' => $input['occupation_id'] === 'other' ? 
+                null : (int)$input['occupation_id'],
+            'occupation_other' => $input['occupation_id'] === 'other' ? 
+                $input['occupation_other'] : null,
+        ]);
+
+        return $user;
     }
 }
