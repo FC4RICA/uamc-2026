@@ -8,12 +8,17 @@
 @section('home', 'active')
 
 @section('content')
-<div class="container">
-    <h1 class="text-center mt-5">สวัสดี {{ Auth::user()->profile->firstname .' '. Auth::user()->profile->lastname }}</h1>
+<div class="container px-4 py-5 ">
+    <h1 class="text-center">สวัสดี {{ Auth::user()->profile->firstname .' '. Auth::user()->profile->lastname }}</h1>
+    @if (Auth::user()->needsPayment())
+        <div class="mt-4 text-danger text-center">
+            <strong>*การลงทะเบียนของคุณยังไม่เสร็จสิ้น กรุณาชำระค่าลงทะเบียนเพื่อเข้าร่วมหรือส่งผลงาน*</strong>
+        </div>
+    @endif
     <div class="my-5">
-        <div class="row">
-            @if(in_array(Auth::user()->participation_type, [ParticipationType::PRESENTER]))
-                <div class="col-4 text-center">
+        <div class="row ">
+            @if(Auth::user()->canSubmitAbstract())
+                <div class="col-4 text-center m-auto">
                     <a href="{{ route('member.submission.create') }}">
                         <div class="circle mx-auto">
                             <i class="fas fa-book fa-2x" style="margin-top: 10%;"></i>
@@ -21,7 +26,7 @@
                         <label>ระบบส่งบทความ</label>
                     </a>
                 </div>
-                <div class="col-4 text-center">
+                <div class="col-4 text-center m-auto">
                     <a href="{{ route('member.submission.index') }}">
                         <div class="circle mx-auto">
                             <i class="fas fa-clipboard-check fa-2x" style="margin-top: 10%;"></i>
@@ -30,7 +35,7 @@
                     </a>
                 </div>
             @endif
-            <div class="col-4 text-center">
+            <div class="col-4 text-center m-auto">
                 <a href="{{ route('member.profile.index') }}">
                     <div class="circle mx-auto text-center">
                         <i class="fas fa-user-edit fa-2x" style="margin-top: 10%;"></i>

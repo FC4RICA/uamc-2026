@@ -85,6 +85,8 @@ class User extends Authenticatable
 
     public function canSubmitAbstract(): bool
     {
-        return $this->registrationStatus === RegistrationStatus::REGISTERED;
+        return $this->isPresenter() && 
+            $this->registrationStatus === RegistrationStatus::REGISTERED &&
+            $this->payment_status === PaymentStatus::VERIFIED;
     }
 }

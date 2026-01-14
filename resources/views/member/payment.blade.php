@@ -8,6 +8,6 @@
     <div class="text-center">
         <h2><strong>ชำระค่าลงทะเบียน</strong></h2>
     </div>
-    <hr>
+    <hr class="separator">
 </div>
 @endsection

@@ -1,7 +1,7 @@
 <div>
     {{-- <h1 class="text-center"><strong>ตารางดำเนินการ</strong></h1>
     @if ($showLineBreak)
-        <hr />
+        <hr class="separator"/>
     @endif --}}
     {{-- <div class="presentation-list mb-2">
         <h4>ตรวจสอบตารางการนำเสนอ</h4>

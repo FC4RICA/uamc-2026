@@ -8,7 +8,7 @@
 <div class="container my-5">
 
     <h1 class="text-center"><strong>คำชี้แจงเกี่ยวกับการส่งผลงานและข้อกำหนดรูปแบบของบทคัดย่อและโปสเตอร์</strong></h1>
-    <hr>
+    <hr class="separator">
     <h3><strong>ผลงานแบบบรรยาย</strong></h3>
     <p>การส่งผลงานแบบบรรยาย นักศึกษาจะต้องส่งเอกสาร 3 อย่าง ทั้งประเภท MS Word และ PDF ดังนี้</p>
     <ol>

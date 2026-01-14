@@ -10,7 +10,7 @@
             <h1 class="text-center"><strong>เข้าระบบส่งบทคัดย่อ</strong></h1>
         </div>
     </div>
-    <hr>
+    <hr class="separator">
 
     <form action="{{ route('login') }}" name="login" id="login-form" method="POST">
         @csrf

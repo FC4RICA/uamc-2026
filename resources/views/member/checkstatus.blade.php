@@ -26,11 +26,11 @@
         <h3>ขณะนี้ยังไม่มีการประกาศผลการคัดเลือก</h3>
         @endif --}}
     </div>
-    <hr>
+    <hr class="separator">
     <div class="text-center">
         <h2><strong>รายการบทความ</strong></h2>
     </div>
-    <hr>
+    <hr class="separator">
     <div>
         <table class="table">
             <tr>

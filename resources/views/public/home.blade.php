@@ -7,7 +7,7 @@
 <div class="container mt-4 mb-5">
     <div class="text-center my-2">
         <h1 class="text-center"><strong>ประชาสัมพันธ์</strong></h1>
-        <hr />
+        <hr class="separator"/>
 
         {{-- <div class="presentation-list mb-3 text-left">
             <h2 class="font-weight-bold">ประกาศผล</h2>
@@ -51,7 +51,7 @@
             ณ คณะวิทยาศาสตร์ มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี<br />
             วันที่ 28 มีนาคม พ.ศ.2569</h3>
     </div>
-    <hr>
+    <hr class="separator">
     <div>
         <h3><strong>หลักการและเหตุผลของการจัดประชุม</strong></h3>
         <p>
@@ -59,7 +59,7 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ในปี พ.ศ. 2569 ภาควิชาคณิตศาสตร์ คณะวิทยาศาสตร์ มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี ได้รับเกียรติให้เป็นเจ้าภาพหลักในการจัดการประชุมวิชาการระดับปริญญาตรีสาขาวิชาคณิตศาสตร์ประยุกต์ ครั้งที่ 14 จึงขอเชิญนักวิจัย คณาจารย์ นิสิต นักศึกษา ส่งผลงานวิจัยเพื่อนำเสนอ และ/หรือ เข้าร่วมประชุม วันที่ 28 มีนาคม พ.ศ.2569 ณ คณะวิทยาศาสตร์ มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี
         </p>
     </div>
-    <hr />
+    <hr class="separator"/>
     <div class="my-5">
         <h1 class="text-center"><strong>กลุ่มย่อยสำหรับการนำเสนอแบบบรรยาย <span lang="en">(Oral
                     Presentation)</span><br />และโปสเตอร์ <span lang="en">(Poster Presentation)</span></strong></h1>
@@ -81,14 +81,14 @@
             </strong></h4></li>
         </ul>
     </div>
-    <hr />
+    <hr class="separator"/>
     <div class="my-4">
         <p class="text-center" style="font-size: 2rem;">
             <strong>ผู้ชนะเลิศการนำเสนอแบบบรรยาย​ได้รับโล่จากสมาคมคณิตศาสตร์แห่งประเทศไทยในพระบรมราชูปถัมภ์<br />
                 ผู้​ชนะ​เลิศการนำเสนอแบบโปสเตอร์​ ได้รับใบประกาศเกียรติ​คุณ</strong>
         </p>
     </div>
-    <hr>
+    <hr class="separator">
     @include('components.schedule', ['showLineBreak' => false])
 </div>
 @endsection

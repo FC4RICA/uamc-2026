@@ -12,7 +12,7 @@
     <div class="text-center">
         <h2><strong>ส่งบทคัดย่อ</strong></h2>
     </div>
-    <hr>
+    <hr class="separator">
     {{-- @if($status == 1) --}}
     <form id="submitpaper" name="submitpaper" action='{{ url("/member/submission") }}' method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}

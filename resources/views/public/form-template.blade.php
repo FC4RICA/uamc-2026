@@ -7,7 +7,7 @@
 
 <div class="container my-5">
     <h1 class="text-center"><strong>Template บทคัดย่อและโปสเตอร์</strong></h1>
-    <hr>
+    <hr class="separator">
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>

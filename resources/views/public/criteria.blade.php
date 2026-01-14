@@ -8,7 +8,7 @@
 <div class="container my-5">
 
     <h1 class="text-center"><strong>การนำเสนอและเกณฑ์การตัดสินผลงาน</strong></h1>
-    <hr>
+    <hr class="separator">
     <h3><strong>เกณฑ์การตัดสินผลงาน</strong></h3>
     <p>คณะกรรมการตัดสินจะพิจารณาจากเกณฑ์ดังนี้</p>
     <div class="row">

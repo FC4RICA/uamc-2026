@@ -10,7 +10,7 @@
             <h1 class="text-center"><strong>ติดต่อเรา</strong></h1>
         </div>
     </div>
-    <hr>
+    <hr class="separator">
     <div class="row">
         <div class="col-12 col-lg-6">
             <h3><strong>ที่ตั้ง</strong></h3>

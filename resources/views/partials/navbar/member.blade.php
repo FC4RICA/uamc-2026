@@ -21,21 +21,22 @@
     @if(Auth::user()->isPresenter())
         <li class="nav-item @yield('check')">
             <a href="{{ route('member.submission.index') }}" 
-            class="nav-link {{ Auth::user()->canSubmitAbstract() ? "disabled" : "" }}">
+            class="nav-link {{ Auth::user()->canSubmitAbstract() ? "" : "disabled" }}">
                 ตรวจสอบการส่งบทคัดย่อ และผลการพิจารณา
             </a>
         </li>
         <li class="nav-item @yield('submission')">
             <a href="{{ route('member.submission.create') }}" 
-            class="nav-link {{ Auth::user()->canSubmitAbstract() ? "disabled" : "" }}">
+            class="nav-link {{ Auth::user()->canSubmitAbstract() ? "" : "disabled" }}">
                 ส่งบทคัดย่อ
             </a>
         </li>
     @endif
+    <li><hr class="text-white"></li>
     <li class="nav-item">
-        <form action="{{ route('logout') }}" method="POST">
+        <form action="{{ route('logout') }}" method="POST" class="nav-link p-0">
             @csrf
-            <button class="nav-link text-inherit bg-none border-0" style="background: none;" type="submit" name="logout" onclick="this.blur();">
+            <button class="nav-link text-inherit bg-none border-0 w-100" style="background: none;" type="submit" name="logout" onclick="this.blur();">
                 ออกจากระบบ
             </button>
         </form>

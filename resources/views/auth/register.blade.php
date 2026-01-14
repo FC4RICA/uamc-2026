@@ -16,12 +16,12 @@
             <h1 class="text-center"><strong>ลงทะเบียน</strong></h1>
         </div>
     </div>
-    <hr>
+    <hr class="separator">
     {{-- @if($status == 1) --}}
     <form action="{{ route('register') }}" name="registration-form" id="registration-form" method="POST">
         @csrf
         <div>
-            <h3>ข้อมูลการเข้าใช้งาน</h3>
+            <h3 class="mt-4">ข้อมูลการเข้าใช้งาน</h3>
             <div class="form-group">
                 <label for="email">อีเมล</label>
                 <input id="email" name="email" value="{{ old('email') }}" type="email" class="form-control" style="@error('email') border-color: red; @enderror" placeholder="uamc2026@kmutt.ac.th" required>
@@ -42,12 +42,12 @@
             </div>
         </div>
         <div>
-            <h3>ข้อมูลส่วนตัว</h3>
+            <h3 class="mt-4">ข้อมูลส่วนตัว</h3>
             <div class="row">
                 <div class="col-12 col-lg-6">
                     <div class="form-group">
                         <label for="title">คำนำหน้า</label>
-                        <select id="title" name="title" class="custom-select" style="@error('title') border-color: red; @enderror" required>
+                        <select id="title" name="title" class="form-select" style="@error('title') border-color: red; @enderror" required>
                             <option value="" @selected(!old('title')) disabled>เลือก</option>
                             @foreach($titles as $title)
                                 <option value="{{ $title->value }}" @selected($title->value == old('title'))>
@@ -63,7 +63,7 @@
                 <div class="col-12 col-lg-6">
                     <div class="form-group">
                         <label for="academic_title">ตำแหน่งทางวิชาการ</label>
-                        <select id="academic_title" name="academic_title" class="custom-select" style="@error('academic_title') border-color: red; @enderror" required>
+                        <select id="academic_title" name="academic_title" class="form-select" style="@error('academic_title') border-color: red; @enderror" required>
                             <option value="" @selected(!old('academic_title')) disabled>เลือก</option>
                             @foreach($academicTitles as $title)
                                 <option value="{{ $title->value }}" @selected($title->value == old('academic_title'))>
@@ -99,12 +99,12 @@
             </div>
         </div>
         <div>
-            <h3>ข้อมูลการศึกษา การทำงาน</h3>
+            <h3 class="mt-4">ข้อมูลการศึกษา การทำงาน</h3>
             <div class="row">
                 <div class="col-12 col-lg-6">
                     <div class="form-group">
                         <label for="education">ระดับการศึกษา</label>
-                        <select id="education" name="education" class="custom-select" style="@error('education') border-color: red; @enderror" required>
+                        <select id="education" name="education" class="form-select" style="@error('education') border-color: red; @enderror" required>
                             <option value="" @selected(!old('education')) disabled>เลือก</option>
                             @foreach($education as $ed)
                                 <option value="{{ $ed->value }}" @selected($ed->value == old('education'))>
@@ -131,7 +131,7 @@
                 <div class="col-12 col-lg-6">
                     <div class="form-group">
                         <label for="occupation_id">อาชีพ</label>
-                        <select id="occupation_id" name="occupation_id" style="@error('occupation_id') border-color: red; @enderror" class="custom-select" required>
+                        <select id="occupation_id" name="occupation_id" style="@error('occupation_id') border-color: red; @enderror" class="form-select" required>
                             <option value="" @selected(!old('occupation_id')) disabled>เลือก</option>
                             @foreach($occupations as $ocu)
                                 <option value="{{ $ocu->id }}" @selected($ocu->id == old('organization_id'))>
@@ -155,12 +155,12 @@
                 </div>
             </div>
             <div>
-                <h3>ข้อมูลการเข้าร่วม</h3>
+                <h3 class="mt-4">ข้อมูลการเข้าร่วม</h3>
                 <div class="row align-items-end">
                     <div class="col-12 col-lg-6">
                         <div class="form-group">
                             <label for="organization_id">สถานที่ทำงาน/สถาบันการศึกษา/หน่วยงาน</label>
-                            <select id="organization_id" name="organization_id" style="@error('organization_id') border-color: red; @enderror" class="custom-select" required>
+                            <select id="organization_id" name="organization_id" style="@error('organization_id') border-color: red; @enderror" class="form-select" required>
                                 <option value="" @selected(!old('organization_id')) disabled>เลือก</option>
                                 @foreach($organizations as $org)
                                     <option value="{{ $org->id }}" @selected($org->id == old('organization_id'))>
@@ -185,14 +185,14 @@
                 </div>
                 <div class="row mb-4">
                     <div class="col-12">
-                        <strong class="text-neutral-600 text-xs">*ผู้สมัครจากมหาวิยาลัยอื่น ๆ ที่ไม่ได้เข้าร่วม ต้องชำระค่าลงทะเบียน 100 บาท เพื่อเข้าร่วมหรือส่งผลงาน*</strong>
+                        <strong class="fs-6 text-secondary">*ผู้สมัครจากมหาวิยาลัยอื่น ๆ ที่ไม่ได้เข้าร่วม ต้องชำระค่าลงทะเบียน 100 บาท เพื่อเข้าร่วมหรือส่งผลงาน*</strong>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12 col-lg-6">
                         <div class="form-group">
                             <label for="participation_type">ประเภทการเข้าร่วม</label>
-                            <select id="participation_type" name="participation_type" class="custom-select" style="@error('participation_type') border-color: red; @enderror" required>
+                            <select id="participation_type" name="participation_type" class="form-select" style="@error('participation_type') border-color: red; @enderror" required>
                                 <option value="" @selected(!old('participation_type')) disabled>เลือก</option>
                                 @foreach ($participationType as $role)
                                     <option value="{{ $role->value }}" @selected($role->value == old('participation_type'))>
@@ -208,7 +208,7 @@
                     <div class="col-12 col-lg-6">
                         <div id="presentation_type_form_group" class="form-group">
                             <label for="presentation_type">ประเภทการนำเสนอ</label>
-                            <select id="presentation_type" name="presentation_type" style="@error('presentation_type') border-color: red; @enderror" class="custom-select">
+                            <select id="presentation_type" name="presentation_type" style="@error('presentation_type') border-color: red; @enderror" class="form-select">
                                 <option value="" @selected(!old('presentation_type')) disabled>เลือก</option>
                                 @foreach ($presentationType as $type)
                                     <option value="{{ $type->value }}" @selected($type->value == old('presentation_type'))>

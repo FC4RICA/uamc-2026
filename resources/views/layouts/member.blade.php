@@ -8,12 +8,12 @@
 @endsection
 
 @section('body')
-<div id="myContainer" class="row no-gutters">
-    <div id="membermenu" class="col-12 col-lg-2 Menu">
+<div id="myContainer" class="row g-0">
+    <div id="membermenu" class="col-12 col-lg-2">
         @include('partials.sidebar-member')
     </div>
 
-    <div class="col-12 col-lg-10 Board overflow-auto">
+    <div class="col-12 col-lg-10 overflow-auto">
         @include('partials.carousel')
         @yield('content')
     </div>

@@ -14,7 +14,7 @@
             <h2 class="text-center"><strong>แก้ไขบทคัดย่อ</strong></h2>
         </div>
     </div>
-    <hr>
+    <hr class="separator">
     {{-- @if($status == 1) --}}
     <form id="editpaper" name="editpaper" action='{{ route('member.submission.update', ['id' => $research->research_id]) }}' method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}

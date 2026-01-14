@@ -8,7 +8,7 @@
     <div class="text-center">
         <h2><strong>แก้ไขข้อมูล</strong></h2>
     </div>
-    <hr>
+    <hr class="separator">
     <form id="editprofile" name="editprofile" action='{{ route('user-profile-information.update') }}' method="POST">
         @csrf
         <div>

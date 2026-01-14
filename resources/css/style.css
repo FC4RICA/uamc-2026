@@ -88,7 +88,7 @@ nav img {
     height: 4rem;
 }
 
-hr {
+hr.separator {
     border-color: #ffd110;
     border-width: thick;
     opacity: 1;
@@ -182,6 +182,7 @@ input.error, textarea.error {
 }
 #adminmenu{
     display: block;
+    background-color: #4f4e4e;
 }
 
 #memberMode{
@@ -189,6 +190,7 @@ input.error, textarea.error {
 }
 #membermenu{
     display: block;
+    background-color: #4f4e4e;
 }
 
 .circle{
@@ -426,4 +428,8 @@ table.table td a.btn {
 
 .presentation-list h4 {
     font-weight: bolder;
+}
+
+div.form-group {
+    margin-bottom: 0.75rem;
 }
