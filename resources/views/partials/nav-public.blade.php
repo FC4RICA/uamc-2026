@@ -21,11 +21,13 @@
                     <a href="{{ route('public.announcement') }}" class="nav-link"><strong>ประกาศรายชื่อ</strong></a>
                 </li> --}}
                 <li class="nav-item dropdown @yield('rules')">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><strong>การส่งผลงาน</strong></a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('public.rules') }}">การส่งผลงานและข้อกำหนดรูปแบบของบทคัดย่อและโปสเตอร์</a>
-                        <a class="dropdown-item" href="{{ route('public.templates') }}">Templates บทคัดย่อและโปสเตอร์</a>
-                    </div>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <strong>การส่งผลงาน</strong>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ route('public.rules') }}">การส่งผลงานและข้อกำหนดรูปแบบของบทคัดย่อและโปสเตอร์</a></li>
+                        <li><a class="dropdown-item" href="{{ route('public.templates') }}">Templates บทคัดย่อและโปสเตอร์</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item @yield('about')">
                     <a href="{{ route('public.about') }}" class="nav-link"><strong>ติดต่อเรา</strong></a>

@@ -91,6 +91,7 @@ nav img {
 hr {
     border-color: #ffd110;
     border-width: thick;
+    opacity: 1;
 }
 
 .tab {

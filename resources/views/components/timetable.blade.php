@@ -1,9 +1,9 @@
 <div>
-    <h1 class="text-center"><strong>ตารางดำเนินการ</strong></h1>
+    {{-- <h1 class="text-center"><strong>ตารางดำเนินการ</strong></h1>
     @if ($showLineBreak)
         <hr />
-    @endif
-    <div class="presentation-list mb-2">
+    @endif --}}
+    {{-- <div class="presentation-list mb-2">
         <h4>ตรวจสอบตารางการนำเสนอ</h4>
         <ul>
             <li>
@@ -330,5 +330,5 @@
     'meetingId' => '973 3765 5861',
     'meetingPassword' => 'UAMC2021',
     'zoomLink' => 'https://zoom.us/j/97337655861?pwd=Z3d6N1NYdGtlQlVkSFpkcE5vQVJvdz09'
-    ])
+    ]) --}}
 </div>

@@ -3,7 +3,8 @@
     @if($showLineBreak)
     <hr/>
     @endif
-    <table class="table">
+    <img src="{{ asset('img/schedule.png') }}" class="img-fluid" alt="">
+    {{-- <table class="table">
         <tr>
             <th class="text-center">วันที่</th>
             <th class="text-center">การดำเนินการ</th>
@@ -36,5 +37,5 @@
             <td class="text-center">24 เมษายน 2564</td>
             <td>Online oral presentation</td>
         </tr>
-    </table>
+    </table> --}}
 </div>
