@@ -127,28 +127,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12 col-lg-6">
-                    <div class="form-group">
-                        <label for="organization_id">สถานที่ทำงาน/หน่วยงาน/สถาบันการศึกษา</label>
-                        <select id="organization_id" name="organization_id" style="@error('organization_id') border-color: red; @enderror" class="custom-select" required>
-                            <option value="" @selected(!old('organization_id')) disabled>เลือก</option>
-                            @foreach($organizations as $org)
-                                <option value="{{ $org->id }}" @selected($org->id == old('organization_id'))>
-                                    {{ $org->name }}
-                                </option>
-                            @endforeach
-                            <option value="other">อื่นๆ</option>
-                        </select>
-                        @error('organization_id')
-                            <label for="organization_id" class="error">{{ $message }}</label>
-                        @enderror
-                        <input id="organization_other" name="organization_other" value="{{ old('organization_other') }}"  style="@error('organization_other') border-color: red; @enderror" class="form-control mt-2" type="text" placeholder="กรองสถานที่ทำงานของคุณ">
-                        @error('organization_other')
-                            <label for="organization_other" class="error">{{ $message }}</label>
-                        @enderror
-                    </div>
-                </div>
+            <div class="row align-items-end">
                 <div class="col-12 col-lg-6">
                     <div class="form-group">
                         <label for="occupation_id">อาชีพ</label>
@@ -164,6 +143,10 @@
                         @error('occupation_id')
                             <label for="occupation_id" class="error">{{ $message }}</label>
                         @enderror
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="form-group">
                         <input id="occupation_other" name="occupation_other" value="{{ old('occupation_other') }}" style="@error('occupation_other') border-color: red; @enderror" class="form-control mt-2" type="text" placeholder="กรอกอาชีพของคุณ">
                         @error('occupation_other')
                             <label for="occupation_other" class="error">{{ $message }}</label>
@@ -173,6 +156,38 @@
             </div>
             <div>
                 <h3>ข้อมูลการเข้าร่วม</h3>
+                <div class="row align-items-end">
+                    <div class="col-12 col-lg-6">
+                        <div class="form-group">
+                            <label for="organization_id">สถานที่ทำงาน/สถาบันการศึกษา/หน่วยงาน</label>
+                            <select id="organization_id" name="organization_id" style="@error('organization_id') border-color: red; @enderror" class="custom-select" required>
+                                <option value="" @selected(!old('organization_id')) disabled>เลือก</option>
+                                @foreach($organizations as $org)
+                                    <option value="{{ $org->id }}" @selected($org->id == old('organization_id'))>
+                                        {{ $org->name }}
+                                    </option>
+                                @endforeach
+                                <option value="other">อื่นๆ</option>
+                            </select>
+                            @error('organization_id')
+                                <label for="organization_id" class="error">{{ $message }}</label>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 ">
+                        <div class="form-group">
+                            <input id="organization_other" name="organization_other" value="{{ old('organization_other') }}"  style="@error('organization_other') border-color: red; @enderror" class="form-control mt-2" type="text" placeholder="กรองสถานที่ทำงานของคุณ">
+                            @error('organization_other')
+                                <label for="organization_other" class="error">{{ $message }}</label>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <strong class="text-neutral-600 text-xs">*ผู้สมัครจากมหาวิยาลัยอื่น ๆ ที่ไม่ได้เข้าร่วม ต้องชำระค่าลงทะเบียน 100 บาท เพื่อเข้าร่วมหรือส่งผลงาน*</strong>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-12 col-lg-6">
                         <div class="form-group">

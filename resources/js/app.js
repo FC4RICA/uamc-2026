@@ -1,4 +1,6 @@
 import './bootstrap';
+import 'bootstrap';
+import '@popperjs/core';
 import { initRegister } from './pages/register';
 
 const bodyElement = document.body;

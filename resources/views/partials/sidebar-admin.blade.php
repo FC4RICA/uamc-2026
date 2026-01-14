@@ -4,7 +4,7 @@
             <img src="{{ asset('img/60year-fsci.png') }}" alt="kmutt-fsci">
         </a>
         <div lang="th">
-            @include('components.navbar-admin')
+            @include('partials.navbar.admin')
         </div>
     </div>
 </nav>

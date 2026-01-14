@@ -6,12 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
     {{-- Shared CSS --}}
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('fontawesome/css/all.min.css') }}" >
     @stack('styles')
     
-    @vite(['resources/js/app.js'])
+    @vite([
+        'resources/css/app.css',
+        'resources/js/app.js',
+    ])
 
     <title>
         @if(View::hasSection('title'))
@@ -35,8 +38,8 @@
 
     {{-- Shared JS --}}
     <script src="{{ asset('js/jquery-3.4.1.js') }}"></script>
-    <script src="{{ asset('js/popper.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    {{-- <script src="{{ asset('js/popper.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script> --}}
     <script src="{{ asset('js/jquery.validate.js') }}"></script>
     {{-- might cause bug (only used in member layout) --}}
     <script src="{{ asset('js/additional-methods.js') }}"></script>

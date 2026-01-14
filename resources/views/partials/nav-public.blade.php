@@ -1,13 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="{{ route('public.home') }}">
             <img src="img/60year-fsci.png" alt="kmutt-fsci">
         </a>
-        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent" lang="th">
-            <ul class="navbar-nav">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto m-auto">
                 <li class="nav-item @yield('home')">
                     <a href="{{ route('public.home') }}" class="nav-link"><strong>หน้าแรก</strong></a>
                 </li>
@@ -39,13 +39,13 @@
                 </li>
             </ul>
         </div>
-            @if (Auth::user())
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button class="accountBTN" style="border: 0;" type="submit" name="logout" onclick="this.blur();">ออกจากระบบ</button>
-                </form>
-            @else
-                <a class="accountBTN" href="{{ route('login') }}">เข้าสู่ระบบ</a>
-            @endif
+        @if (Auth::user())
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button class="accountBTN" style="border: 0;" type="submit" name="logout" onclick="this.blur();">ออกจากระบบ</button>
+            </form>
+        @else
+            <a class="accountBTN" href="{{ route('login') }}">เข้าสู่ระบบ</a>
+        @endif
     </div>
 </nav>

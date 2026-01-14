@@ -7,7 +7,7 @@
             <img src="{{ asset('img/60year-fsci.png') }}" alt="kmutt-fsci">
         </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent" lang="th">
-            @include('components.navbar-member')
+            @include('partials.navbar.member')
         </div>
     </div>
 </nav>

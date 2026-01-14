@@ -4,7 +4,7 @@
             <img class="img-fluid" src="{{ asset('img/60year-fsci.png') }}" alt="kmutt-fsci">
         </a>
         <div lang="th">
-            @include('components.navbar-member')
+            @include('partials.navbar.member')
         </div>
     </div>
 </nav>
