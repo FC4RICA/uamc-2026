@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\PaymentController;
 
 Route::name('public.')
     ->group(function () {
@@ -22,10 +23,13 @@ Route::prefix('member')
         Route::get('/', [MemberController::class, 'index'])
             ->name('index');
 
-        Route::get('/payment', [MemberController::class, 'indexPayment'])
+        Route::get('/payment', [MemberController::class, 'payment'])
             ->name('payment.index');
 
-        Route::get('/profile', [MemberController::class, 'indexProfile'])
+        Route::post('/payment', [PaymentController::class, 'store'])
+            ->name('payment.store');
+
+        Route::get('/profile', [MemberController::class, 'profile'])
             ->name('profile.index');
 
         Route::put('/profile', [MemberController::class, 'updateProfile'])

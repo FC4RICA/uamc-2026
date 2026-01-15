@@ -23,13 +23,12 @@ class MemberController extends Controller
         return view('member.welcome');
     }
 
-    public function indexPayment(): View
+    public function payment(): View
     {
-        
         return view('member.payment');
     }
 
-    public function indexProfile(): View
+    public function profile(): View
     {
         $titles = Title::cases();
         $academicTitles = AcademicTitle::cases();

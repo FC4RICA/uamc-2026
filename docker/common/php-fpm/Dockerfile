@@ -7,6 +7,7 @@ FROM php:8.4-fpm AS builder
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     unzip \
+    git \
     libpq-dev \
     libonig-dev \
     libssl-dev \

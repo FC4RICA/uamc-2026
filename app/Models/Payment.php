@@ -14,5 +14,6 @@ class Payment extends Model
     protected $fillable = [
         'user_id',
         'drive_file_id',
+        'original_file_name'
     ];
 }

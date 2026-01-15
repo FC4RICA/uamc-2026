@@ -42,7 +42,7 @@ return new class extends Migration
                 ->nullable()
                 ->constrained()
                 ->nullOnDelete()
-                ->after('education');
+                ->after('organization_id');
             $table->string('occupation_other')->nullable();
 
             $table->timestamps();

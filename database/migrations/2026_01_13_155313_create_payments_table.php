@@ -17,6 +17,7 @@ return new class extends Migration
                   ->constrained()
                   ->cascadeOnDelete();
             $table->string('drive_file_id')->nullable();
+            $table->string('original_file_name')->default('undefined');
             $table->timestamps();
         });
     }
