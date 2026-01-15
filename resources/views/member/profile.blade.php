@@ -4,7 +4,7 @@
 @section('profile', 'active')
 
 @section('content')
-<div class="container my-5">
+<div class="container px-4 my-5">
     <div class="text-center">
         <h2><strong>แก้ไขข้อมูล</strong></h2>
     </div>

@@ -13,6 +13,6 @@ class Payment extends Model
      */
     protected $fillable = [
         'user_id',
-        'receipt_path',
+        'drive_file_id',
     ];
 }

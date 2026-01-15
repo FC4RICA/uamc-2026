@@ -19,13 +19,9 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $email = getenv('ADMIN_EMAIL');
-        $pass = getenv('ADMIN_PASSWORD');
-
-
         $user = User::firstOrCreate([
-            'email' =>  empty($email) ? $email : 'test@example.com',
-            'password' => Hash::make(empty($pass) ? $pass : 'testuser123'),
+            'email' =>  env('ADMIN_EMAIL', 'test@example.com'),
+            'password' => Hash::make(env('ADMIN_PASSWORD', 'testuser123')),
             'is_admin' => true,
         ]);
 

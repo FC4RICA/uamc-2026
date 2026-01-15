@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')
                   ->constrained()
                   ->cascadeOnDelete();
-            $table->string('receipt_path')->nullable();
+            $table->string('drive_file_id')->nullable();
             $table->timestamps();
         });
     }
