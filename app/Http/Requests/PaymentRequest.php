@@ -23,7 +23,23 @@ class PaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => ['required', 'file', 'max:2048']
+            'payment_at' => ['required', 'date_format:Y-m-d\TH:i'],
+            'account_name' => ['required', 'string', 'max:255'],
+            'from_bank' => ['required', 'string', 'max:255'],
+            'file' => ['required', 'file', 'max:2048'],
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'payment_datetime.required' => 'A title is required for your post.',
+            'body.required' => 'The post body cannot be empty.',
         ];
     }
 }

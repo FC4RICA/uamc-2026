@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('profiles', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('firstname');
             $table->string('lastname');
             $table->string('phone')->nullable();
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('participation_type')->default(ParticipationType::ATTENDEE->value);
             $table->unsignedSmallInteger('presentation_type')->nullable();
 
-            $table->foreignId('user_id')
+            $table->foreignUuid('user_id')
                 ->nullable()
                 ->constrained()
                 ->nullOnDelete()

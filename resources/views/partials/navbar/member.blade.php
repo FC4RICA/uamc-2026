@@ -12,7 +12,7 @@
     </li>
     @if (Auth::user()->needsPayment())
         <li class="Nav-item @yield('payment')">
-            <a href="{{ route('member.payment.index') }}" class="nav-link">ชำระค่าลงทะเบียน</a>
+            <a href="{{ route('member.payment.create') }}" class="nav-link">ชำระค่าลงทะเบียน</a>
         </li>
     @endif
     <li class="nav-item @yield('profile')">

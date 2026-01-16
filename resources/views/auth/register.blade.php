@@ -176,7 +176,7 @@
                     </div>
                     <div class="col-12 col-lg-6 ">
                         <div class="form-group">
-                            <input id="organization_other" name="organization_other" value="{{ old('organization_other') }}"  style="@error('organization_other') border-color: red; @enderror" class="form-control mt-2" type="text" placeholder="กรองสถานที่ทำงานของคุณ">
+                            <input id="organization_other" name="organization_other" value="{{ old('organization_other') }}"  style="@error('organization_other') border-color: red; @enderror" class="form-control mt-2" type="text" placeholder="กรอกสถานที่ทำงานของคุณ">
                             @error('organization_other')
                                 <label for="organization_other" class="error">{{ $message }}</label>
                             @enderror
@@ -185,7 +185,7 @@
                 </div>
                 <div class="row mb-4">
                     <div class="col-12">
-                        <strong class="fs-6 text-secondary">*ผู้สมัครจากมหาวิยาลัยอื่น ๆ ที่ไม่ได้เข้าร่วม ต้องชำระค่าลงทะเบียน 100 บาท เพื่อเข้าร่วมหรือส่งผลงาน*</strong>
+                        <strong class="fs-6 text-secondary">*ผู้สมัครที่ไม่ได้มาจากมหาวิทยาลัยที่เข้าร่วมต้องชำระค่าลงทะเบียน 100 บาท เพื่อเข้าร่วมหรือส่งผลงาน*</strong>
                     </div>
                 </div>
                 <div class="row">

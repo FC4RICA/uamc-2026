@@ -12,11 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('payments', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')
+            $table->uuid('id')->primary();
+            $table->foreignUuid('user_id')
                   ->constrained()
                   ->cascadeOnDelete();
-            $table->string('drive_file_id')->nullable();
+            $table->dateTime('payment_at')->nullable();
+            $table->string('account_name')->nullable();
+            $table->string('from_bank')->nullable();
+            $table->string('drive_file_id');
             $table->string('original_file_name')->default('undefined');
             $table->timestamps();
         });

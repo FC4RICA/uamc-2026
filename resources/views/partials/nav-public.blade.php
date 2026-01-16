@@ -8,35 +8,35 @@
         </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto m-auto">
-                <li class="nav-item @yield('home')">
-                    <a href="{{ route('public.home') }}" class="nav-link"><strong>หน้าแรก</strong></a>
+                <li class="nav-item">
+                    <a href="{{ route('public.home') }}" class="nav-link @yield('home')"><strong>หน้าแรก</strong></a>
                 </li>
-                <li class="nav-item @yield('schedule')">
-                    <a href="{{ route('public.schedule') }}" class="nav-link"><strong>กำหนดการ</strong></a>
+                <li class="nav-item">
+                    <a href="{{ route('public.schedule') }}" class="nav-link @yield('schedule')"><strong>กำหนดการ</strong></a>
                 </li>
-                <li class="nav-item @yield('criteria')">
-                    <a class="nav-link" href="{{ route('public.criteria') }}"><strong>การนำเสนอและเกณฑ์การตัดสิน</strong></a>
+                <li class="nav-item">
+                    <a href="{{ route('public.criteria') }}" class="nav-link  @yield('criteria')"><strong>การนำเสนอและเกณฑ์การตัดสิน</strong></a>
                 </li>
                 {{-- <li class="nav-item @yield('attendend')">
                     <a href="{{ route('public.announcement') }}" class="nav-link"><strong>ประกาศรายชื่อ</strong></a>
                 </li> --}}
-                <li class="nav-item dropdown @yield('rules')">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle @yield('rules')" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <strong>การส่งผลงาน</strong>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route('public.rules') }}">การส่งผลงานและข้อกำหนดรูปแบบของบทคัดย่อและโปสเตอร์</a></li>
-                        <li><a class="dropdown-item" href="{{ route('public.templates') }}">Templates บทคัดย่อและโปสเตอร์</a></li>
+                        <li><a href="{{ route('public.rules') }}" class="dropdown-item">การส่งผลงานและข้อกำหนดรูปแบบของบทคัดย่อและโปสเตอร์</a></li>
+                        <li><a href="{{ route('public.templates') }}" class="dropdown-item">Templates บทคัดย่อและโปสเตอร์</a></li>
                     </ul>
                 </li>
-                <li class="nav-item @yield('about')">
-                    <a href="{{ route('public.about') }}" class="nav-link"><strong>ติดต่อเรา</strong></a>
+                <li class="nav-item">
+                    <a href="{{ route('public.about') }}" class="nav-link @yield('about')"><strong>ติดต่อเรา</strong></a>
                 </li>
-                <li class="nav-item @yield('register')" >
+                <li class="nav-item" >
                     @if (Auth::user())
                         <a href="{{ route('member.index') }}" class="nav-link"><strong>หน้าสมาชิก</strong></a>
                     @else
-                        <a href="{{ route('register') }}" class="nav-link"><strong>ลงทะเบียน</strong></a>
+                        <a href="{{ route('register') }}" class="nav-link @yield('register')"><strong>ลงทะเบียน</strong></a>
                     @endif
                 </li>
             </ul>

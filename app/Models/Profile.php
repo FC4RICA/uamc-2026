@@ -8,10 +8,13 @@ use App\Enums\Education;
 use App\Enums\ParticipationType;
 use App\Enums\PresentationType;
 use App\Enums\Title;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Profile extends Model
 {
+    use HasUuids;
+
     /**
      * The attributes that are mass assignable.
      *

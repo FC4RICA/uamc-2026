@@ -13,13 +13,15 @@ class UploadPayment
         protected CloudStorage $storage
     ) {}
 
-    public function handle(int $userId, UploadedFile $file): Payment
+    public function handle(string $userId, UploadedFile $file): Payment
     {
-        $path = "payments/" . 'user_' . $userId . '_' . Str::uuid() . '.' . $file->extension();
-        $file_id = $this->storage->upload($path, $file);
+        $id = Str::uuid();
+        $path = "payments/" . 'user_' . $userId . '_' . $id . '.' . $file->extension();
+        $drive_file_id = $this->storage->upload($path, $file);
         return Payment::create([
+            'id' => $id,
             'user_id' => $userId,
-            'drive_file_id' => $file_id,
+            'drive_file_id' => $drive_file_id,
             'original_file_name' => $file->getClientOriginalName(),
         ]);
     }

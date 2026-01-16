@@ -3,6 +3,7 @@
 namespace App\Contracts;
 
 use Illuminate\Http\UploadedFile;
+use Psr\Http\Message\StreamInterface;
 
 interface CloudStorage
 {
@@ -13,6 +14,8 @@ interface CloudStorage
     ): string;
 
     public function getFileInfo(string $fileId): array;
+
+    public function download(string $fileId): StreamInterface;
 
     public function makeDir(
         string $name,

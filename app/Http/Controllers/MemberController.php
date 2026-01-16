@@ -23,11 +23,6 @@ class MemberController extends Controller
         return view('member.welcome');
     }
 
-    public function payment(): View
-    {
-        return view('member.payment');
-    }
-
     public function profile(): View
     {
         $titles = Title::cases();

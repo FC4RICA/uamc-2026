@@ -3,39 +3,35 @@
     @if($showLineBreak)
     <hr class="separator"/>
     @endif
-    <img src="{{ asset('img/schedule.png') }}" class="img-fluid" alt="">
-    {{-- <table class="table">
+    {{-- <img src="{{ asset('img/schedule.png') }}" class="img-fluid" alt=""> --}}
+    <table class="table">
         <tr>
             <th class="text-center">วันที่</th>
             <th class="text-center">การดำเนินการ</th>
         </tr>
         <tr>
-            <td class="text-center">18 มกราคม 2564</td>
-            <td>เปิดลงทะเบียนผู้เข้าร่วมงานทางเว็บไซต์</td>
+            <td class="text-center">1 มกราคม 2569</td>
+            <td>เปิดเว็ปไซต์งานประชุมและเปิดให้ลงทะเบียนร่วมงาน</td>
         </tr>
         <tr>
-            <td class="text-center"><strike>2 เมษายน 2564</strike></td>
-            <td><strike>วันสุดท้ายของการส่งบทคัดย่อ</strike></td>
+            <td class="text-center">27 กุมภาพันธ์ 2569</td>
+            <td>ส่งบทคัดย่อของผลงานแบบบรรยายและแบบโปสเตอร์ (รอบแรก)</td>
         </tr>
         <tr>
-            <td class="text-center">4 เมษายน 2564</td>
-            <td>วันสุดท้ายของการส่งบทคัดย่อ</td>
+            <td class="text-center">6 มีนาคม 2569</td>
+            <td>ส่งบทคัดย่อของผลงานแบบบรรยายและแบบโปสเตอร์ (รอบขยายเวลา)</td>
         </tr>
         <tr>
-            <td class="text-center">9 เมษายน 2564</td>
-            <td>วันประกาศผู้ที่ได้รับคัดเลือกเพื่อมานำเสนองาน</td>
+            <td class="text-center">13 มีนาคม 2569</td>
+            <td>ประกาศผลการคัดเลือกงาน</td>
         </tr>
         <tr>
-            <td class="text-center">16 เมษายน 2564</td>
-            <td>วันปิดลงทะเบียนผู้เข้าร่วมประชุม, วันสุดท้ายของการส่งวิดีทัศน์นำเสนอสำหรับผู้ได้รับการคัดเลือก, ส่งบทคัดย่อแบบขยาย, บทความวิจัยฉบับเต็ม หรือโปสเตอร์</td>
+            <td class="text-center">20 มีนาคม 2569</td>
+            <td>ส่งบทคัดย่อแบบขยาย (extended abstract)</td>
         </tr>
         <tr>
-            <td class="text-center">23 เมษายน 2564</td>
-            <td>Online poster presentation</td>
+            <td class="text-center">28 มีนาคม 2569</td>
+            <td>วันจัดงานประชุม</td>
         </tr>
-        <tr>
-            <td class="text-center">24 เมษายน 2564</td>
-            <td>Online oral presentation</td>
-        </tr>
-    </table> --}}
+    </table>
 </div>

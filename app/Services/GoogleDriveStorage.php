@@ -6,6 +6,7 @@ use App\Contracts\CloudStorage;
 use Google\Service\Drive\DriveFile;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
+use Psr\Http\Message\StreamInterface;
 
 class GoogleDriveStorage implements CloudStorage
 {
@@ -42,6 +43,25 @@ class GoogleDriveStorage implements CloudStorage
     public function delete(string $fileId): void
     {
         $this->client->drive()->files->delete($fileId);
+    }
+
+    public function download(string $fileId): StreamInterface
+    {
+        $response = $this->client->client()->getHttpClient()->request(
+             'GET',
+            sprintf(
+                'https://www.googleapis.com/drive/v3/files/%s?alt=media',
+                $fileId
+            ),
+            [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->client->client()->getAccessToken()['access_token'],
+                ],
+                'stream' => true,
+            ]
+        );
+
+        return $response->getBody();
     }
 
     public function getFileInfo(string $fileId): array
@@ -104,12 +124,10 @@ class GoogleDriveStorage implements CloudStorage
     {
         $segments = explode('/', $path);
         $name = array_pop($segments);
-        Log::debug('GoogleDriveStorage.parsePath explode pop', compact('segments', 'name'));
 
         $parentId = config('services.google.folder_id');
 
         foreach ($segments as $folderName) {
-            Log::debug('GoogleDriveStorage.parsePath $segments as $folderName', compact('folderName', 'name'));
             $parentId = $this->getOrCreateFolder($folderName, $parentId);
         }
 

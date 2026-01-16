@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
@@ -23,11 +24,11 @@ Route::prefix('member')
         Route::get('/', [MemberController::class, 'index'])
             ->name('index');
 
-        Route::get('/payment', [MemberController::class, 'payment'])
-            ->name('payment.index');
-
-        Route::post('/payment', [PaymentController::class, 'store'])
-            ->name('payment.store');
+        Route::controller(PaymentController::class)->name('payment.')->group(function () {
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/{payment}/download', 'download')->name('download');
+        });
 
         Route::get('/profile', [MemberController::class, 'profile'])
             ->name('profile.index');
