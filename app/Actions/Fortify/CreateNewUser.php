@@ -144,6 +144,7 @@ class CreateNewUser implements CreatesNewUsers
                 null : (int)$input['occupation_id'],
             'occupation_other' => $input['occupation_id'] === 'other' ? 
                 $input['occupation_other'] : null,
+            'created_by' => $user->id,
         ]);
 
         return $user;

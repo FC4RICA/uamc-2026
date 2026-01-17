@@ -25,11 +25,16 @@ return new class extends Migration
             $table->unsignedSmallInteger('participation_type')->default(ParticipationType::ATTENDEE->value);
             $table->unsignedSmallInteger('presentation_type')->nullable();
 
-            $table->foreignUuid('user_id')
+            $table->foreignUuid('user_id') // user account id
                 ->nullable()
                 ->constrained()
                 ->nullOnDelete()
                 ->unique();
+            
+            $table->foreignUuid('created_by')
+                ->references('id')
+                ->on('users')
+                ->nullOnDelete();
 
             $table->foreignId('organization_id')
                 ->nullable()

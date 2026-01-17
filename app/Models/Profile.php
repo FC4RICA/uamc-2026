@@ -35,6 +35,7 @@ class Profile extends Model
         'organization_other',
         'occupation_id',
         'occupation_other',
+        'created_by',
     ];
 
     /**
