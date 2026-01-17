@@ -32,8 +32,7 @@ return new class extends Migration
                 ->unique();
             
             $table->foreignUuid('created_by')
-                ->references('id')
-                ->on('users')
+                ->constrained('users', 'id')
                 ->nullOnDelete();
 
             $table->foreignId('organization_id')

@@ -4,7 +4,6 @@ namespace App\Actions\Payment;
 
 use App\Contracts\CloudStorage;
 use App\Enums\PaymentStatus;
-use App\Enums\RegistrationStatus;
 use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
@@ -55,10 +54,6 @@ class UploadPayment
                 'payment_at' => $paymentAt,
                 'account_name' => $accountName,
                 'from_bank' => $fromBank,
-            ]);
-
-            $user->update([
-                'registration_status' => RegistrationStatus::PENDING_REVIEW,
             ]);
 
             return $payment;

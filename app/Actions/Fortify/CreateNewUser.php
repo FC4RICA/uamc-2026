@@ -5,9 +5,7 @@ namespace App\Actions\Fortify;
 use App\Enums\AcademicTitle;
 use App\Enums\Education;
 use App\Enums\ParticipationType;
-use App\Enums\PaymentStatus;
 use App\Enums\PresentationType;
-use App\Enums\RegistrationStatus;
 use App\Enums\Title;
 use App\Models\Profile;
 use App\Models\User;
@@ -120,8 +118,6 @@ class CreateNewUser implements CreatesNewUsers
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'payment_required' => $input['organization_id'] === 'other',
-            'registration_status' => ($input['payment_required'] ?? null) 
-                ? RegistrationStatus::PENDING_PAYMENT : RegistrationStatus::REGISTERED,
         ]);
         
         Profile::create([

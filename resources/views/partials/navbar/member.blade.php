@@ -1,8 +1,3 @@
-@php
-    use App\Enums\ParticipationType;
-    use App\Enums\RegistrationStatus;
-@endphp
-
 <ul class="navbar-nav">
     <li class="nav-item @yield('home')">
         <a href="{{ route('member.index') }}" class="nav-link">หน้าแรก</a>

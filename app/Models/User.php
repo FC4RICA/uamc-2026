@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Enums\ParticipationType;
 use App\Enums\PaymentStatus;
-use App\Enums\RegistrationStatus;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -28,7 +27,6 @@ class User extends Authenticatable
         'password',
         'is_admin',
         'payment_required',
-        'registration_status',
     ];
 
     /**
@@ -53,7 +51,6 @@ class User extends Authenticatable
             'password' => 'hashed',
             'is_admin' => 'boolean',
             'payment_required' => 'boolean',
-            'registration_status' => RegistrationStatus::class,
         ];
     }
 
@@ -95,7 +92,16 @@ class User extends Authenticatable
     public function needsPayment(): bool
     {
         return $this->payment_required
-            && $this->registrationStatus !== RegistrationStatus::REGISTERED;
+            && ! $this->hasVerifiedPayment();
+    }
+
+    public function registrationComplete(): bool
+    {
+        if ($this->requiresPayment()) {
+            return $this->hasVerifiedPayment();
+        }
+
+        return true;
     }
 
     public function isPresenter(): bool
@@ -105,8 +111,7 @@ class User extends Authenticatable
 
     public function canSubmitAbstract(): bool
     {
-        return $this->isPresenter() && 
-            $this->registrationStatus === RegistrationStatus::REGISTERED &&
-            $this->payment_status === PaymentStatus::VERIFIED;
+        return $this->isPresenter()
+            && $this->registrationComplete();
     }
 }
