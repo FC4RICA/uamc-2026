@@ -6,6 +6,7 @@ use App\Actions\Payment\UploadPayment;
 use App\Contracts\CloudStorage;
 use App\Http\Requests\PaymentRequest;
 use App\Models\Payment;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -16,23 +17,37 @@ class PaymentController extends Controller
 {
     public function create(): View
     {
-        return view('member.payment');
+        Gate::authorize('create', Payment::class);
+
+        $user = Auth::user();
+        $activePayment = $user->activePayment();
+
+        return view('member.payment', compact('user', 'activePayment'));
     }
 
     public function store(
         PaymentRequest $request, 
         UploadPayment $action
     ): RedirectResponse {
-        $validated = $request->validated();
-        $file = $request->file('file');
-        $payment = $action->handle(Auth::user()->id, $file);
-        $payment->update([            
-            'payment_at' => $validated['payment_at'],
-            'account_name' => $validated['account_name'],
-            'from_bank' => $validated['from_bank'],
-        ]);
-        $payment->save();
-        return back()->with('success', 'Uploaded');
+        Gate::authorize('store', Payment::class);
+
+        try {
+            $action->handle(
+                userId: Auth::id(),
+                file: $request->validated('file'),
+                paymentAt: $request->validated('payment_at'),
+                accountName: $request->validated('account_name'),
+                fromBank: $request->validated('from_bank'),
+            );
+            return back()->with('success', 'Uploaded');
+        } catch (QueryException $e) {
+            if ($e->getCode() === '23000') { // duplicate key
+                return back()->withErrors([
+                    'payment' => 'Payment already submitted.',
+                ]);
+            }
+            throw $e;
+        }
     }
 
     public function download(
@@ -40,7 +55,7 @@ class PaymentController extends Controller
         CloudStorage $storage
     ): StreamedResponse
     {
-        Gate::authorize('view', $payment);
+        Gate::authorize('download', $payment);
 
         $stream = $storage->download($payment->drive_file_id);
 

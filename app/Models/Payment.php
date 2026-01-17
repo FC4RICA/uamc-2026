@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PaymentStatus;
 use App\Policies\PaymentPolicy;
 use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -24,7 +25,8 @@ class Payment extends Model
         'account_name',
         'from_bank',
         'drive_file_id',
-        'original_file_name'
+        'status',
+        'original_file_name',
     ];
 
     /**
@@ -36,6 +38,7 @@ class Payment extends Model
     {
         return [
             'payment_at' => 'datetime',
+            'status' => PaymentStatus::class,
         ];
     }
 }

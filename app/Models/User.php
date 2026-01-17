@@ -28,7 +28,6 @@ class User extends Authenticatable
         'password',
         'is_admin',
         'payment_required',
-        'payment_status',
         'registration_status',
     ];
 
@@ -54,7 +53,6 @@ class User extends Authenticatable
             'password' => 'hashed',
             'is_admin' => 'boolean',
             'payment_required' => 'boolean',
-            'payment_status' => PaymentStatus::class,
             'registration_status' => RegistrationStatus::class,
         ];
     }
@@ -72,6 +70,26 @@ class User extends Authenticatable
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function activePayment(): ?Payment
+    {
+        return $this->payments()
+            ->where('status', PaymentStatus::SUBMITTED)
+            ->latest()
+            ->first();
+    }
+
+    public function hasSubmittedPayment(): bool
+    {
+        return $this->activePayment() !== null;
+    }
+
+    public function paymentVerified(): bool
+    {
+        return $this->payments()
+            ->where('status', PaymentStatus::VERIFIED)
+            ->exists();
     }
 
     public function needsPayment(): bool

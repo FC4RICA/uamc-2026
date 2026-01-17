@@ -15,7 +15,7 @@ class RedirectAfterRegister
 
         // Store intended redirect in session
         if ($user->payment_required) {
-            session(['url.intended' => route('member.payment.index')]);
+            session(['url.intended' => route('member.payment.create')]);
         } else {
             session(['url.intended' => route('member.index')]);
         }

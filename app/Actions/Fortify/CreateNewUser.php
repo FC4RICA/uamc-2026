@@ -120,8 +120,6 @@ class CreateNewUser implements CreatesNewUsers
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'payment_required' => $input['organization_id'] === 'other',
-            'payment_status' => ($input['payment_required'] ?? null) 
-                ? PaymentStatus::PENDING : PaymentStatus::NOT_REQUIRED,
             'registration_status' => ($input['payment_required'] ?? null) 
                 ? RegistrationStatus::PENDING_PAYMENT : RegistrationStatus::REGISTERED,
         ]);
