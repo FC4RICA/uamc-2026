@@ -1,4 +1,4 @@
-import { initParticipant } from '../components/participant';
+import { initParticipant } from '../../components/participant';
 
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('#participants-container');
@@ -22,5 +22,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         initParticipant(participant);
     });
+
+    document.querySelector('#submit-submission')
+    .addEventListener('submit', e => {
+        e.target.querySelector('button[type="submit"]').disabled = true;
+    });
+
 });
 

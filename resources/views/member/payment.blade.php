@@ -118,8 +118,8 @@
                     </div>
                 </div>
                 <div class="col-12 col-lg-6 ">
-                    <button class="btn btn-warning" type="submit"
-                        onclick="this.disabled=true; this.form.submit();">ส่งหลักฐานการชำระเงิน</button>
+                    <button class="btn btn-warning" type="submit" id="submit-payment">
+                    ส่งหลักฐานการชำระเงิน</button>
                     <div>
             </form>
         @endif

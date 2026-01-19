@@ -258,7 +258,7 @@
 
             <div class="text-center">
                 <div class="form-group">
-                    <button class="btn btn-warning" type="submit" onclick="this.disabled=true; this.form.submit();">
+                    <button id="submit-submission" class="btn btn-warning" type="submit">
                         ส่งบทคัดย่อ
                     </button>
                 </div>
@@ -273,5 +273,5 @@
 @endsection
 
 @push('scripts')
-    @vite('resources/js/pages/submission.js')
+    @vite('resources/js/pages/member/submission.js')
 @endpush
