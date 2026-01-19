@@ -125,3 +125,7 @@
         @endif
     </div>
 @endsection
+
+@push('scripts')
+    @vite('resources/js/pages/member/payment.js')
+@endpush
