@@ -5,9 +5,9 @@
 
 @section('content')
 
-<div class="container my-5 d-grid gap-5">
-    @include('components.schedule', ['showLineBreak' => true])
-    @include('components.timetable', ['showLineBreak' => true])
-</div>
+    <div class="container my-5 d-grid gap-5">
+        @include('components.schedule', ['showLineBreak' => true])
+        @include('components.timetable', ['showLineBreak' => true])
+    </div>
 
 @endsection

@@ -13,25 +13,28 @@
     <li class="nav-item @yield('profile')">
         <a href="{{ route('member.profile.index') }}" class="nav-link">ข้อมูลส่วนตัว</a>
     </li>
-    @if(Auth::user()->isPresenter())
+    @if (Auth::user()->isPresenter())
         <li class="nav-item @yield('check')">
-            <a href="{{ route('member.submission.index') }}" 
-            class="nav-link {{ Auth::user()->hasSubmission() ?: "disabled" }}">
+            <a href="{{ route('member.submission.index') }}"
+                class="nav-link {{ Auth::user()->hasSubmission() ?: 'disabled' }}">
                 ตรวจสอบการส่งบทคัดย่อ และผลการพิจารณา
             </a>
         </li>
         <li class="nav-item @yield('submission')">
-            <a href="{{ route('member.submission.create') }}" 
-            class="nav-link {{ Auth::user()->canSubmitAbstract() ?: "disabled" }}">
+            <a href="{{ route('member.submission.create') }}"
+                class="nav-link {{ Auth::user()->canSubmitAbstract() ?: 'disabled' }}">
                 ส่งบทคัดย่อ
             </a>
         </li>
     @endif
-    <li><hr class="text-white"></li>
+    <li>
+        <hr class="text-white">
+    </li>
     <li class="nav-item">
         <form action="{{ route('logout') }}" method="POST" class="nav-link p-0">
             @csrf
-            <button class="nav-link text-inherit bg-none border-0 w-100" style="background: none;" type="submit" name="logout" onclick="this.blur();">
+            <button class="nav-link text-inherit bg-none border-0 w-100" style="background: none;" type="submit"
+                name="logout" onclick="this.blur();">
                 ออกจากระบบ
             </button>
         </form>

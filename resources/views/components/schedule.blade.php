@@ -1,7 +1,7 @@
 <div>
     <h1 class="text-center"><strong>กำหนดการ</strong></h1>
-    @if($showLineBreak)
-    <hr class="separator"/>
+    @if ($showLineBreak)
+        <hr class="separator" />
     @endif
     {{-- <img src="{{ asset('img/schedule.png') }}" class="img-fluid" alt=""> --}}
     <table class="table">

@@ -14,7 +14,8 @@
     <li class="nav-item">
         <form action="{{ route('logout') }}" method="POST">
             @csrf
-            <button class="nav-link text-inherit bg-none border-0" style="background: none;" type="submit" name="logout" onclick="this.blur();">ออกจากระบบ</button>
+            <button class="nav-link text-inherit bg-none border-0" style="background: none;" type="submit"
+                name="logout" onclick="this.blur();">ออกจากระบบ</button>
         </form>
     </li>
 </ul>
