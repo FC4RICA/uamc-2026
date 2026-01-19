@@ -4,13 +4,13 @@ namespace App\Models;
 
 use App\Enums\ParticipationType;
 use App\Enums\PaymentStatus;
+use App\Enums\PresentationType;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -64,6 +64,7 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class);
     }
     
+    // payment
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
@@ -82,7 +83,7 @@ class User extends Authenticatable
         return $this->activePayment() !== null;
     }
 
-    public function paymentVerified(): bool
+    public function hasVerifiedPayment(): bool
     {
         return $this->payments()
             ->where('status', PaymentStatus::VERIFIED)
@@ -97,21 +98,43 @@ class User extends Authenticatable
 
     public function registrationComplete(): bool
     {
-        if ($this->requiresPayment()) {
+        if ($this->needsPayment()) {
             return $this->hasVerifiedPayment();
         }
 
         return true;
     }
 
+    // submission
     public function isPresenter(): bool
     {
         return $this->profile?->participation_type === ParticipationType::PRESENTER;
     }
 
+    public function isOral(): bool
+    {
+        return $this->profile?->presentation_type === PresentationType::ORAL;
+    }
+
+    public function isPoster(): bool
+    {
+        return $this->profile?->presentation_type === PresentationType::POSTER;
+    }
+
     public function canSubmitAbstract(): bool
     {
         return $this->isPresenter()
-            && $this->registrationComplete();
+            && $this->registrationComplete()
+            && ! $this->hasSubmission();
+    }
+    
+    public function submission(): HasOne
+    {
+        return $this->hasOne(Submission::class);
+    }
+
+    public function hasSubmission(): bool
+    {
+        return $this->submission !== null;
     }
 }

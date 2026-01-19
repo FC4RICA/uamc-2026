@@ -1,15 +1,9 @@
 import { validateForm } from "../common/validateForm";
-import toggleSelect from "../components/toggleSelect";
+import { initToggleSelect } from "../components/toggleSelect";
 
-export function initRegister() {
-    // registerValidate();
-
-    document.addEventListener('DOMContentLoaded', () => {
-        toggleSelect('occupation_id', 'occupation_other', 'other');
-        toggleSelect('organization_id', 'organization_other', 'other');
-        toggleSelect('participation_type', 'presentation_type_form_group', presenterId);
-    });
-}
+document.addEventListener('DOMContentLoaded', () => {
+    initToggleSelect(document);
+});
 
 function registerValidate() {
     const form = document.querySelector('form[name="registration"]')

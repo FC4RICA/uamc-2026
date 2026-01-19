@@ -1,7 +1,3 @@
-@php
-    use App\Enums\ParticipationType;
-@endphp
-
 @extends('layouts.member')
 @section('title', 'หน้าแรกสมาชิก')
 
@@ -23,9 +19,11 @@
                         <div class="circle mx-auto">
                             <i class="fas fa-book fa-2x" style="margin-top: 10%;"></i>
                         </div>
-                        <label>ระบบส่งบทความ</label>
+                        <label>ส่งบทคัดย่อ</label>
                     </a>
                 </div>
+            @endif
+            @if (Auth::user()->hasSubmission())
                 <div class="col-4 text-center m-auto">
                     <a href="{{ route('member.submission.index') }}">
                         <div class="circle mx-auto">

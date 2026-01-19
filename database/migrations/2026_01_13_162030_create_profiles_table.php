@@ -38,15 +38,13 @@ return new class extends Migration
             $table->foreignId('organization_id')
                 ->nullable()
                 ->constrained()
-                ->nullOnDelete()
-                ->after('education');
+                ->nullOnDelete();
             $table->string('organization_other')->nullable();
 
             $table->foreignId('occupation_id')
                 ->nullable()
                 ->constrained()
-                ->nullOnDelete()
-                ->after('organization_id');
+                ->nullOnDelete();
             $table->string('occupation_other')->nullable();
 
             $table->timestamps();

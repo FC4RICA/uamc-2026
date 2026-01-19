@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\SubmissionController;
 
 Route::name('public.')
     ->group(function () {
@@ -21,12 +22,24 @@ Route::prefix('member')
     ->name('member.')
     ->group(function () {
 
-        Route::controller(PaymentController::class)->name('payment.')->group(function () {
+        Route::controller(PaymentController::class)
+        ->prefix('/payment')
+        ->name('payment.')
+        ->group(function () {
             Route::get('/create', 'create')->name('create');
             Route::post('/', 'store')->name('store');
             Route::get('/{payment}/download', 'download')->name('download');
         });
 
+        Route::controller(SubmissionController::class)
+        ->prefix('/submission')
+        ->name('submission.')
+        ->group(function () {
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/index', 'index')->name('index');
+            Route::put('/{submission}', 'update')->name('update');
+        });
 
         Route::get('/', [MemberController::class, 'index'])
             ->name('index');
@@ -37,20 +50,22 @@ Route::prefix('member')
         Route::put('/profile', [MemberController::class, 'updateProfile'])
             ->name('profile.update');
 
-        Route::get('/submission/create', [MemberController::class, 'createSubmission'])
-            ->name('submission.create');
+        
 
-        Route::post('/submission', [MemberController::class, 'storeSubmission'])
-            ->name('submission.store');
+        // Route::get('/submission/create', [MemberController::class, 'createSubmission'])
+        //     ->name('submission.create');
 
-        Route::get('/submission', [MemberController::class, 'indexSubmission'])
-            ->name('submission.index');
+        // Route::post('/submission', [MemberController::class, 'storeSubmission'])
+        //     ->name('submission.store');
 
-        Route::get('/submission/{id}/edit', [MemberController::class, 'editSubmission'])
-            ->name('submission.edit');
+        // Route::get('/submission', [MemberController::class, 'indexSubmission'])
+        //     ->name('submission.index');
 
-        Route::put('/submission/{id}', [MemberController::class, 'updateSubmission'])
-            ->name('submission.update');
+        // Route::get('/submission/{id}/edit', [MemberController::class, 'editSubmission'])
+        //     ->name('submission.edit');
+
+        // Route::put('/submission/{id}', [MemberController::class, 'updateSubmission'])
+        //     ->name('submission.update');
 
         // unused
         // Route::get('/research/{research}', [MemberController::class, 'editResearch'])

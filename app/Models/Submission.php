@@ -4,11 +4,14 @@ namespace App\Models;
 
 use App\Enums\PresentationType;
 use App\Enums\SubmissionStatus;
+use App\Policies\SubmissionPolicy;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+#[UsePolicy(SubmissionPolicy::class)]
 class Submission extends Model
 {
     use HasUuids;

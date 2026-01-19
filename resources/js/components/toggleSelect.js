@@ -1,20 +1,26 @@
-export default function toggleSelect (selectId, inputId, targetValue) {
-    const select = document.getElementById(selectId);
-    const input  = document.getElementById(inputId);
+export function initToggleSelect(root = document) {
+    const selects = root.querySelectorAll('[data-toggle-select]');
+    
 
-    if (!select || !input) return;
+    selects.forEach(select => {
+        const target = root.querySelector(select.dataset.target);
+        if (!target) return;
 
-    const update = () => {
-        if (select.value == targetValue) {
-            input.classList.remove('d-none');
-            input.required = true;
-        } else {
-            input.classList.add('d-none');
-            input.required = false;
-            input.value = '';
-        }
-    };
+        const targetValue = select.dataset.value;
+        const targetLabel = root.querySelector(target.dataset.label);
 
-    select.addEventListener('change', update);
-    update(); // run once on page load (for validation errors)
+        const update = () => {
+            const active = select.value === targetValue;
+
+            target.classList.toggle('d-none', !active);
+            target.required = active;
+
+            if (targetLabel) targetLabel.classList.toggle('d-none', !active);
+
+            if (!active) target.value = '';
+        };
+
+        select.addEventListener('change', update);
+        update();
+    });
 }

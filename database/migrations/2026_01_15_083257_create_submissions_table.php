@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('submissions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('submitted_by')->constrained('users', 'id');
+            $table->foreignUuid('user_id')->constrained();
             $table->unsignedSmallInteger('presentation_type');
             $table->text('titie_th');
             $table->text('titie_en');

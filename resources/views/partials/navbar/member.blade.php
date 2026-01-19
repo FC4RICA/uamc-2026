@@ -16,13 +16,13 @@
     @if(Auth::user()->isPresenter())
         <li class="nav-item @yield('check')">
             <a href="{{ route('member.submission.index') }}" 
-            class="nav-link {{ Auth::user()->canSubmitAbstract() ? "" : "disabled" }}">
+            class="nav-link {{ Auth::user()->hasSubmission() ?: "disabled" }}">
                 ตรวจสอบการส่งบทคัดย่อ และผลการพิจารณา
             </a>
         </li>
         <li class="nav-item @yield('submission')">
             <a href="{{ route('member.submission.create') }}" 
-            class="nav-link {{ Auth::user()->canSubmitAbstract() ? "" : "disabled" }}">
+            class="nav-link {{ Auth::user()->canSubmitAbstract() ?: "disabled" }}">
                 ส่งบทคัดย่อ
             </a>
         </li>

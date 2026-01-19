@@ -24,7 +24,7 @@
 
     
     <div class="row mt-4 mb-5">
-        @if ($user->paymentVerified())
+        @if ($user->hasVerifiedPayment())
             <h4 class="text-success fw-bold">
                 การชำระเงินได้รับการยืนยันแล้ว
             </h4>
@@ -52,7 +52,7 @@
     </div>
 
     
-    @if (! $user->paymentVerified())
+    @if (! $user->hasVerifiedPayment())
         <h3 class="mt-4">
             {{ $activePayment ? 'อัพโหลดใหม่เพื่อแก้ไขข้อมูล' : 'อัพโหลดหลักฐานการชำระเงิน' }}
         </h3>
@@ -64,7 +64,7 @@
                         <label for="payment_at">วันที่และเวลาที่โอนเงินตามหลักฐานการชำระเงิน</label>
                         <input id="payment_at" name="payment_at" value="{{ old('payment_at') }}"  
                         class="form-control @error('payment_at') border-danger @enderror" type="datetime-local" 
-                        placeholder="วันที่โอนเงิน" >
+                        placeholder="วันที่โอนเงิน" required>
                         @error('payment_at')
                             <label for="payment_at" class="error">{{ $message }}</label>
                         @enderror
@@ -74,7 +74,7 @@
                     <div class="form-group">
                         <label for="account_name">ชื่อบัญชีผู้โอน</label>
                         <input id="account_name" name="account_name" value="{{ old('account_name') }}"  
-                        class="form-control @error('account_name') border-danger @enderror" type="text" placeholder="ชื่อบัญชี">
+                        class="form-control @error('account_name') border-danger @enderror" type="text" placeholder="ชื่อบัญชี" required>
                         @error('account_name')
                             <label for="account_name" class="error">{{ $message }}</label>
                         @enderror
@@ -85,8 +85,8 @@
                 <div class="col-12 col-lg-6 ">
                     <div class="form-group">
                         <label for="from_bank">โอนจากบัญชีธนาคาร</label>
-                        <input id="from_bank" name="from_bank" value="{{ old('from_bank') }}"  
-                        class="form-control @error('from_bank') border-danger @enderror" type="text" placeholder="ชื่อธนาคาร">
+                        <input id="from_bank" name="from_bank" value="{{ old('from_bank') }}" type="text"
+                        class="form-control @error('from_bank') border-danger @enderror" placeholder="ชื่อธนาคาร" required>
                         @error('from_bank')
                             <label for="from_bank" class="error">{{ $message }}</label>
                         @enderror
@@ -103,7 +103,7 @@
                 <div class="col-12 col-lg-6 ">
                     <div class="form-group">
                         <label for="receipt">อัพโหลดหลักฐานการชำระเงิน</label>
-                        <input id="receipt" name="file" type="file" class="form-control @error('file') border-danger @enderror">
+                        <input id="receipt" name="file" type="file" class="form-control @error('file') border-danger @enderror" required>
                         @error('file')
                             <label for="receipt" class="error">{{ $message }}</label>
                         @enderror

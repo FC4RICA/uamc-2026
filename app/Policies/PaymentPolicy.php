@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Enums\PaymentStatus;
 use App\Models\Payment;
 use App\Models\User;
 
