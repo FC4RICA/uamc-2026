@@ -22,11 +22,12 @@
             <div class="row">
                 <div class="col-12 col-lg-6 col-xl-4">
                     <div class="form-group">
-                        <label for="category">ประเภทบทคัดย่อ *</label>
-                        <input id="category" name="category" type="text" class="form-control" disabled
+                        <label>ประเภทบทคัดย่อ *</label>
+                        <input name="category" type="text" class="form-control" disabled
                             value="{{ $user_presentation_type->label() }}">
                         @error('category')
-                            <label for="category" class="error">{{ $message }}</label>
+                            <label
+                             class="error">{{ $message }}</label>
                         @enderror
                     </div>
                 </div>
@@ -35,48 +36,54 @@
             <div class="row">
                 <div class="col-12 col-lg-6 col-xl-4">
                     <div class="form-group">
-                        <label for="category">กลุ่มบทคัดย่อ *</label>
-                        <select id="category" name="category" required
-                            class="form-select @error('category') is-invalid @enderror">
-                            <option value="" selected disabled>เลือก</option>
+                        <label>กลุ่มบทคัดย่อ *</label>
+                        <select name="groups[1]" required
+                            class="form-select @error('groups.1') is-invalid @enderror">
+                            <option value="" disabled @selected(!old('groups.1'))>เลือก</option>
                             @foreach ($groups as $group)
-                                <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                <option value="{{ $group->id }}" @selected($group->id == old('groups.1'))>
+                                    {{ $group->name }}
+                                </option>
                             @endforeach
                         </select>
-                        @error('category')
-                            <label for="category" class="error">{{ $message }}</label>
+                        @error('groups.1')
+                            <label class="error">{{ $message }}</label>
                         @enderror
                     </div>
                 </div>
                 <div class="col-12 col-lg-6 col-xl-4">
                     <div class="form-group">
-                        <label for="category2">กลุ่มบทคัดย่อ (สำรอง 1)</label>
-                        <select id="category2" name="category2"
-                            class="form-select @error('category2') is-invalid @enderror">
-                            <option value="" selected disabled>เลือก (ไม่จำเป็น)</option>
+                        <label>กลุ่มบทคัดย่อ (สำรอง 1)</label>
+                        <select name="groups[2]"
+                            class="form-select @error('groups.2') is-invalid @enderror">
+                            <option value="" disabled @selected(!old('groups.2'))>เลือก (ไม่จำเป็น)</option>
                             <option value="">ไม่เลือก</option>
                             @foreach ($groups as $group)
-                                <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                <option value="{{ $group->id }}" @selected($group->id == old('groups.2'))>
+                                    {{ $group->name }}
+                                </option>
                             @endforeach
                         </select>
-                        @error('category2')
-                            <label for="category2" class="error">{{ $message }}</label>
+                        @error('groups.2')
+                            <label class="error">{{ $message }}</label>
                         @enderror
                     </div>
                 </div>
                 <div class="col-12 col-lg-6 col-xl-4">
                     <div class="form-group">
-                        <label for="category3">กลุ่มบทคัดย่อ (สำรอง 2)</label>
-                        <select id="category3" name="category3"
-                            class="form-select @error('category3') is-invalid @enderror">
-                            <option value="" selected disabled>เลือก (ไม่จำเป็น)</option>
+                        <label>กลุ่มบทคัดย่อ (สำรอง 2)</label>
+                        <select name="groups[3]"
+                            class="form-select @error('groups.3') is-invalid @enderror">
+                            <option value="" disabled @selected(!old('groups.3'))>เลือก (ไม่จำเป็น)</option>
                             <option value="">ไม่เลือก</option>
                             @foreach ($groups as $group)
-                                <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                <option value="{{ $group->id }}" @selected($group->id == old('groups.3'))>
+                                    {{ $group->name }}
+                                </option>
                             @endforeach
                         </select>
-                        @error('category3')
-                            <label for="category3" class="error">{{ $message }}</label>
+                        @error('groups.3')
+                            <label class="error">{{ $message }}</label>
                         @enderror
                     </div>
                 </div>
@@ -86,28 +93,28 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">
-                        <label for="title_th">ชื่อบทคัดย่อภาษาไทย *</label>
-                        <input id="title_th" name="title_th" type="text" placeholder="ภาษาไทย"
+                        <label>ชื่อบทคัดย่อภาษาไทย *</label>
+                        <input name="title_th" type="text" placeholder="ภาษาไทย" value="{{ old('title_th') }}"
                             class="form-control @error('title_th') is-invalid @enderror" required>
                         @error('title_th')
-                            <label for="title_th" class="error">{{ $message }}</label>
+                            <label class="error">{{ $message }}</label>
                         @enderror
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="form-group">
-                        <label for="title_en">ชื่อบทคัดย่อภาษาอังกฤษ *</label>
-                        <input id="title_en" name="title_en" type="text" placeholder="ภาษาอังกฤษ"
+                        <label>ชื่อบทคัดย่อภาษาอังกฤษ *</label>
+                        <input name="title_en" type="text" placeholder="ภาษาอังกฤษ" value="{{ old('title_en') }}"
                             class="form-control @error('title_en') is-invalid @enderror" required>
                         @error('title_en')
-                            <label for="title_en" class="error">{{ $message }}</label>
+                            <label class="error">{{ $message }}</label>
                         @enderror
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="form-group">
                         <label for="keyword">คำสำคัญ (Keyword) *</label>
-                        <input id="keyword" name="keyword" type="text" placeholder="Keyword"
+                        <input id="keyword" name="keyword" type="text" placeholder="Keyword" value="{{ old('keyword') }}"
                             class="form-control @error('keyword') is-invalid @enderror" required>
                         @error('keyword')
                             <label for="keyword" class="error">{{ $message }}</label>
@@ -118,7 +125,7 @@
                     <div class="form-group">
                         <label for="abstract_th">บทคัดย่อภาษาไทย (PDF) *</label>
                         <input type="file" id="abstract_th" name="abstract_th" placeholder="บทคัดย่อภาษาไทย"
-                            class="form-control @error('abstract_th') is-invalid @enderror"
+                            class="form-control @error('abstract_th') is-invalid @enderror" value="{{ old('abstract_th') }}"
                             onchange="onInputFileChangeLabel(this.id, this.value)" required>
                         @error('abstract_th')
                             <label for="abstract_th" class="error">{{ $message }}</label>
@@ -128,7 +135,7 @@
                 <div class="col-12 col-lg-6 col-xl-4">
                     <div class="form-group">
                         <label for="abstract_en">บทคัดย่อภาษาอังกฤษ (PDF) *</label>
-                        <input type="file" id="abstract_en"name="abstract_en"
+                        <input type="file" id="abstract_en"name="abstract_en" value="{{ old('abstract_en') }}"
                             onchange="onInputFileChangeLabel(this.id, this.value)" placeholder="บทคัดย่อภาษาอังกฤษ"
                             class="form-control @error('abstract_en') is-invalid @enderror" required>
                         @error('abstract_en')
@@ -148,11 +155,12 @@
                 @elseif($user->isPoster())
                     <div class="col-12 col-lg-6 col-xl-4">
                         <div class="form-group">
-                            <label for="poster">โปสเตอร์ (PDF) *</label>
-                            <input type="file" class="form-control" id="poster" name="poster"
-                                onchange="onInputFileChangeLabel(this.id, this.value)" placeholder="โปสเตอร์" required />
+                            <label>โปสเตอร์ (PDF) *</label>
+                            <input type="file" name="poster" value="{{ old('poster') }}"
+                                onchange="onInputFileChangeLabel(this.id, this.value)" placeholder="โปสเตอร์" 
+                                class="form-control @error('poster') is-invalid @enderror" required />
                             @error('poster')
-                                <label for="poster" class="error">{{ $message }}</label>
+                                <label class="error">{{ $message }}</label>
                             @enderror
                         </div>
                     </div>
@@ -168,7 +176,7 @@
                 @endif
             </div>
 
-            <hr class="separator">
+            <hr class="separator my-5">
 
             <h3 class="mt-4">ข้อมูลผู้ร่วมผลงาน</h3>
             <div id="participants" class="card mb-4">
@@ -243,7 +251,7 @@
             </div>
 
             <div id="participants-container">
-                @foreach ($participants as $index => $data)
+                @foreach ((old('participants', [])) as $index => $data)
                     <x-participant-form :index="$index" :data="$data" />
                 @endforeach
             </div>

@@ -5,12 +5,13 @@ namespace App\Actions\Payment;
 use App\Contracts\CloudStorage;
 use App\Enums\PaymentStatus;
 use App\Models\Payment;
+use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class UploadPayment
+class CreatePayment
 {
     public function __construct(
         protected CloudStorage $storage
@@ -30,7 +31,7 @@ class UploadPayment
             $accountName,
             $fromBank,
         ) {
-            $user = User::lockForUpdate()->findOrFail($userId);
+            $profile = Profile::where('user_id', $userId)->firstOrFail();
 
             $existing = Payment::where('user_id', $userId)
                 ->where('status', PaymentStatus::SUBMITTED)
@@ -41,12 +42,12 @@ class UploadPayment
                 $existing->update(['status' => PaymentStatus::REPLACED]);
             }
 
-            $payment_id = Str::uuid();
-            $path = "payments/user_{$userId}_{$payment_id}." . $file->extension();
+            $paymentId = (string) Str::uuid();
+            $path = "payments/user_{$profile->firstname}-{$profile->lastname}_{$paymentId}." . $file->extension();
             $driveFileId = $this->storage->upload($path, $file);
 
             $payment = Payment::create([
-                'id' => $payment_id,
+                'id' => $paymentId,
                 'user_id' => $userId,
                 'status' => PaymentStatus::SUBMITTED,
                 'drive_file_id' => $driveFileId,

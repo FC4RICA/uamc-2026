@@ -111,14 +111,19 @@ class User extends Authenticatable
         return $this->profile?->participation_type === ParticipationType::PRESENTER;
     }
 
+    public function presentationType(): PresentationType
+    {
+        return $this->profile?->presentation_type;
+    }
+
     public function isOral(): bool
     {
-        return $this->profile?->presentation_type === PresentationType::ORAL;
+        return $this->presentationType() === PresentationType::ORAL;
     }
 
     public function isPoster(): bool
     {
-        return $this->profile?->presentation_type === PresentationType::POSTER;
+        return $this->presentationType() === PresentationType::POSTER;
     }
 
     public function canSubmitAbstract(): bool
@@ -130,7 +135,7 @@ class User extends Authenticatable
     
     public function submission(): HasOne
     {
-        return $this->hasOne(Submission::class);
+        return $this->hasOne(Submission::class, 'submitted_by', 'id');
     }
 
     public function hasSubmission(): bool

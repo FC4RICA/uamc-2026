@@ -4,9 +4,9 @@ namespace App\Enums;
 
 enum SubmissionFileType: string
 {
-    case ABSTRACT_TH = 'abstract_th_pdf';
-    case ABSTRACT_EN = 'abstract_en_pdf';
-    case POSTER = 'poster_pdf';
+    case ABSTRACT_TH = 'abstract_th';
+    case ABSTRACT_EN = 'abstract_en';
+    case POSTER = 'poster';
 
     public function label(): string
     {

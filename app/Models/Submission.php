@@ -25,8 +25,8 @@ class Submission extends Model
         'id',
         'submitted_by',
         'presentation_type',
-        'titie_th',
-        'titie_en',
+        'title_th',
+        'title_en',
         'keywords',
         'drive_folder_id',
         'status',
@@ -57,8 +57,14 @@ class Submission extends Model
 
     public function abstractGroups(): BelongsToMany
     {
-        return $this->belongsToMany(AbstractGroup::class)
-            ->withPivot('priority')->orderByPivot('priority');
+        return $this->belongsToMany(
+            AbstractGroup::class, 
+            'submission_abstract_groups',
+            'submission_id',
+            'abstract_group_id'
+        )
+        ->withPivot('priority')
+        ->orderByPivot('priority');
     }
 
     public function files()

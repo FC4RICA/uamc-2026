@@ -34,6 +34,7 @@ class SubmissionFile extends Model
         return [
             'type' => SubmissionFileType::class,
             'is_current' => 'boolean',
+            'version' => 'int',
         ];
     }
 }

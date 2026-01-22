@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Payment\UploadPayment;
+use App\Actions\Payment\CreatePayment;
 use App\Contracts\CloudStorage;
 use App\Http\Requests\PaymentRequest;
 use App\Models\Payment;
@@ -27,7 +27,7 @@ class PaymentController extends Controller
 
     public function store(
         PaymentRequest $request, 
-        UploadPayment $action
+        CreatePayment $action
     ): RedirectResponse {
         Gate::authorize('store', Payment::class);
 

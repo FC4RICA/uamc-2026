@@ -7,6 +7,8 @@ use App\Enums\Education;
 use App\Enums\ParticipationType;
 use App\Enums\PresentationType;
 use App\Enums\Title;
+use App\Models\Occupation;
+use App\Models\Organization;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -50,14 +52,28 @@ class CreateNewUser implements CreatesNewUsers
                 ),
                 'nullable',
             ],
-            'organization_id' => ['required'],
+            'organization_id' => [
+                'required',
+                Rule::when(
+                    fn ($value) => $value !== 'other',
+                    Rule::exists(Organization::class, 'id'),
+                    Rule::in(['other'])
+                ),
+            ],
             'organization_other' => [
                 Rule::requiredIf(fn () => ($input['organization_id'] ?? null) === 'other'),
                 'nullable',
                 'string',
                 'max:255',
             ],
-            'occupation_id' => ['required'],
+            'occupation_id' => [
+                'required',
+                Rule::when(
+                    fn ($value) => $value !== 'other',
+                    Rule::exists(Occupation::class, 'id'),
+                    Rule::in(['other'])
+                ),
+            ],
             'occupation_other' => [
                 Rule::requiredIf(fn () => ($input['occupation_id'] ?? null) === 'other'),
                 'nullable',
@@ -101,13 +117,15 @@ class CreateNewUser implements CreatesNewUsers
             'presentation_type.enum' => 'ประเภทการนำเสนอไม่ถูกต้อง',
 
             'organization_id.required' => 'กรุณาเลือกหน่วยงาน / สถานที่ทำงาน',
-
+            'organization_id.exists' => 'หน่วยงานที่เลือกไม่ถูกต้อง',
+            'organization_id.in' => 'หน่วยงานที่เลือกไม่ถูกต้อง',
             'organization_other.required' => 'กรุณาระบุหน่วยงาน / สถานที่ทำงาน',
             'organization_other.string' => 'ชื่อหน่วยงานไม่ถูกต้อง',
             'organization_other.max' => 'ชื่อหน่วยงานยาวเกิน 255 ตัวอักษร',
 
             'occupation_id.required' => 'กรุณาเลือกอาชีพ',
-
+            'occupation_id.exists' => 'อาชีพที่เลือกไม่ถูกต้อง',
+            'occupation_id.in' => 'อาชีพที่เลือกไม่ถูกต้อง',
             'occupation_other.required' => 'กรุณาระบุอาชีพ',
             'occupation_other.string' => 'ชื่ออาชีพไม่ถูกต้อง',
             'occupation_other.max' => 'ชื่ออาชีพยาวเกิน 255 ตัวอักษร',

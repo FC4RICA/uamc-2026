@@ -93,6 +93,9 @@ COPY --from=builder /usr/local/bin/docker-php-ext-* /usr/local/bin/
 # -----------------------------------------------------------
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
+# Override PHP settings (uploads, limits, etc.)
+COPY ./docker/common/php-fpm/php.ini /usr/local/etc/php/conf.d/99-custom.ini
+
 # Enable PHP-FPM status page by modifying www.conf with sed
 # RUN sed -i '/\[www\]/a pm.status_path = /status' /usr/local/etc/php-fpm.d/zz-docker.conf
 RUN sed -i '/\[www\]/a pm.status_path = /status' /usr/local/etc/php-fpm.d/www.conf

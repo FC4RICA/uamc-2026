@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Submission\CreateSubmission;
+use App\Data\SubmissionData;
+use App\Http\Requests\SubmissionRequest;
 use App\Models\AbstractGroup;
 use App\Models\Submission;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -26,13 +30,27 @@ class SubmissionController extends Controller
             compact('user', 'groups', 'user_presentation_type', 'profile', 'participants'));
     }
 
-    public function store(): RedirectResponse
+    public function store(
+        SubmissionRequest $request,
+        CreateSubmission $action,
+    ): RedirectResponse
     {
-        Gate::authorize('store', Submission::class);
+        Gate::authorize('create', Submission::class);
 
-        $user = Auth::user();
+        try {
+            $action->handle(
+                SubmissionData::fromRequest($request)
+            );
 
-        return redirect(route('member.submission.index'));
+            return back()->with('success', 'Created');
+        } catch (QueryException $e) {
+            if ($e->getCode() === '23000') { // duplicate key
+                return back()->withErrors([
+                    'submission' => 'Submission already submitted.',
+                ]);
+            }
+            throw $e;
+        }
     }
 
     public function index(): View

@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Contracts\CloudStorage;
 use Google\Service\Drive\DriveFile;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Log;
 use Psr\Http\Message\StreamInterface;
 
 class GoogleDriveStorage implements CloudStorage
@@ -20,11 +19,24 @@ class GoogleDriveStorage implements CloudStorage
         ?string $mimeType = null,
     ): string {
         [$folderId, $name] = $this->parsePath($path);
-        Log::debug('GoogleDriveStorage.upload parsePath', compact('path', 'folderId', 'name'));
 
+        return $this->uploadToFolder(
+            parentId: $folderId,
+            file: $file,
+            fileName: $name,
+            mimeType: $mimeType,
+        );
+    }
+
+    public function uploadToFolder(
+        string $parentId,
+        UploadedFile $file,
+        string $fileName,
+        ?string $mimeType = null,
+    ): string {
         $driveFile = new DriveFile([
-            'name' => $name,
-            'parents' => [$folderId],
+            'name' => $fileName,
+            'parents' => [$parentId],
         ]);
 
         $created = $this->client->drive()->files->create(
@@ -100,14 +112,17 @@ class GoogleDriveStorage implements CloudStorage
         ];
     }
 
-    public function makeDir(string $name, ?string $parentId = null): string {
-        $file = new DriveFile([
-            'name' => $name,
-            'mimeType' => 'application/vnd.google-apps.folder',
-            'parents' => $parentId ? [$parentId] : [],
-        ]);
+    public function makePath(string $path): string
+    {
+        $segments = array_filter(explode('/', trim($path, '/')));
 
-        return $this->client->drive()->files->create($file)->id;
+        $parentId = config('services.google.folder_id');
+
+        foreach ($segments as $segment) {
+            $parentId = $this->getOrCreateFolder($segment, $parentId);
+        }
+
+        return $parentId;
     }
 
     public function all(string $folderId): array
@@ -154,6 +169,16 @@ class GoogleDriveStorage implements CloudStorage
             return $result->files[0]->id;
         }
 
-        return $this->makeDir($name, $parentId);
+        return $this->createFolder($name, $parentId);
+    }
+
+    protected function createFolder(string $name, ?string $parentId = null): string {
+        $file = new DriveFile([
+            'name' => $name,
+            'mimeType' => 'application/vnd.google-apps.folder',
+            'parents' => $parentId ? [$parentId] : [],
+        ]);
+
+        return $this->client->drive()->files->create($file)->id;
     }
 }

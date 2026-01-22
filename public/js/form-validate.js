@@ -3,10 +3,10 @@ let formvalid = true;
 $(document).ready(function () {
     validateRegis();
     validateLogin();
-    validateEditProfile();
-    validateSubmission();
-    validateEditPaper();
-    adminEditPaper();
+    // validateEditProfile();
+    // validateSubmission();
+    // validateEditPaper();
+    // adminEditPaper();
 });
 
 $.validator.addMethod("notEqual", function (value, element, param) {

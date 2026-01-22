@@ -23,11 +23,6 @@ class SubmissionPolicy
         return $user->canSubmitAbstract();
     }
 
-    public function store(User $user): bool
-    {
-        return $user->canSubmitAbstract();
-    }
-
     /**
      * Determine whether the user can update the model.
      */
