@@ -5,15 +5,15 @@
 
 @section('content')
     <div class="container px-4 py-5 ">
-        <h1 class="text-center">สวัสดี {{ Auth::user()->profile->firstname . ' ' . Auth::user()->profile->lastname }}</h1>
-        @if (Auth::user()->needsPayment())
+        <h1 class="text-center">สวัสดี {{ $user->profile->firstname . ' ' . $user->profile->lastname }}</h1>
+        @if ($user->needsPayment())
             <div class="mt-4 text-danger text-center">
                 <strong>*การลงทะเบียนของคุณยังไม่เสร็จสิ้น กรุณาชำระค่าลงทะเบียนเพื่อเข้าร่วมหรือส่งผลงาน*</strong>
             </div>
         @endif
         <div class="my-5">
             <div class="row ">
-                @if (Auth::user()->canSubmitAbstract())
+                @if ($user->canSubmitAbstract())
                     <div class="col-4 text-center m-auto">
                         <a href="{{ route('member.submission.create') }}">
                             <div class="circle mx-auto">
@@ -23,7 +23,7 @@
                         </a>
                     </div>
                 @endif
-                @if (Auth::user()->hasSubmission())
+                @if ($user->hasSubmission())
                     <div class="col-4 text-center m-auto">
                         <a href="{{ route('member.submission.index') }}">
                             <div class="circle mx-auto">
