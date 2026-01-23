@@ -50,46 +50,7 @@ Route::prefix('member')
         Route::put('/profile', [MemberController::class, 'updateProfile'])
             ->name('profile.update');
 
-        
-
-        // Route::get('/submission/create', [MemberController::class, 'createSubmission'])
-        //     ->name('submission.create');
-
-        // Route::post('/submission', [MemberController::class, 'storeSubmission'])
-        //     ->name('submission.store');
-
-        // Route::get('/submission', [MemberController::class, 'indexSubmission'])
-        //     ->name('submission.index');
-
-        // Route::get('/submission/{id}/edit', [MemberController::class, 'editSubmission'])
-        //     ->name('submission.edit');
-
-        // Route::put('/submission/{id}', [MemberController::class, 'updateSubmission'])
-        //     ->name('submission.update');
-
-        // unused
-        // Route::get('/research/{research}', [MemberController::class, 'editResearch'])
-        //     ->name('research.edit');
-
-        // Route::put('/research/{research}', [MemberController::class, 'updateResearch'])
-        //     ->name('research.update');
-
-        // Route::delete('/research/{research}', [MemberController::class, 'destroyResearch'])
-        //     ->name('research.destroy');
-
-        // Route::resource('member/research', ResearchController::class)
-        //     ->only(['edit', 'update', 'destroy']);
     });
-
-// Route::get('member', 'MemberControl@index');
-// Route::get('member/profile', 'MemberControl@profile');
-// Route::get('member/submission', 'MemberControl@showSubmission');
-// Route::post('member/submission', 'MemberControl@submissionPaper');
-// Route::get('member/check', 'MemberControl@checkSubmission');
-// Route::get('member/edit/{id?}', 'MemberControl@showEditPaper');
-// Route::post('member/edit/{id}', 'MemberControl@editPaper');
-// Route::get('member/delete/{id}', 'MemberControl@deletePaper');
-// Route::post('member/editprofile', 'MemberControl@editProfile');
 
 // // download file -- use direct asset() instead
 // Route::get('download/abstractTH/{id}', 'FileControl@downloadAbstractTH');
