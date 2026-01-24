@@ -30,7 +30,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ route('public.rules') }}"
-                                class="dropdown-item">การส่งผลงานและข้อกำหนดรูปแบบของบทคัดย่อและโปสเตอร์</a></li>
+                                class="dropdown-item">หลักเกณฑ์การลงทะเบียนและส่งบทคัดย่อ</a></li>
                         <li><a href="{{ route('public.templates') }}" class="dropdown-item">Templates
                                 บทคัดย่อและโปสเตอร์</a></li>
                     </ul>
