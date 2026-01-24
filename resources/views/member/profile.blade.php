@@ -13,7 +13,7 @@
             <h2><strong>แก้ไขข้อมูล</strong></h2>
         </div>
         <hr class="separator">
-        <form id="editprofile" name="editprofile" action='{{ route('user-profile-information.update') }}' method="POST">
+        <form id="editprofile" name="editprofile" action="{{ route('member.profile.update') }}" method="POST">
             @csrf
 
             <h3 class="mt-4">ข้อมูลการเข้าใช้งาน</h3>
