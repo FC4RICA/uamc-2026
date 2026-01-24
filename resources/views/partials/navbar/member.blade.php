@@ -11,7 +11,7 @@
         </li>
     @endif
     <li class="nav-item @yield('profile')">
-        <a href="{{ route('member.profile.index') }}" class="nav-link">ข้อมูลส่วนตัว</a>
+        <a href="{{ route('member.profile.edit') }}" class="nav-link">ข้อมูลส่วนตัว</a>
     </li>
     @if (Auth::user()->isPresenter())
         <li class="nav-item @yield('check')">

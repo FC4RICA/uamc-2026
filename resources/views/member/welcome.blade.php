@@ -34,7 +34,7 @@
                     </div>
                 @endif
                 <div class="col-4 text-center m-auto">
-                    <a href="{{ route('member.profile.index') }}">
+                    <a href="{{ route('member.profile.edit') }}">
                         <div class="circle mx-auto text-center">
                             <i class="fas fa-user-edit fa-2x" style="margin-top: 10%;"></i>
                         </div>

@@ -10,7 +10,8 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/pages/register.js',
                 'resources/js/pages/member/payment.js',
-                'resources/js/pages/member/submission.js'
+                'resources/js/pages/member/submission.js',
+                'resources/js/pages/member/profile.js',
             ],
             refresh: true,
         }),

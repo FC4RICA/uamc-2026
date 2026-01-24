@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MemberController;
+use App\Http\Controllers\Member\MemberController;
+use App\Http\Controllers\Member\ProfileController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SubmissionController;
 
@@ -23,7 +24,7 @@ Route::prefix('member')
     ->group(function () {
 
         Route::controller(PaymentController::class)
-        ->prefix('/payment')
+        ->prefix('/payments')
         ->name('payment.')
         ->group(function () {
             Route::get('/create', 'create')->name('create');
@@ -32,7 +33,7 @@ Route::prefix('member')
         });
 
         Route::controller(SubmissionController::class)
-        ->prefix('/submission')
+        ->prefix('/submissions')
         ->name('submission.')
         ->group(function () {
             Route::get('/create', 'create')->name('create');
@@ -41,14 +42,16 @@ Route::prefix('member')
             Route::put('/{submission}', 'update')->name('update');
         });
 
+        Route::controller(ProfileController::class)
+        ->prefix('/profiles')
+        ->name('profile.')
+        ->group(function () {
+            Route::get('/edit', 'edit')->name('edit');
+            Route::put('/{profile}', 'update')->name('update');
+        });
+
         Route::get('/', [MemberController::class, 'index'])
             ->name('index');
-
-        Route::get('/profile', [MemberController::class, 'profile'])
-            ->name('profile.index');
-
-        Route::put('/profile', [MemberController::class, 'updateProfile'])
-            ->name('profile.update');
 
     });
 
