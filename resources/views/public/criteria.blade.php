@@ -127,7 +127,7 @@
                 <tr>
                     <td class="fw-bold">เกณฑ์การพิจารณาตัดสินรางวัลและเกณฑ์การให้คะแนนการนำเสนอ</td>
                     <td>
-                        <a href="{{ asset('file/เกณฑ์การพิจารณาเหรียญรางวัล.pdf') }}" class="text-center">
+                        <a href="{{ asset('file/เกณฑ์การพิจารณาเหรียญรางวัล.pdf') }}" class="btn btn-outline-warning w-100" download>
                             เกณฑ์การพิจารณาเหรียญรางวัล.pdf
                         </a>
                     </td>

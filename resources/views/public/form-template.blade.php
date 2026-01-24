@@ -12,49 +12,22 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th width="40%" class="text-center">Template</th>
-                        <th width="30%" class="text-center">ไฟล์ MS Word</th>
-                        <th width="30%" class="text-center">ไฟล์ PDF</th>
+                        <th width="70%" class="text-center">Template</th>
+                        <th width="30%" class="text-center">ไฟล์</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>
                             <p>
-                                <strong>บทคัดย่อภาษาไทย</strong><br />
-                                <span style="font-size: 1rem;">(Thai abstract)</span>
+                                <strong>บทคัดย่อ</strong><br />
+                                <span style="font-size: 1rem;">(Abstract)</span>
                             </p>
                         </td>
                         <td class="text-center">
-                            <a href="{{ asset('download/template/Abstract_Template_TH_KMUTT.docx') }}"
+                            <a href="{{ asset('file/template/AbstractTemplate_uamc2026.docx') }}"
                                 class="btn btn-outline-warning w-100" download>
-                                ดาวน์โหลด
-                            </a>
-                        </td>
-                        <td class="text-center">
-                            <a href="{{ asset('download/template/Abstract_Template_TH_KMUTT.pdf') }}"
-                                class="btn btn-outline-warning w-100" target="_blank" rel="noopener noreferrer">
-                                ดาวน์โหลด
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>
-                                <strong>บทคัดย่อภาษาอังกฤษ</strong><br />
-                                <span style="font-size: 1rem;">(English abstract)</span>
-                            </p>
-                        </td>
-                        <td class="text-center">
-                            <a href="{{ asset('download/template/Abstract_Template_EN_KMUTT.docx') }}"
-                                class="btn btn-outline-warning w-100" download>
-                                ดาวน์โหลด
-                            </a>
-                        </td>
-                        <td class="text-center">
-                            <a href="{{ asset('download/template/Abstract_Template_EN_KMUTT.pdf') }}"
-                                class="btn btn-outline-warning w-100" target="_blank" rel="noopener noreferrer">
-                                ดาวน์โหลด
+                                ดาวน์โหลดไฟล์ MS Word
                             </a>
                         </td>
                     </tr>
@@ -66,15 +39,9 @@
                             </p>
                         </td>
                         <td class="text-center">
-                            <a href="{{ asset('download/template/ExtendedAbstract_Template.docx') }}"
+                            <a href="{{ asset('file/template/ExtendedAbstractTemplate_uamc2026.docx') }}"
                                 class="btn btn-outline-warning w-100" download>
-                                ดาวน์โหลด
-                            </a>
-                        </td>
-                        <td class="text-center">
-                            <a href="{{ asset('download/template/ExtendedAbstract_Template.pdf') }}"
-                                class="btn btn-outline-warning w-100" target="_blank" rel="noopener noreferrer">
-                                ดาวน์โหลด
+                                ดาวน์โหลดไฟล์ MS Word
                             </a>
                         </td>
                     </tr>
@@ -86,7 +53,7 @@
                             </p>
                         </td>
                         <td class="text-center" colspan="2">
-                            <a href="{{ asset('download/template/Poster_Template.pptx') }}"
+                            <a href="{{ asset('file/template/PosterTemplate_uamc2026.pptx') }}"
                                 class="btn btn-outline-warning w-100" download>
                                 ดาวน์โหลดไฟล์ MS PowerPoint
                             </a>
@@ -95,26 +62,12 @@
                     <tr>
                         <td>
                             <p>
-                                <strong>บทความวิจัยฉบับเต็มภาษาไทย</strong><br />
-                                <span style="font-size: 1rem;">(Thai full text)</span>
+                                <strong>หนังสือรับรองจากอาจารย์ที่ปรึกษา</strong><br />
+                                <span style="font-size: 1rem;">(Letter of Recommendation)</span>
                             </p>
                         </td>
                         <td class="text-center" colspan="2">
-                            <a href="{{ asset('download/template/UAMC2021_fulltext_thai.docx') }}"
-                                class="btn btn-outline-warning w-100" download>
-                                ดาวน์โหลดไฟล์ MS Word
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>
-                                <strong>บทความวิจัยฉบับเต็มภาษาอังกฤษ</strong><br />
-                                <span style="font-size: 1rem;">(English full text)</span>
-                            </p>
-                        </td>
-                        <td class="text-center" colspan="2">
-                            <a href="{{ asset('download/template/UAMC2021_fulltext_eng.docx') }}"
+                            <a href="{{ asset('file/template/หนังสือรับรองจากอาจารย์ที่ปรึกษา.docx') }}"
                                 class="btn btn-outline-warning w-100" download>
                                 ดาวน์โหลดไฟล์ MS Word
                             </a>
