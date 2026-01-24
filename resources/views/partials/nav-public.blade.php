@@ -5,7 +5,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="{{ route('public.home') }}">
-            <img src="{{ asset('img/60year-fsci.png') }} " alt="kmutt-fsci">
+            <img src="{{ asset('img/logo.png') }} " alt="kmutt-fsci">
         </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto m-auto">

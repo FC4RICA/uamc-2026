@@ -1,7 +1,7 @@
 <div id="imgSlide" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="{{ asset('img/banner.jpg') }}" class="d-block w-100" />
+            <img src="{{ asset('img/banner.png') }}" class="d-block w-100" />
         </div>
         <div class="carousel-item">
             <img src="{{ asset('img/slide1-2.jpg') }}" class="d-block w-100" />
