@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('submission_files', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('submission_id')->constrained()->cascadeOnDelete();
-            $table->string('type'); // abstract_th, abstract_en, poster
+            $table->string('type'); // abstract, extended_abstract, poster, lor
             $table->string('drive_file_id');
             $table->string('original_file_name');
             $table->integer('version')->default(1);

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Submission\CreateSubmission;
-use App\Data\SubmissionData;
-use App\Http\Requests\SubmissionRequest;
+use App\Actions\Submission\CreateAbstractSubmission;
+use App\Data\AbstractSubmissionData;
+use App\Http\Requests\AbstractSubmissionRequest;
 use App\Models\AbstractGroup;
 use App\Models\Submission;
 use Illuminate\Database\QueryException;
@@ -31,15 +31,15 @@ class SubmissionController extends Controller
     }
 
     public function store(
-        SubmissionRequest $request,
-        CreateSubmission $action,
+        AbstractSubmissionRequest $request,
+        CreateAbstractSubmission $action,
     ): RedirectResponse
     {
         Gate::authorize('create', Submission::class);
 
         try {
             $action->handle(
-                SubmissionData::fromRequest($request)
+                AbstractSubmissionData::fromRequest($request)
             );
 
             return back()->with('success', 'Created');

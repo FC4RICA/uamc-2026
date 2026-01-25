@@ -3,16 +3,19 @@
 namespace App\Actions\Submission;
 
 use App\Contracts\CloudStorage;
-use App\Data\SubmissionData;
+use App\Data\AbstractSubmissionData;
 use App\Enums\ParticipationType;
 use App\Enums\PresentationType;
+use App\Enums\SubmissionFileType;
 use App\Enums\SubmissionStatus;
 use App\Models\Profile;
 use App\Models\Submission;
 use App\Models\SubmissionFile;
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 /*
 CreateSubmission handle the creation of the submission, participants profile,
@@ -20,42 +23,36 @@ create gdrive submission folder and upload files.
 
 Along with catch to delete a folder if the action is failed.
 */
-class CreateSubmission
+class CreateAbstractSubmission
 {
     public function __construct(
         protected CloudStorage $storage
     ) {}
 
-    public function handle(SubmissionData $data): void
+    public function handle(AbstractSubmissionData $data): void
     {
         $driveFolderId = null;
 
         try {
             $user = User::with('profile')->findOrFail($data->userId);
 
-            $submission = DB::transaction(function () use ($data) {
-                return $this->createSubmission($data);
-            });
+            $submissionId = Str::uuid()->toString();
 
             $folderId = $this->storage->makePath(
-                "submission/user_{$user->profile->firstname}-{$user->profile->lastname}_{$submission->id}"
+                "abstract_submissions/{$user->presentationType()->initial()}_{$user->profile->firstname}-{$user->profile->lastname}_{$submissionId}"
             );
 
-            $uploadedFiles = [];
-            foreach ($data->files as $type => $file) {
-                $uploadedFiles[$type] = $this->storage->uploadToFolder(
-                    parentId: $folderId,
-                    file: $file,
-                    fileName: "{$type}_v1",
-                );
-            }
+            $info = pathinfo($data->abstract->getClientOriginalName());
+            $fileId = $this->storage->uploadToFolder(
+                parentId: $folderId,
+                file: $data->abstract,
+                fileName: $info['filename'] . '_v1.' . $info['extension'],
+            );
 
-            DB::transaction(function () use ($submission, $data, $user, $folderId, $uploadedFiles) {
-                $submission->update([
-                    'drive_folder_id' => $folderId,
-                ]);
+            DB::transaction(function () use ($data, $user, $folderId, $fileId) {
+                $submission = $this->createSubmission($data, $user, $folderId);
 
-                $this->createSubmissionFiles($data->files, $uploadedFiles, $submission->id);
+                $this->createAbstractFile($data->abstract, $fileId, $submission->id);
                 
                 $pivotData = [];
                 foreach ($data->groups as $priority => $groupId) {
@@ -86,29 +83,27 @@ class CreateSubmission
         }
     }
 
-    private function createSubmission(SubmissionData $data): Submission
+    private function createSubmission(AbstractSubmissionData $data, User $user, string $folderId): Submission
     {
-        $profile = Profile::where('user_id', $data->userId)->firstOrFail();
         return Submission::create([
             'submitted_by' => $data->userId,
-            'presentation_type' => $profile->presentation_type,
+            'presentation_type' => $user->presentationType(),
             'title_th' => $data->titleTH,
             'title_en' => $data->titleEN,
             'keywords' => $data->keyword,
             'status' => SubmissionStatus::PENDING,
+            'drive_folder_id' => $folderId,
         ]);
     }
 
-    private function createSubmissionFiles(array $files, array $uploadedFiles, string $submission_id): void
+    private function createAbstractFile(UploadedFile $file, string $drive_file_id, string $submission_id): void
     {
-        foreach ($files as $type => $file) {
-            SubmissionFile::create([
-                'submission_id' => $submission_id,
-                'type' => $type,
-                'drive_file_id' => $uploadedFiles[$type],
-                'original_file_name' => $file->getClientOriginalName(),
-            ]);
-        }
+        SubmissionFile::create([
+            'submission_id' => $submission_id,
+            'type' => SubmissionFileType::ABSTRACT,
+            'drive_file_id' => $drive_file_id,
+            'original_file_name' => $file->getClientOriginalName(),
+        ]);
         return;
     }
 

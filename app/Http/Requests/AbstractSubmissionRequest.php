@@ -10,10 +10,9 @@ use App\Models\Occupation;
 use App\Models\Organization;
 use App\Models\Submission;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class SubmissionRequest extends FormRequest
+class AbstractSubmissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -34,21 +33,13 @@ class SubmissionRequest extends FormRequest
             'groups'     => ['required', 'array'],
             'groups.1'   => ['required', Rule::exists(AbstractGroup::class, 'id')],
             'groups.2'   => ['nullable', Rule::exists(AbstractGroup::class, 'id')],
-            'groups.3'   => ['nullable', Rule::exists(AbstractGroup::class, 'id')],
             'groups.*'   => ['distinct'],
 
             'title_th' => ['required', 'string', 'max:65535'],
             'title_en' => ['required', 'string', 'max:65535'],
             'keyword' => ['required', 'string', 'max:65535'],
 
-            'abstract_th' => ['required', 'file', 'mimes:pdf', 'max:51200'],
-            'abstract_en' => ['required', 'file', 'mimes:pdf', 'max:51200'],
-            'poster' => [
-                Rule::requiredIf(fn () => (Auth::user()->isPoster())),
-                'file',
-                'mimes:pdf',
-                'max:51200'
-            ],
+            'abstract' => ['required', 'file', 'mimes:pdf', 'max:51200'],
 
             'participants.*.firstname' => ['required', 'string', 'max:255'],
             'participants.*.lastname' => ['required', 'string', 'max:255'],
@@ -112,21 +103,10 @@ class SubmissionRequest extends FormRequest
             'keyword.string' => 'คำสำคัญต้องเป็นข้อความ',
             'keyword.max' => 'คำสำคัญยาวเกินกำหนด',
 
-            'abstract_th.required' => 'กรุณาอัปโหลดไฟล์บทคัดย่อภาษาไทย',
-            'abstract_th.file' => 'ไฟล์บทคัดย่อภาษาไทยไม่ถูกต้อง',
-            'abstract_th.mimes' => 'ไฟล์บทคัดย่อภาษาไทยต้องเป็นไฟล์ PDF เท่านั้น',
-            'abstract_th.max' => 'ไฟล์บทคัดย่อภาษาไทยต้องมีขนาดไม่เกิน 50 MB',
-
-            'abstract_en.required' => 'กรุณาอัปโหลดไฟล์บทคัดย่อภาษาอังกฤษ',
-            'abstract_en.file' => 'ไฟล์บทคัดย่อภาษาอังกฤษไม่ถูกต้อง',
-            'abstract_en.mimes' => 'ไฟล์บทคัดย่อภาษาอังกฤษต้องเป็นไฟล์ PDF เท่านั้น',
-            'abstract_en.max' => 'ไฟล์บทคัดย่อภาษาอังกฤษต้องมีขนาดไม่เกิน 50 MB',
-
-            // Poster
-            'poster.required' => 'กรุณาอัปโหลดไฟล์โปสเตอร์',
-            'poster.file' => 'ไฟล์โปสเตอร์ไม่ถูกต้อง',
-            'poster.mimes' => 'ไฟล์โปสเตอร์ต้องเป็นไฟล์ PDF เท่านั้น',
-            'poster.max' => 'ไฟล์โปสเตอร์ต้องมีขนาดไม่เกิน 50 MB',
+            'abstract.required' => 'กรุณาอัปโหลดไฟล์บทคัดย่อ',
+            'abstract.file' => 'ไฟล์บทคัดย่อไม่ถูกต้อง',
+            'abstract.mimes' => 'ไฟล์บทคัดย่อต้องเป็นไฟล์ PDF เท่านั้น',
+            'abstract.max' => 'ไฟล์บทคัดย่อต้องมีขนาดไม่เกิน 50 MB',
 
             // Participants (generic)
             'participants.*.firstname.required' => 'กรุณากรอกชื่อจริงของผู้ร่วมเขียน',

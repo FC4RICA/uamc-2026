@@ -4,16 +4,18 @@ namespace App\Enums;
 
 enum SubmissionFileType: string
 {
-    case ABSTRACT_TH = 'abstract_th';
-    case ABSTRACT_EN = 'abstract_en';
+    case ABSTRACT = 'abstract';
+    case EXTENDED_ABSTRACT = 'extended_abstract';
     case POSTER = 'poster';
+    case RECOMMENDATION_LETTER = ' recommendation_letter';
 
     public function label(): string
     {
         return match ($this) {
-            self::ABSTRACT_TH => 'บทคัดย่อภาษาไทย',
-            self::ABSTRACT_EN => 'บทคัดย่อภาษาอังกฤษ',
+            self::ABSTRACT => 'บทคัดย่อ',
+            self::EXTENDED_ABSTRACT => 'บทคัดย่อแบบขยาย',
             self::POSTER => 'โปสเตอร์',
+            self::RECOMMENDATION_LETTER => 'หนังสือรับรองจากอาจารย์ที่ปรึกษา',
         };
     }
 }

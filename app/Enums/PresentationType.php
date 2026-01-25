@@ -14,4 +14,12 @@ enum PresentationType: int
             self::POSTER => 'นำเสนอแบบโปสเตอร์ (Poster Presentation)',
         };
     }
+
+    public function initial(): string
+    {
+        return match ($this) {
+            self::ORAL => 'O',
+            self::POSTER => 'P',
+        };
+    }
 }

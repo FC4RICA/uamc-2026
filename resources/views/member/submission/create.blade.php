@@ -20,7 +20,7 @@
 
             <h3 class="mt-4">กลุ่มบทคัดย่อ</h3>
             <div class="row">
-                <div class="col-12 col-lg-6 col-xl-4">
+                <div class="col-12 col-lg-6">
                     <div class="form-group">
                         <label>ประเภทบทคัดย่อ *</label>
                         <input name="category" type="text" class="form-control" disabled
@@ -34,9 +34,9 @@
             </div>
 
             <div class="row">
-                <div class="col-12 col-lg-6 col-xl-4">
+                <div class="col-12 col-lg-6">
                     <div class="form-group">
-                        <label>กลุ่มบทคัดย่อ *</label>
+                        <label>สาขาของผลงาน *</label>
                         <select name="groups[1]" required
                             class="form-select @error('groups.1') is-invalid @enderror">
                             <option value="" disabled @selected(!old('groups.1'))>เลือก</option>
@@ -51,9 +51,9 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-12 col-lg-6 col-xl-4">
+                <div class="col-12 col-lg-6">
                     <div class="form-group">
-                        <label>กลุ่มบทคัดย่อ (สำรอง 1)</label>
+                        <label>สาขาของผลงาน (สำรอง)</label>
                         <select name="groups[2]"
                             class="form-select @error('groups.2') is-invalid @enderror">
                             <option value="" disabled @selected(!old('groups.2'))>เลือก (ไม่จำเป็น)</option>
@@ -65,24 +65,6 @@
                             @endforeach
                         </select>
                         @error('groups.2')
-                            <label class="error">{{ $message }}</label>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-12 col-lg-6 col-xl-4">
-                    <div class="form-group">
-                        <label>กลุ่มบทคัดย่อ (สำรอง 2)</label>
-                        <select name="groups[3]"
-                            class="form-select @error('groups.3') is-invalid @enderror">
-                            <option value="" disabled @selected(!old('groups.3'))>เลือก (ไม่จำเป็น)</option>
-                            <option value="">ไม่เลือก</option>
-                            @foreach ($groups as $group)
-                                <option value="{{ $group->id }}" @selected($group->id == old('groups.3'))>
-                                    {{ $group->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('groups.3')
                             <label class="error">{{ $message }}</label>
                         @enderror
                     </div>
@@ -121,62 +103,22 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-12 col-lg-6 col-xl-4">
+                <div class="col-12">
                     <div class="form-group">
-                        <label for="abstract_th">บทคัดย่อภาษาไทย (PDF) *</label>
-                        <input type="file" id="abstract_th" name="abstract_th" placeholder="บทคัดย่อภาษาไทย"
-                            class="form-control @error('abstract_th') is-invalid @enderror" value="{{ old('abstract_th') }}"
+                        <label>บทคัดย่อ (PDF) *</label>
+                        <input type="file" name="abstract" placeholder="O_ชื่อจริง_นามสกุล.pdf หรือ P_ชื่อจริง_นามสกุล.pdf"
+                            class="form-control @error('abstract') is-invalid @enderror" value="{{ old('abstract') }}"
                             onchange="onInputFileChangeLabel(this.id, this.value)" required>
-                        @error('abstract_th')
-                            <label for="abstract_th" class="error">{{ $message }}</label>
+                        @error('abstract')
+                            <label class="error">{{ $message }}</label>
                         @enderror
-                    </div>
-                </div>
-                <div class="col-12 col-lg-6 col-xl-4">
-                    <div class="form-group">
-                        <label for="abstract_en">บทคัดย่อภาษาอังกฤษ (PDF) *</label>
-                        <input type="file" id="abstract_en"name="abstract_en" value="{{ old('abstract_en') }}"
-                            onchange="onInputFileChangeLabel(this.id, this.value)" placeholder="บทคัดย่อภาษาอังกฤษ"
-                            class="form-control @error('abstract_en') is-invalid @enderror" required>
-                        @error('abstract_en')
-                            <label for="abstract_en" class="error">{{ $message }}</label>
-                        @enderror
-                    </div>
-                </div>
-                @if ($user->isOral())
-                    {{-- <div class="row">
-                    <div class="col-12 col-lg-12 col-md-12">
-                        <p class="text-center">
-                            <u>ผลงานที่ผ่านการคัดเลือกต้องส่งวิดีทัศน์ความยาวไม่เกิน 15 นาที <strong>ภายในวันที่ 16 เมษายน พ.ศ.2564</strong><br/>เพื่อสำรองไว้ในกรณีที่มีเหตุขัดข้องระหว่างการนำเสนอจริง</u>
-                        </p>
-                        <p class="text-center">ส่ง VDO นำเสนอผ่าน Google drive link</p>
-                    </div>
-                </div> --}}
-                @elseif($user->isPoster())
-                    <div class="col-12 col-lg-6 col-xl-4">
-                        <div class="form-group">
-                            <label>โปสเตอร์ (PDF) *</label>
-                            <input type="file" name="poster" value="{{ old('poster') }}"
-                                onchange="onInputFileChangeLabel(this.id, this.value)" placeholder="โปสเตอร์" 
-                                class="form-control @error('poster') is-invalid @enderror" required />
-                            @error('poster')
-                                <label class="error">{{ $message }}</label>
-                            @enderror
-                        </div>
                     </div>
 
-                    {{-- <div class="row">
-                    <div class="col-12 col-lg-12 col-md-12">
-                        <p class="text-center">
-                            <u>ผลงานที่ผ่านการคัดเลือกต้องส่งวิดีทัศน์ความยาวไม่เกิน 10 นาที โดยนำเสนอผ่านโปสเตอร์ตัวเอง <strong>ภายในวันที่ 16 เมษายน พ.ศ.2564</strong><br/>เพื่อสำรองไว้ในกรณีที่มีเหตุขัดข้องระหว่างการนำเสนอจริง</u>
-                        </p>
-                        <p class="text-center">ส่ง VDO นำเสนอผ่าน Google drive link</p>
-                    </div>
-                </div> --}}
-                @endif
+                    <p class="fs-6 text-secondary fw-bold">*ตั้งชื่อไฟล์ผลงาน O_ชื่อ_นามสกุล.pdf หรือ P_ชื่อ_นามสกุล.pdf ตามรูปแบบการนําเสนอ*</p>
+                </div>
             </div>
 
-            <hr class="separator my-5">
+            <hr class="separator my-4">
 
             <h3 class="mt-4">ข้อมูลผู้ร่วมผลงาน</h3>
             <div id="participants" class="card mb-4">
