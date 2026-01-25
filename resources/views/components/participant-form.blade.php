@@ -90,7 +90,7 @@
 
         <div class="col-12 col-md-6 form-group">
             <label>อาชีพ *</label>
-            <div class="row g-2">
+            <div class="row g-4">
                 <div class="col-12 col-xl-6">
                     <select name="participants[{{ $index }}][occupation_id]" required
                         data-toggle-select data-target="[data-occupation-other]" data-value="other"
@@ -120,7 +120,7 @@
 
         <div class="col-12 col-md-6 form-group">
             <label>สถานที่ทำงาน/สถาบันการศึกษา/หน่วยงาน *</label>
-            <div class="row g-2">
+            <div class="row g-4">
                 <div class="col-12 col-xl-6">
                     <select name="participants[{{ $index }}][organization_id]" required
                         data-toggle-select data-target="[data-organization-other]" data-value="other"
