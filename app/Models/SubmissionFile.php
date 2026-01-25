@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\SubmissionFileType;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SubmissionFile extends Model
 {
@@ -16,8 +17,8 @@ class SubmissionFile extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'submission_id',
-        'type',
+        'submission_round_id',
+        'file_type',
         'drive_file_id',
         'original_file_name',
         'version',
@@ -32,9 +33,14 @@ class SubmissionFile extends Model
     protected function casts(): array
     {
         return [
-            'type' => SubmissionFileType::class,
+            'file_type' => SubmissionFileType::class,
             'is_current' => 'boolean',
             'version' => 'int',
         ];
+    }
+
+    public function round(): BelongsTo
+    {
+        return $this->belongsTo(SubmissionRound::class, 'submission_round_id');
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[UsePolicy(SubmissionPolicy::class)]
 class Submission extends Model
@@ -67,8 +68,18 @@ class Submission extends Model
         ->orderByPivot('priority');
     }
 
-    public function files()
+    public function rounds(): HasMany
     {
-        return $this->hasMany(SubmissionFile::class);
+        return $this->hasMany(SubmissionRound::class);
+    }
+
+    public function abstractRound(): SubmissionRound
+    {
+        return $this->rounds()->where('round_type', 'abstract')->first();
+    }
+
+    public function finalRound(): SubmissionRound
+    {
+        return $this->rounds()->where('round_type', 'final')->first();
     }
 }

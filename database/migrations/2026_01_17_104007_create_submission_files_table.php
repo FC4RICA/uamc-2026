@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('submission_files', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('submission_id')->constrained()->cascadeOnDelete();
-            $table->string('type'); // abstract, extended_abstract, poster, lor
+            $table->foreignUuid('submission_round_id')->constrained()->cascadeOnDelete();
+            $table->string('file_type'); // abstract, extended_abstract, poster, lor
             $table->string('drive_file_id');
             $table->string('original_file_name');
             $table->integer('version')->default(1);
             $table->boolean('is_current')->default(true);
-            $table->unique(['submission_id', 'type', 'version']);
+            $table->unique(['submission_round_id', 'file_type', 'version']);
             $table->timestamps();
         });
     }

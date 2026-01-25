@@ -12,6 +12,7 @@ use App\Enums\PresentationType;
 use App\Enums\Title;
 use App\Models\Occupation;
 use App\Models\Organization;
+use App\Models\Profile;
 
 class ProfileController extends Controller
 {
@@ -34,7 +35,7 @@ class ProfileController extends Controller
         ));
     }
 
-    public function update()
+    public function update(Profile $profile)
     {
         return;
     }

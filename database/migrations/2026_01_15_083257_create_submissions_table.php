@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('presentation_type');
             $table->text('title_th');
             $table->text('title_en');
-            $table->text('keywords');
+            $table->text('keywords')->nullable();
             $table->string('drive_folder_id')->nullable();
             $table->unsignedSmallInteger('status')->default(SubmissionStatus::PENDING->value);
             $table->timestamps();

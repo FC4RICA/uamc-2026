@@ -7,10 +7,12 @@ use App\Data\AbstractSubmissionData;
 use App\Enums\ParticipationType;
 use App\Enums\PresentationType;
 use App\Enums\SubmissionFileType;
+use App\Enums\SubmissionRoundType;
 use App\Enums\SubmissionStatus;
 use App\Models\Profile;
 use App\Models\Submission;
 use App\Models\SubmissionFile;
+use App\Models\SubmissionRound;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +24,8 @@ CreateSubmission handle the creation of the submission, participants profile,
 create gdrive submission folder and upload files.
 
 Along with catch to delete a folder if the action is failed.
+
+It create a folder and upload file to gdrive first, then store records in db within transaction
 */
 class CreateAbstractSubmission
 {
@@ -52,7 +56,8 @@ class CreateAbstractSubmission
             DB::transaction(function () use ($data, $user, $folderId, $fileId) {
                 $submission = $this->createSubmission($data, $user, $folderId);
 
-                $this->createAbstractFile($data->abstract, $fileId, $submission->id);
+                $abstract_round = $this->createSubmissionAbstractRound($submission);
+                $this->createAbstractFile($data->abstract, $fileId, $abstract_round->id);
                 
                 $pivotData = [];
                 foreach ($data->groups as $priority => $groupId) {
@@ -96,11 +101,19 @@ class CreateAbstractSubmission
         ]);
     }
 
-    private function createAbstractFile(UploadedFile $file, string $drive_file_id, string $submission_id): void
+    private function createSubmissionAbstractRound(Submission $submission): SubmissionRound
+    {
+        return SubmissionRound::create([
+            'submission_id' => $submission->id,
+            'round_type' => SubmissionRoundType::ABSTRACT,
+        ]);
+    }
+
+    private function createAbstractFile(UploadedFile $file, string $drive_file_id, string $submission_round_id): void
     {
         SubmissionFile::create([
-            'submission_id' => $submission_id,
-            'type' => SubmissionFileType::ABSTRACT,
+            'submission_round_id' => $submission_round_id,
+            'file_type' => SubmissionFileType::ABSTRACT,
             'drive_file_id' => $drive_file_id,
             'original_file_name' => $file->getClientOriginalName(),
         ]);
