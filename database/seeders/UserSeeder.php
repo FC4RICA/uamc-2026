@@ -48,35 +48,5 @@ class UserSeeder extends Seeder
                 'organization_id' => 1,
             ]
         );
-
-        // unregistered user
-        $user = User::firstOrCreate(
-            [
-                'email' =>  'test1@example.com',
-            ],
-            [
-                'password' => 'testuser123',
-                'payment_required' => true,
-            ]
-        );
-
-        Profile::firstOrCreate(
-            [
-                'user_id' => $user->id,
-            ],
-            [
-                'created_by' => $user->id,
-                'firstname' => 'Test',
-                'lastname' => 'User',
-                'phone' => '0123456789',
-                'title' => Title::MR,
-                'academic_title' => AcademicTitle::NONE,
-                'education' => Education::BACHELOR,
-                'participation_type' => ParticipationType::PRESENTER,
-                'presentation_type' => PresentationType::ORAL,
-                'occupation_id' => 1,
-                'organization_other' => 'Other Uni',
-            ]
-        );
     }
 }
