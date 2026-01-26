@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             OccupationSeeder::class,
             OrganizationSeeder::class,
             AbstractGroupSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            SettingSeeder::class,
         ]);
     }
 }

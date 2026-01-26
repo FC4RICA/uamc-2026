@@ -11,9 +11,11 @@ use App\Models\Occupation;
 use App\Models\Organization;
 use App\Models\Profile;
 use App\Models\User;
+use App\Services\AccessControl;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 
 class CreateNewUser implements CreatesNewUsers
@@ -27,6 +29,12 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input): User
     {
+        if (!AccessControl::registrationOpen()) {
+            throw ValidationException::withMessages([
+                'message' => 'Registration is currently closed.',
+            ]);
+        }
+
         Validator::make($input, [
             'firstname' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],

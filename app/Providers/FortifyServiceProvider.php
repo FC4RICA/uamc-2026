@@ -13,6 +13,7 @@ use App\Enums\PresentationType;
 use App\Enums\Title;
 use App\Models\Occupation;
 use App\Models\Organization;
+use App\Services\AccessControl;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -41,6 +42,10 @@ class FortifyServiceProvider extends ServiceProvider
         });
         
         Fortify::registerView(function () {
+            if (!AccessControl::registrationOpen()) {
+                abort(404);
+            }
+
             $titles = Title::cases();
             $academicTitles = AcademicTitle::cases();
             $education = Education::cases();

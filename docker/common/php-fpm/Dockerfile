@@ -32,6 +32,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Set the working directory inside the container
 WORKDIR /var/www
 
+# Prevent Laravel from touching the database during build
+# ENV CACHE_STORE=array \
+#     SESSION_DRIVER=array \
+#     QUEUE_CONNECTION=sync
+
 # Copy the entire Laravel application code into the container
 # -----------------------------------------------------------
 # In Laravel, the `composer install` command often triggers

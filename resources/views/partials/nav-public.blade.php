@@ -43,8 +43,10 @@
                     @if (Auth::user())
                         <a href="{{ route('member.index') }}" class="nav-link"><strong>หน้าสมาชิก</strong></a>
                     @else
-                        <a href="{{ route('register') }}"
+                        @registrationOpen
+                             <a href="{{ route('register') }}"
                             class="nav-link @yield('register')"><strong>ลงทะเบียน</strong></a>
+                        @endregistrationOpen
                     @endif
                 </li>
             </ul>

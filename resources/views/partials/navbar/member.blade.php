@@ -20,12 +20,14 @@
                 ตรวจสอบการส่งบทคัดย่อ และผลการพิจารณา
             </a>
         </li>
-        <li class="nav-item @yield('submission')">
-            <a href="{{ route('member.submission.create') }}"
-                class="nav-link {{ Auth::user()->canSubmitAbstract() ?: 'disabled' }}">
-                ส่งบทคัดย่อ
-            </a>
-        </li>
+        @abstractSubmissionOpen
+            <li class="nav-item @yield('submission')">
+                <a href="{{ route('member.submission.create') }}"
+                    class="nav-link {{ Auth::user()->canSubmitAbstract() ?: 'disabled' }}">
+                    ส่งบทคัดย่อ
+                </a>
+            </li>
+        @endabstractSubmissionOpen
     @endif
     <li>
         <hr class="text-white">
