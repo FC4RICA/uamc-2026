@@ -43,7 +43,7 @@ class CreateAbstractSubmission
             $submissionId = Str::uuid()->toString();
 
             $folderId = $this->storage->makePath(
-                "abstract_submissions/{$user->presentationType()->initial()}_{$user->profile->firstname}-{$user->profile->lastname}_{$submissionId}"
+                "submissions/{$user->presentationType()->initial()}_{$user->profile->firstname}-{$user->profile->lastname}_{$submissionId}"
             );
 
             $info = pathinfo($data->abstract->getClientOriginalName());
