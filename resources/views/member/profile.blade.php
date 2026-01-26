@@ -13,19 +13,19 @@
             <h2><strong>แก้ไขข้อมูล</strong></h2>
         </div>
         <hr class="separator">
-        <form id="editprofile" name="editprofile" action="{{ route('member.profile.update', $profile) }}" method="POST">
+        <form id="editprofile" name="editprofile" action="{{ route('member.profile.update') }}" method="POST">
             @csrf
             @method('PUT')
-            <h3 class="mt-4">ข้อมูลการเข้าใช้งาน</h3>
+            {{-- <h3 class="mt-4">ข้อมูลการเข้าใช้งาน</h3>
             <div class="form-group">
                 <label>อีเมล</label>
-                <input name="email" value="{{ old('email', $user->email) }}" type="email"
+                <input name="email" value="{{ $user->email }}" type="email"
                     class="form-control @error('email') is-invalid @enderror"
                     required>
                 @error('email')
                     <label class="error">{{ $message }}</label>
                 @enderror
-            </div>
+            </div> --}}
 
             <h3 class="mt-4">ข้อมูลส่วนตัว</h3>
             <div class="row">
@@ -35,7 +35,7 @@
                         class="form-select @error('title') is-invalid @enderror">
                         @foreach ($titles as $title)
                             <option value="{{ $title->value }}" 
-                                @selected($title->value == old('title', $profile->title))>
+                                @selected($title->value == $profile->title->value)>
                                 {{ $title->label() }}
                             </option>
                         @endforeach
@@ -50,7 +50,7 @@
                         class="form-select @error('academic_title') is-invalid @enderror" required>
                         @foreach ($academicTitles as $title)
                             <option value="{{ $title->value }}" 
-                                @selected($title->value == old('academic_title', $profile->academic_title->value))>
+                                @selected($title->value == $profile->academic_title->value)>
                                 {{ $title->label() }}
                             </option>
                         @endforeach
@@ -63,7 +63,7 @@
             <div class="row">
                 <div class="col-12 col-lg-6 form-group">
                     <label>ชื่อ</label>
-                    <input name="firstname" value="{{ old('firstname', $profile->firstname) }}" type="text" 
+                    <input name="firstname" value="{{ $profile->firstname }}" type="text" 
                         class="form-control @error('firstname') is-invalid @enderror"  required>
                     @error('firstname')
                         <label class="error">{{ $message }}</label>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="col-12 col-lg-6 form-group">
                     <label>นามสกุล</label>
-                    <input name="lastname" value="{{ old('lastname', $profile->lastname) }}" type="text"
+                    <input name="lastname" value="{{ $profile->lastname }}" type="text"
                         class="form-control @error('lastname') is-invalid @enderror" required>
                     @error('lastname')
                         <label class="error">{{ $message }}</label>
@@ -87,7 +87,7 @@
                         class="form-select @error('education') is-invalid @enderror" >
                         @foreach ($education as $ed)
                             <option value="{{ $ed->value }}" 
-                                @selected($ed->value == old('education', $profile->education->value))>
+                                @selected($ed->value == $profile->education->value)>
                                 {{ $ed->label() }}
                             </option>
                         @endforeach
@@ -98,7 +98,7 @@
                 </div>
                 <div class="col-12 col-lg-6 form-group">
                     <label>เบอร์โทร</label>
-                    <input name="phone" value="{{ old('phone', $profile->phone) }}" type="tel" required
+                    <input name="phone" value="{{ $profile->phone }}" type="tel" required
                         class="form-control @error('phone') is-invalid @enderror" placeholder="เบอร์โทร">
                     @error('phone')
                         <label class="error">{{ $message }}</label>
@@ -113,7 +113,7 @@
                         data-toggle-select data-target="[data-occupation-other]" data-value="other">
                         @foreach ($occupations as $ocu)
                             <option value="{{ $ocu->id }}" 
-                                @selected($ocu->id == old('occupation_id', $profile->organization_id))>
+                                @selected($ocu->id == $profile->organization_id)>
                                 {{ $ocu->name }}
                             </option>
                         @endforeach
@@ -124,7 +124,7 @@
                     @enderror
                 </div>
                 <div class="col-12 col-lg-6 form-group">
-                    <input name="occupation_other" value="{{ old('occupation_other', $profile->occupation_other) }}"
+                    <input name="occupation_other" value="{{ $profile->occupation_other }}"
                         type="text" class="form-control @error('occupation_other') is-invalid @enderror"
                         placeholder="กรอกอาชีพของคุณ" data-occupation-other>
                     @error('occupation_other')
@@ -141,7 +141,7 @@
                         class="form-select @error('organization_id') is-invalid @enderror" 
                         data-toggle-select data-target="[data-organization-other]" >
                         @foreach ($organizations as $org)
-                            <option value="{{ $org->id }}" @selected($org->id == old('organization_id', $profile->organization_id))>
+                            <option value="{{ $org->id }}" @selected($org->id == $profile->organization_id)>
                                 {{ $org->name }}
                             </option>
                         @endforeach
@@ -153,7 +153,7 @@
                 </div>
                 <div class="col-12 col-lg-6 form-group">
                     <input name="organization_other"
-                        value="{{ old('organization_other', $profile->organization_other) }}" type="text"
+                        value="{{ $profile->organization_other }}" type="text"
                         class="form-control @error('organization_other') is-invalid @enderror"
                         placeholder="กรอกสถานที่ทำงานของคุณ" data-organization-other>
                     @error('organization_other')
@@ -166,10 +166,11 @@
                     <label>ประเภทการเข้าร่วม</label>
                     <select name="participation_type" data-target="[data-presentation-type]"
                         class="form-select @error('participation_type') is-invalid @enderror"
-                        required data-toggle-select data-value="{{ ParticipationType::PRESENTER->value }}">
+                        required data-toggle-select data-value="{{ ParticipationType::PRESENTER->value }}"
+                        @disabled($user->hasSubmission())>
                         @foreach ($participationType as $role)
                             <option value="{{ $role->value }}" 
-                                @selected($role->value == old('participation_type', $profile->participation_type->value))>
+                                @selected($role->value == $profile->participation_type->value)>
                                 {{ $role->label() }}
                             </option>
                         @endforeach
@@ -182,10 +183,11 @@
                     <label data-presentation-type-label>ประเภทการนำเสนอ</label>
                     <select name="presentation_type" data-presentation-type
                         class="form-select @error('presentation_type') is-invalid @enderror"
-                        data-label="[data-presentation-type-label]">
+                        data-label="[data-presentation-type-label]"
+                        @disabled($user->hasSubmission())>
                         @foreach ($presentationType as $type)
                             <option value="{{ $type->value }}"
-                                @selected($type == old('presentation_type', $profile->presentation_type->value))>
+                                @selected($type == $profile->presentation_type->value)>
                                 {{ $type->label() }}
                             </option>
                         @endforeach
@@ -194,13 +196,18 @@
                         <label class="error">{{ $message }}</label>
                     @enderror
                 </div>
+                @if ($user->hasSubmission())
+                    <div class="col-12 fs-6 text-danger fw-bold mb-4">
+                        *ไม่สามารถแก้ไขได้ระหว่างการส่งบทคัดย่อ กรุณายกเลิกการส่งบทคัดย่อเพื่อแก้ไข*
+                    </div>
+                @endif
             </div>
             <div class="row">
                 <div class="col-12 col-lg-6 form-group">
                     <label>
                         ข้อจำกัดด้านอาหาร / ข้อมูลสุขภาพที่ควรทราบ (ถ้ามี)
                     </label>
-                    <input name="special_requirements" value="{{ old('special_requirements', $profile->special_requirements) }}"
+                    <input name="special_requirements" value="{{ $profile->special_requirements }}"
                         class="form-control @error('special_requirements') is-invalid @enderror"
                         placeholder="เช่น มังสวิรัติ, ฮาลาล, แพ้ถั่ว, เบาหวาน" type="text">
                     @error('special_requirements')
@@ -209,7 +216,7 @@
                 </div>
             </div>
 
-            <h3  class="mt-4">ระบุรหัสผ่านเพื่อเปลี่ยนแปลงข้อมูล</h3>
+            {{-- <h3  class="mt-4">ระบุรหัสผ่านเพื่อเปลี่ยนแปลงข้อมูล</h3>
             <div class="form-group">
                 <label for="password">รหัสผ่าน</label>
                 <input id="password" name="password" type="password" class="form-control" placeholder="รหัสผ่าน"
@@ -219,9 +226,9 @@
                 <label for="confirmpassword">ยืนยันรหัสผ่าน</label>
                 <input id="confirmpassword" name="confirmpassword" type="password" class="form-control"
                     placeholder="รหัสผ่าน" require>
-            </div>
+            </div> --}}
 
-            <div class="text-center">
+            <div class="text-center mt-4">
                 <div class="form-group">
                     <button class="btn btn-warning" type="submit">แก้ไขข้อมูล</button>
                     <button class="btn btn-danger" type="reset">ยกเลิกการแก้ไข</button>

@@ -10,9 +10,9 @@ use App\Enums\Education;
 use App\Enums\ParticipationType;
 use App\Enums\PresentationType;
 use App\Enums\Title;
+use App\Http\Requests\ProfileRequest;
 use App\Models\Occupation;
 use App\Models\Organization;
-use App\Models\Profile;
 
 class ProfileController extends Controller
 {
@@ -35,8 +35,10 @@ class ProfileController extends Controller
         ));
     }
 
-    public function update(Profile $profile)
+    public function update(ProfileRequest $request)
     {
-        return;
+        Auth::user()->profile->update($request->validated());
+
+        return back()->with('status', 'Profile updated successfully.');
     }
 }
