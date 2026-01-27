@@ -1,17 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Member;
 
 use App\Actions\Submission\CreateAbstractSubmission;
+use App\Contracts\CloudStorage;
 use App\Data\AbstractSubmissionData;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\AbstractSubmissionRequest;
 use App\Models\AbstractGroup;
 use App\Models\Submission;
+use App\Models\SubmissionFile;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\View\View as View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Illuminate\View\View;
 
 class SubmissionController extends Controller
 {
@@ -53,12 +57,45 @@ class SubmissionController extends Controller
         }
     }
 
-    public function index(): View
+    public function edit(): View
     {
-        Gate::authorize('index', Submission::class);
-
         $user = Auth::user();
+        $profile = $user->profile;
+        $groups = AbstractGroup::all();
+        $submission = $user->submission;
 
-        return view('member.submission', compact('user'));
+        return view(
+            'member.submission.edit',
+            compact('user', 'groups', 'profile', 'submission')
+        );
+    }
+
+    public function update(): RedirectResponse
+    {
+        return back()->with('status', 'Submission updated successfully.');
+    }
+
+    public function delete(): RedirectResponse
+    {
+        return redirect(route('member.index'));
+    }
+
+    public function fileDownload(
+        SubmissionFile $file,
+        CloudStorage $storage
+    ): StreamedResponse
+    {
+        Gate::authorize('download', $file);
+
+        $stream = $storage->download($file->drive_file_id);
+
+        return response()->streamDownload(
+            function () use ($stream) {
+                while (!$stream->eof()) {
+                    echo $stream->read(8192);
+                }
+            },
+            $file->original_file_name
+        );
     }
 }

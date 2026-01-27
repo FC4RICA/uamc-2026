@@ -53,7 +53,10 @@ class Submission extends Model
 
     public function profiles(): BelongsToMany
     {
-        return $this->belongsToMany(Profile::class, 'submission_profiles');
+        return $this->belongsToMany(
+            Profile::class,
+            'submission_profiles'
+        );
     }
 
     public function abstractGroups(): BelongsToMany
@@ -70,7 +73,9 @@ class Submission extends Model
 
     public function rounds(): HasMany
     {
-        return $this->hasMany(SubmissionRound::class);
+        return $this->hasMany(
+            SubmissionRound::class,
+        );
     }
 
     public function abstractRound(): SubmissionRound
@@ -78,8 +83,13 @@ class Submission extends Model
         return $this->rounds()->where('round_type', 'abstract')->first();
     }
 
-    public function finalRound(): SubmissionRound
+    public function finalRound(): ?SubmissionRound
     {
         return $this->rounds()->where('round_type', 'final')->first();
+    }
+
+    public function abstractFiles(): HasMany
+    {
+        return $this->abstractRound()->files()->orderBy('version');
     }
 }

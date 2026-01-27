@@ -4,8 +4,8 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Member\ProfileController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\SubmissionController;
+use App\Http\Controllers\Member\SubmissionController;
+use App\Http\Controllers\Member\PaymentController;
 
 Route::name('public.')
     ->group(function () {
@@ -38,8 +38,9 @@ Route::prefix('member')
         ->group(function () {
             Route::get('/create', 'create')->name('create');
             Route::post('/', 'store')->name('store');
-            Route::get('/index', 'index')->name('index');
-            Route::put('/{submission}', 'update')->name('update');
+            Route::get('/edit', 'edit')->name('edit');
+            Route::put('/', 'update')->name('update');
+            Route::get('/file/{file}/download', 'fileDownload')->name('file.download');
         });
 
         Route::controller(ProfileController::class)

@@ -25,7 +25,7 @@
                 @endif
                 @if ($user->hasSubmission())
                     <div class="col-4 text-center m-auto">
-                        <a href="{{ route('member.submission.index') }}">
+                        <a href="{{ route('member.submission.edit') }}">
                             <div class="circle mx-auto">
                                 <i class="fas fa-clipboard-check fa-2x" style="margin-top: 10%;"></i>
                             </div>

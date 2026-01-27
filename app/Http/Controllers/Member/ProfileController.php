@@ -13,6 +13,7 @@ use App\Enums\Title;
 use App\Http\Requests\ProfileRequest;
 use App\Models\Occupation;
 use App\Models\Organization;
+use Illuminate\Http\RedirectResponse;
 
 class ProfileController extends Controller
 {
@@ -35,7 +36,7 @@ class ProfileController extends Controller
         ));
     }
 
-    public function update(ProfileRequest $request)
+    public function update(ProfileRequest $request): RedirectResponse
     {
         Auth::user()->profile->update($request->validated());
 

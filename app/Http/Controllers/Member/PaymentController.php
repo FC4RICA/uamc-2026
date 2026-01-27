@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Member;
 
 use App\Actions\Payment\CreatePayment;
 use App\Contracts\CloudStorage;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\PaymentRequest;
 use App\Models\Payment;
 use Illuminate\Database\QueryException;

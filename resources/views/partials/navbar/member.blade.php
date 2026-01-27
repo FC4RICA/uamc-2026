@@ -15,7 +15,7 @@
     </li>
     @if (Auth::user()->isPresenter())
         <li class="nav-item @yield('check')">
-            <a href="{{ route('member.submission.index') }}" disabled
+            <a href="{{ route('member.submission.edit') }}" disabled
                 class="nav-link {{ Auth::user()->hasSubmission() ?: 'disabled' }}">
                 ตรวจสอบการส่งบทคัดย่อ และผลการพิจารณา
             </a>

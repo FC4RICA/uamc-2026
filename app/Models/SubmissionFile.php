@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use App\Enums\SubmissionFileType;
+use App\Policies\SubmissionFilePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 
+#[UsePolicy(SubmissionFilePolicy::class)]
 class SubmissionFile extends Model
 {
     use HasUuids;
@@ -39,8 +42,15 @@ class SubmissionFile extends Model
         ];
     }
 
-    public function round(): BelongsTo
+    public function submissionRound(): BelongsTo
     {
-        return $this->belongsTo(SubmissionRound::class, 'submission_round_id');
+        return $this->belongsTo(SubmissionRound::class);
+    }
+
+    public function ownerId(): string
+    {
+        return $this->submissionRound
+            ->submission
+            ->submitted_by;
     }
 }
