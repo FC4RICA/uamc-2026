@@ -49,14 +49,7 @@ class AbstractSubmissionRequest extends FormRequest
             'participants.*.academic_title' => ['required', Rule::enum(AcademicTitle::class)],
             'participants.*.education' => ['required', Rule::enum(Education::class)],
 
-            'participants.*.organization_id' => [
-                'required',
-                Rule::when(
-                    fn ($value) => $value !== 'other',
-                    Rule::exists(Organization::class, 'id'),
-                    Rule::in(['other'])
-                ),
-            ],
+            'participants.*.organization_id' => ['required'],
             'participants.*.organization_other' => [
                 'required_if:participants.*.organization_id,other',
                 'nullable',
@@ -64,14 +57,7 @@ class AbstractSubmissionRequest extends FormRequest
                 'max:255',
             ],
 
-            'participants.*.occupation_id' => [
-                'required',
-                Rule::when(
-                    fn ($value) => $value !== 'other',
-                    Rule::exists(Occupation::class, 'id'),
-                    Rule::in(['other'])
-                ),
-            ],
+            'participants.*.occupation_id' => ['required'],
             'participants.*.occupation_other' => [
                 'required_if:participants.*.occupation_id,other',
                 'nullable',
@@ -156,4 +142,38 @@ class AbstractSubmissionRequest extends FormRequest
         ];
     }
 
+    public function withValidator($validator)
+    {
+        $validator->sometimes(
+            'participants.*.organization_id',
+            Rule::exists(Organization::class, 'id'),
+            function ($input, $item) {
+                return is_numeric($item);
+            }
+        );
+
+        $validator->sometimes(
+            'participants.*.organization_id',
+            Rule::in(['other']),
+            function ($input, $item) {
+                return $item === 'other';
+            }
+        );
+
+        $validator->sometimes(
+            'participants.*.occupation_id',
+            Rule::exists(Occupation::class, 'id'),
+            function ($input, $item) {
+                return is_numeric($item);
+            }
+        );
+
+        $validator->sometimes(
+            'participants.*.occupation_id',
+            Rule::in(['other']),
+            function ($input, $item) {
+                return $item === 'other';
+            }
+        );
+    }
 }

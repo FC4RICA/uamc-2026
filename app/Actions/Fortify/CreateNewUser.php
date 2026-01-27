@@ -22,11 +22,6 @@ class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules;
 
-    /**
-     * Validate and create a newly registered user.
-     *
-     * @param  array<string, string>  $input
-     */
     public function create(array $input): User
     {
         if (!AccessControl::registrationOpen()) {
@@ -35,7 +30,63 @@ class CreateNewUser implements CreatesNewUsers
             ]);
         }
 
-        Validator::make($input, [
+        $rules = $this->rules($input);
+
+        if (($input['organization_id'] ?? null) === 'other') {
+            $rules['organization_id'][] = Rule::in(['other']);
+        } else {
+            $rules['organization_id'][] = Rule::exists(Organization::class, 'id');
+        }
+
+        if (($input['occupation_id'] ?? null) === 'other') {
+            $rules['occupation_id'][] = Rule::in(['other']);
+        } else {
+            $rules['occupation_id'][] = Rule::exists(Occupation::class, 'id');
+        }
+
+        Validator::make(
+            $input,
+            $rules,
+            $this->messages(),
+        )->validate();
+
+        $user = User::create([
+            'email' => $input['email'],
+            'password' => Hash::make($input['password']),
+            'payment_required' => $input['organization_id'] === 'other',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user->id,
+            'firstname' => $input['firstname'],
+            'lastname' => $input['lastname'],
+            'phone' => $input['phone'],
+            'special_requirements' => $input['special_requirements'],
+            'title' => $input['title'],
+            'academic_title' => $input['academic_title'],
+            'education' => $input['education'],
+            'participation_type' => $input['participation_type'],
+            'presentation_type' => $input['participation_type'] == ParticipationType::PRESENTER->value ? 
+                $input['presentation_type'] : null,
+            'organization_id' => $input['organization_id'] === 'other' ? 
+                null : (int)$input['organization_id'] ,
+            'organization_other' => $input['organization_id'] === 'other' ? 
+                $input['organization_other'] : null,
+            'occupation_id' => $input['occupation_id'] === 'other' ? 
+                null : (int)$input['occupation_id'],
+            'occupation_other' => $input['occupation_id'] === 'other' ? 
+                $input['occupation_other'] : null,
+            'created_by' => $user->id,
+        ]);
+
+        return $user;
+    }
+
+    private function rules(array $input): array
+    {
+        $isPresenter = ($input['participation_type'] ?? null) == ParticipationType::PRESENTER->value;
+
+        return [
             'firstname' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
             'email' => [
@@ -53,20 +104,15 @@ class CreateNewUser implements CreatesNewUsers
             'education' => ['required', Rule::enum(Education::class)],
             'participation_type' => ['required', Rule::enum(ParticipationType::class)],
             'presentation_type' => [
-                Rule::requiredIf(fn () => ($input['participation_type'] ?? null) == ParticipationType::PRESENTER->value),
+                Rule::requiredIf($isPresenter),
                 Rule::when(
-                    ($input['participation_type'] ?? null) == ParticipationType::PRESENTER->value, 
+                    $isPresenter, 
                     Rule::enum(PresentationType::class)
                 ),
                 'nullable',
             ],
             'organization_id' => [
                 'required',
-                Rule::when(
-                    fn ($value) => $value !== 'other',
-                    Rule::exists(Organization::class, 'id'),
-                    Rule::in(['other'])
-                ),
             ],
             'organization_other' => [
                 Rule::requiredIf(fn () => ($input['organization_id'] ?? null) === 'other'),
@@ -76,11 +122,6 @@ class CreateNewUser implements CreatesNewUsers
             ],
             'occupation_id' => [
                 'required',
-                Rule::when(
-                    fn ($value) => $value !== 'other',
-                    Rule::exists(Occupation::class, 'id'),
-                    Rule::in(['other'])
-                ),
             ],
             'occupation_other' => [
                 Rule::requiredIf(fn () => ($input['occupation_id'] ?? null) === 'other'),
@@ -88,8 +129,12 @@ class CreateNewUser implements CreatesNewUsers
                 'string',
                 'max:255',
             ],
-        ],
-        [
+        ];
+    }
+
+    private function messages(): array
+    {
+        return [
             'firstname.required' => 'กรุณากรอกชื่อ',
             'firstname.max' => 'ชื่อยาวเกิน 255 ตัวอักษร',
 
@@ -137,38 +182,6 @@ class CreateNewUser implements CreatesNewUsers
             'occupation_other.required' => 'กรุณาระบุอาชีพ',
             'occupation_other.string' => 'ชื่ออาชีพไม่ถูกต้อง',
             'occupation_other.max' => 'ชื่ออาชีพยาวเกิน 255 ตัวอักษร',
-        ]
-        )->validate();
-
-        $user = User::create([
-            'email' => $input['email'],
-            'password' => Hash::make($input['password']),
-            'payment_required' => $input['organization_id'] === 'other',
-        ]);
-        
-        Profile::create([
-            'user_id' => $user->id,
-            'firstname' => $input['firstname'],
-            'lastname' => $input['lastname'],
-            'phone' => $input['phone'],
-            'special_requirements' => $input['special_requirements'],
-            'title' => $input['title'],
-            'academic_title' => $input['academic_title'],
-            'education' => $input['education'],
-            'participation_type' => $input['participation_type'],
-            'presentation_type' => $input['participation_type'] == ParticipationType::PRESENTER->value ? 
-                $input['participation_type'] : null,
-            'organization_id' => $input['organization_id'] === 'other' ? 
-                null : (int)$input['organization_id'] ,
-            'organization_other' => $input['organization_id'] === 'other' ? 
-                $input['organization_other'] : null,
-            'occupation_id' => $input['occupation_id'] === 'other' ? 
-                null : (int)$input['occupation_id'],
-            'occupation_other' => $input['occupation_id'] === 'other' ? 
-                $input['occupation_other'] : null,
-            'created_by' => $user->id,
-        ]);
-
-        return $user;
+        ];
     }
 }
