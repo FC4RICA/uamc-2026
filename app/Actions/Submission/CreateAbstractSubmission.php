@@ -75,7 +75,7 @@ class CreateAbstractSubmission
         } catch (\Throwable $e) {
             if ($driveFolderId) {
                 try {
-                    // $this->storage->delete($driveFolderId);
+                    $this->storage->delete($driveFolderId);
                 } catch (\Throwable $cleanupError) {
                     Log::error('Failed to cleanup Drive folder', [
                         'folder_id' => $driveFolderId,
@@ -95,7 +95,7 @@ class CreateAbstractSubmission
             'presentation_type' => $user->presentationType(),
             'title_th' => $data->titleTH,
             'title_en' => $data->titleEN,
-            'keywords' => $data->keyword,
+            'keywords' => $data->keywords,
             'status' => SubmissionStatus::PENDING,
             'drive_folder_id' => $folderId,
         ]);

@@ -22,6 +22,8 @@ interface CloudStorage
 
     public function getFileInfo(string $fileId): array;
 
+    public function delete(string $fileId): void;
+
     public function download(string $fileId): StreamInterface;
 
     public function makePath(string $path): string;
