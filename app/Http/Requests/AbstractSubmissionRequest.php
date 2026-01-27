@@ -37,7 +37,7 @@ class AbstractSubmissionRequest extends FormRequest
 
             'title_th' => ['required', 'string', 'max:65535'],
             'title_en' => ['required', 'string', 'max:65535'],
-            'keyword' => ['required', 'string', 'max:65535'],
+            'keywords' => ['required', 'string', 'max:65535'],
 
             'abstract' => ['required', 'file', 'mimes:pdf', 'max:51200'],
 
@@ -99,9 +99,9 @@ class AbstractSubmissionRequest extends FormRequest
             'title_en.string' => 'ชื่อบทคัดย่อภาษาอังกฤษต้องเป็นข้อความ',
             'title_en.max' => 'ชื่อบทคัดย่อภาษาอังกฤษยาวเกินกำหนด',
 
-            'keyword.required' => 'กรุณากรอกคำสำคัญ',
-            'keyword.string' => 'คำสำคัญต้องเป็นข้อความ',
-            'keyword.max' => 'คำสำคัญยาวเกินกำหนด',
+            'keywords.required' => 'กรุณากรอกคำสำคัญ',
+            'keywords.string' => 'คำสำคัญต้องเป็นข้อความ',
+            'keywords.max' => 'คำสำคัญยาวเกินกำหนด',
 
             'abstract.required' => 'กรุณาอัปโหลดไฟล์บทคัดย่อ',
             'abstract.file' => 'ไฟล์บทคัดย่อไม่ถูกต้อง',

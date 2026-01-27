@@ -95,11 +95,11 @@
                 </div>
                 <div class="col-12">
                     <div class="form-group">
-                        <label for="keyword">คำสำคัญ (Keyword) *</label>
-                        <input id="keyword" name="keyword" type="text" placeholder="Keyword" value="{{ old('keyword') }}"
-                            class="form-control @error('keyword') is-invalid @enderror" required>
-                        @error('keyword')
-                            <label for="keyword" class="error">{{ $message }}</label>
+                        <label>คำสำคัญ (Keyword) *</label>
+                        <input name="keywords" type="text" placeholder="คำสำคัญ" value="{{ old('keywords') }}"
+                            class="form-control @error('keywords') is-invalid @enderror" required>
+                        @error('keywords')
+                            <label class="error">{{ $message }}</label>
                         @enderror
                     </div>
                 </div>

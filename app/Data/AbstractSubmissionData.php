@@ -12,7 +12,7 @@ final class AbstractSubmissionData
         public array $groups,           // [priority => groupId]
         public string $titleTH,
         public string $titleEN,
-        public string $keyword,
+        public string $keywords,
         public UploadedFile $abstract,            // [type => UploadedFile]
         public array $participants,
     ) {}
@@ -24,7 +24,7 @@ final class AbstractSubmissionData
             groups: $request->validated('groups'),
             titleTH: $request->validated('title_th'),
             titleEN: $request->validated('title_en'),
-            keyword: $request->validated('keyword'),
+            keywords: $request->validated('keywords'),
             abstract: $request->validated('abstract'),
             participants: $request->validated('participants', []),
         );
