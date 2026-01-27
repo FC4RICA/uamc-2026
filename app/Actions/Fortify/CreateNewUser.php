@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Data\ProfileData;
 use App\Enums\AcademicTitle;
 use App\Enums\Education;
 use App\Enums\ParticipationType;
@@ -12,6 +13,7 @@ use App\Models\Organization;
 use App\Models\Profile;
 use App\Models\User;
 use App\Services\AccessControl;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -31,7 +33,6 @@ class CreateNewUser implements CreatesNewUsers
         }
 
         $rules = $this->rules($input);
-
         if (($input['organization_id'] ?? null) === 'other') {
             $rules['organization_id'][] = Rule::in(['other']);
         } else {
@@ -50,36 +51,33 @@ class CreateNewUser implements CreatesNewUsers
             $this->messages(),
         )->validate();
 
-        $user = User::create([
-            'email' => $input['email'],
-            'password' => Hash::make($input['password']),
-            'payment_required' => $input['organization_id'] === 'other',
-        ]);
-        
-        Profile::create([
-            'user_id' => $user->id,
-            'firstname' => $input['firstname'],
-            'lastname' => $input['lastname'],
-            'phone' => $input['phone'],
-            'special_requirements' => $input['special_requirements'],
-            'title' => $input['title'],
-            'academic_title' => $input['academic_title'],
-            'education' => $input['education'],
-            'participation_type' => $input['participation_type'],
-            'presentation_type' => $input['participation_type'] == ParticipationType::PRESENTER->value ? 
-                $input['presentation_type'] : null,
-            'organization_id' => $input['organization_id'] === 'other' ? 
-                null : (int)$input['organization_id'] ,
-            'organization_other' => $input['organization_id'] === 'other' ? 
-                $input['organization_other'] : null,
-            'occupation_id' => $input['occupation_id'] === 'other' ? 
-                null : (int)$input['occupation_id'],
-            'occupation_other' => $input['occupation_id'] === 'other' ? 
-                $input['occupation_other'] : null,
-            'created_by' => $user->id,
-        ]);
+        return DB::transaction(function () use ($input) {
+            $user = User::create([
+                'email' => $input['email'],
+                'password' => Hash::make($input['password']),
+                'payment_required' => $input['organization_id'] === 'other',
+            ]);
 
-        return $user;
+            $profileData = array_merge(
+                ProfileData::normalize($input),
+                [
+                    'user_id' => $user->id,
+                    'firstname' => $input['firstname'],
+                    'lastname' => $input['lastname'],
+                    'phone' => $input['phone'],
+                    'special_requirements' => $input['special_requirements'],
+                    'title' => $input['title'],
+                    'academic_title' => $input['academic_title'],
+                    'education' => $input['education'],
+                    'participation_type' => $input['participation_type'],
+                    'created_by' => $user->id,
+                ]
+            );
+
+            Profile::create($profileData);
+
+            return $user;
+        });
     }
 
     private function rules(array $input): array

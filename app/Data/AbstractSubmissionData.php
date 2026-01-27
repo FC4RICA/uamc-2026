@@ -19,6 +19,13 @@ final class AbstractSubmissionData
 
     public static function fromRequest(AbstractSubmissionRequest $request): self
     {
+        $participants = collect(
+            $request->validated('participants', [])
+        )->map(fn (array $p) => array_merge(
+            $p,
+            ProfileData::normalize($p)
+        ))->toArray();
+
         return new self(
             userId: $request->user()->id,
             groups: $request->validated('groups'),
@@ -26,7 +33,7 @@ final class AbstractSubmissionData
             titleEN: $request->validated('title_en'),
             keywords: $request->validated('keywords'),
             abstract: $request->validated('abstract'),
-            participants: $request->validated('participants', []),
+            participants: $participants,
         );
     }
 }
