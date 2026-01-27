@@ -19,7 +19,7 @@
         </tr>
         <tr>
             <td class="text-center">13 มีนาคม 2569</td>
-            <td>ประกาศผลการคัดเลือกงาน</td>
+            <td>ประกาศผลการคัดเลือกผลงาน</td>
         </tr>
         <tr>
             <td class="text-center">20 มีนาคม 2569</td>
