@@ -194,7 +194,7 @@
 
             <div id="participants-container">
                 @foreach ((old('participants', [])) as $index => $data)
-                    <x-participant-form :index="$index" :data="$data" />
+                    <x-participant-form :index="$index" :profile="$data" />
                 @endforeach
             </div>
 

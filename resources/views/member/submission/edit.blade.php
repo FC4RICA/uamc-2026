@@ -125,6 +125,11 @@
         </div>
 
         <hr class="separator my-4">
+        <div id="participants-container">
+            @foreach ($submission->participants as $index => $data)
+                <x-participant-form :index="$index" :profile="$data->toArray()"/>
+            @endforeach
+        </div>
 
         <div class="text-center">
             <div class="form-group">

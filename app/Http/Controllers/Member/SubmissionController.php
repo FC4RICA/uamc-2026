@@ -60,13 +60,12 @@ class SubmissionController extends Controller
     public function edit(): View
     {
         $user = Auth::user();
-        $profile = $user->profile;
         $groups = AbstractGroup::all();
         $submission = $user->submission;
 
         return view(
             'member.submission.edit',
-            compact('user', 'groups', 'profile', 'submission')
+            compact('user', 'groups', 'submission')
         );
     }
 

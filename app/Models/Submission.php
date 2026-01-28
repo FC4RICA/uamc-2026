@@ -59,6 +59,11 @@ class Submission extends Model
         );
     }
 
+    public function participants(): BelongsToMany
+    {
+        return $this->profiles()->where('user_id', null);
+    }
+
     public function abstractGroups(): BelongsToMany
     {
         return $this->belongsToMany(

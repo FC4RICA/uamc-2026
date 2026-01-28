@@ -4,5 +4,5 @@ return [
     App\Providers\AppServiceProvider::class,
     App\Providers\FortifyServiceProvider::class,
     App\Providers\GoogleDriveServiceProvider::class,
-    // App\Providers\AccessControlServiceProvider::class,
+    App\Providers\AccessControlServiceProvider::class,
 ];

@@ -9,7 +9,6 @@ use App\Enums\PresentationType;
 use App\Enums\Title;
 use App\Models\Occupation;
 use App\Models\Organization;
-use Closure;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -26,7 +25,7 @@ class ParticipantForm extends Component
 
     public function __construct(
         public int|string $index,
-        public ?array $data = null
+        public array $profile = [],
     ) {
         $this->titles = Title::cases();
         $this->academicTitles = AcademicTitle::cases();
@@ -38,7 +37,7 @@ class ParticipantForm extends Component
     }
 
     
-    public function render(): View|Closure|string
+    public function render(): View
     {
         return view('components.participant-form');
     }

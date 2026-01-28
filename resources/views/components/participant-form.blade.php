@@ -1,7 +1,3 @@
-@php
-    $p = old("participants.$index", $data ?? []);
-@endphp
-
 <div class="card mb-4 participant" data-participant>
     <h4 class="card-header d-flex justify-content-between">
         <div>ผู้ร่วมผลงาน</div>
@@ -16,7 +12,8 @@
                 class="form-select @error('participants[{{ $index }}][title]') is-invalid @enderror">
                 <option value="" disabled>เลือก</option>
                 @foreach ($titles as $t)
-                    <option value="{{ $t->value }}" @selected(($p['title'] ?? null) == $t->value)>
+                    <option value="{{ $t->value }}" 
+                        @selected(old("participants.$index.title", $profile['title'] ?? '') == $t->value)>
                         {{ $t->label() }}
                     </option>
                 @endforeach
@@ -32,7 +29,8 @@
                 class="form-select @error('participants[{{ $index }}][academic_title]') is-invalid @enderror">
                 <option value="" disabled>เลือก</option>
                 @foreach ($academicTitles as $t)
-                    <option value="{{ $t->value }}" @selected(($p['academic_title'] ?? null) == $t->value)>
+                    <option value="{{ $t->value }}" 
+                        @selected(old("participants.$index.academic_title", $profile['academic_title'] ?? '') == $t->value)>
                         {{ $t->label() }}
                     </option>
                 @endforeach
@@ -45,7 +43,7 @@
         <div class="col-12 col-md-6 col-xl-4 form-group">
             <label>ชื่อ *</label>
             <input type="text" name="participants[{{ $index }}][firstname]"
-                value="{{ $p['firstname'] ?? '' }}" required
+                value="{{ old("participants.$index.firstname", $profile['firstname'] ?? '') }}" required
                 class="form-control @error('participants[{{ $index }}][firstname]') is-invalid @enderror">
             @error('participants[{{ $index }}][firstname]')
                 <label class="error">{{ $message }}</label>
@@ -55,7 +53,7 @@
         <div class="col-12 col-md-6 col-xl-4 form-group">
             <label>นามสกุล *</label>
             <input type="text" name="participants[{{ $index }}][lastname]"
-                value="{{ $p['lastname'] ?? '' }}" required
+                value="{{ old("participants.$index.lastname", $profile['lastname'] ?? '') }}" required
                 class="form-control @error('participants[{{ $index }}][lastname]') is-invalid @enderror">
             @error('participants[{{ $index }}][lastname]')
                 <label class="error">{{ $message }}</label>
@@ -68,7 +66,8 @@
                 class="form-select @error('participants[{{ $index }}][education]') is-invalid @enderror">
                 <option value="" disabled>เลือก</option>
                 @foreach ($education as $ed)
-                    <option value="{{ $ed->value }}" @selected(($p['education'] ?? null) == $ed->value)>
+                    <option value="{{ $ed->value }}" 
+                        @selected(old("participants.$index.education", $profile['education'] ?? '') == $ed->value)>
                         {{ $ed->label() }}
                     </option>
                 @endforeach
@@ -81,7 +80,7 @@
         <div class="col-12 col-md-6 col-xl-3 form-group">
             <label>เบอร์โทร</label>
             <input type="tel" name="participants[{{ $index }}][phone]"
-                value="{{ $p['phone'] ?? '' }}"
+                value="{{ old("participants.$index.phone", $profile['phone'] ?? '') }}"
                 class="form-control @error('participants[{{ $index }}][phone]') is-invalid @enderror">
             @error('participants[{{ $index }}][phone]')
                 <label class="error">{{ $message }}</label>
@@ -97,11 +96,15 @@
                         class="form-select @error('participants[{{ $index }}][occupation_id]') is-invalid @enderror">
                         <option value="" disabled>เลือก</option>
                         @foreach ($occupations as $ocu)
-                            <option value="{{ $ocu->id }}" @selected(($p['occupation_id'] ?? null) == $ocu->id)>
+                            <option value="{{ $ocu->id }}" 
+                                @selected(old("participants.$index.occupation_id", $profile['occupation_id'] ?? '') == $ocu->id)>
                                 {{ $ocu->name }}
                             </option>
                         @endforeach
-                        <option value="other">อื่นๆ</option>
+                        <option value="other"
+                            @selected(old("participants.$index.occupation_id", $profile['occupation_id'] ?? 'other') == 'other')>
+                            อื่นๆ
+                        </option>
                     </select>
                     @error('participants[{{ $index }}][occupation_id]')
                         <label class="error">{{ $message }}</label>
@@ -109,8 +112,9 @@
                 </div>
                 <div class="col-12 col-xl-6">
                     <input type="text" name="participants[{{ $index }}][occupation_other]"
-                        placeholder="กรุณาระบุอาชีพ" value="{{ $p['occupation_other'] ?? '' }}" data-occupation-other
-                        class="form-control @error('participants[{{ $index }}][occupation_other]') is-invalid @enderror">
+                        placeholder="กรุณาระบุอาชีพ" data-occupation-other
+                        class="form-control @error('participants[{{ $index }}][occupation_other]') is-invalid @enderror"
+                        value="{{ old("participants.$index.occupation_other", $profile['occupation_other'] ?? '') }}">
                     @error('participants[{{ $index }}][occupation_other]')
                         <label class="error">{{ $message }}</label>
                     @enderror
@@ -127,19 +131,23 @@
                         class="form-select @error('participants[{{ $index }}][organization_id]') is-invalid @enderror">
                         <option value="" disabled>เลือก</option>
                         @foreach ($organizations as $org)
-                            <option value="{{ $org->id }}" @selected(($p['organization_id'] ?? null) == $org->id)>
+                            <option value="{{ $org->id }}" 
+                                @selected(old("participants.$index.organization_id", $profile['organization_id'] ?? '') == $org->id)>
                                 {{ $org->name }}
                             </option>
                         @endforeach
-                        <option value="other">อื่นๆ</option>
+                        <option value="other"
+                            @selected(old("participants.$index.organization_id", $profile['organization_id'] ?? 'other') == 'other')>
+                            อื่นๆ
+                        </option>
                     </select>
                     @error('participants[{{ $index }}][organization_id]')
                         <label class="error">{{ $message }}</label>
                     @enderror
                 </div>
                 <div class="col-12 col-xl-6">
-                    <input name="participants[{{ $index }}][organization_other]" placeholder="กรุณาระบุสถานที่ทำงาน"
-                        value="{{ $p['organization_other'] ?? '' }}" class="form-control" type="text" data-organization-other 
+                    <input name="participants[{{ $index }}][organization_other]" placeholder="กรุณาระบุสถานที่ทำงาน" data-organization-other
+                        value="{{ old("participants.$index.organization_other", $profile['organization_other'] ?? '') }}"type="text"
                         class="form-control @error('participants[{{ $index }}][organization_other]') is-invalid @enderror">
                     @error('participants[{{ $index }}][organization_other]')
                         <label class="error">{{ $message }}</label>
@@ -151,7 +159,7 @@
         <div class="col-12 col-md-6 form-group">
             <label>ข้อจำกัดด้านอาหาร / ข้อมูลสุขภาพที่ควรทราบ (ถ้ามี)</label>
             <input name="participants[{{ $index }}][special_requirements]" type="text"
-                value="{{ $p['special_requirements'] ?? '' }}" placeholder="เช่น มังสวิรัติ, ฮาลาล, แพ้ถั่ว, เบาหวาน"
+                value="{{ old("participants.$index.special_requirements", $profile['special_requirements'] ?? '') }}" placeholder="เช่น มังสวิรัติ, ฮาลาล, แพ้ถั่ว, เบาหวาน"
                 class="form-control @error('participants[{{ $index }}][special_requirements]') is-invalid @enderror">
             @error('participants[{{ $index }}][special_requirements]')
                 <label class="error">{{ $message }}</label>
