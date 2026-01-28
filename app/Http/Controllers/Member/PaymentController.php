@@ -21,9 +21,8 @@ class PaymentController extends Controller
         Gate::authorize('create', Payment::class);
 
         $user = Auth::user();
-        $activePayment = $user->activePayment();
 
-        return view('member.payment', compact('user', 'activePayment'));
+        return view('member.payment', compact('user'));
     }
 
     public function store(

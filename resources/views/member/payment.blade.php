@@ -25,11 +25,7 @@
 
 
         <div class="row mt-4 mb-5">
-            @if ($user->hasVerifiedPayment())
-                <h4 class="text-success fw-bold">
-                    การชำระเงินได้รับการยืนยันแล้ว
-                </h4>
-            @elseif ($activePayment)
+            @if ($user->hasPayment())
                 <h4 class="text-warning fw-bold">
                     ส่งหลักฐานแล้ว หากข้อมูลไม่ถูกต้อง สามารถอัพโหลดใหม่ได้
                 </h4>
@@ -40,15 +36,14 @@
                 </h4>
             @endif
 
-            @if ($activePayment)
-                <div class="mt-4">
+            @if ($user->hasPayment())
+                <div class="mt-4  d-flex gap-3">
                     <strong>ไฟล์ล่าสุด:</strong>
-                    <a href="{{ route('member.payment.download', $activePayment) }}">
-                        {{ $activePayment->original_file_name }}
-                    </a>
-                    <span class="badge bg-success @if ($activePayment->status->rejected()) bg-danger @endif ms-2">
-                        {{ $activePayment->status->label() }}
-                    </span>
+                    @foreach ($user->payments as $payment)
+                        <a href="{{ route('member.payment.download', $payment) }}" class="fs-6 text fw-bold">
+                            {{ $payment->original_file_name }}
+                        </a>
+                    @endforeach
                 </div>
             @endif
         </div>

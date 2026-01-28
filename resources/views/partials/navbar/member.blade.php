@@ -5,7 +5,7 @@
     <li class="nav-item">
         <a href="{{ route('public.home') }}" class="nav-link">กลับหน้าเว็บหลัก</a>
     </li>
-    @if (Auth::user()->needsPayment())
+    @if (Auth::user()->payment_required)
         <li class="Nav-item @yield('payment')">
             <a href="{{ route('member.payment.create') }}" class="nav-link">ชำระค่าลงทะเบียน</a>
         </li>

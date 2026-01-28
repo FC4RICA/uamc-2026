@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Enums\ParticipationType;
-use App\Enums\PaymentStatus;
 use App\Enums\PresentationType;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -70,39 +69,15 @@ class User extends Authenticatable
         return $this->hasMany(Payment::class);
     }
 
-    public function activePayment(): ?Payment
+    public function hasPayment(): bool
     {
-        return $this->payments()
-            ->where('status', PaymentStatus::SUBMITTED)
-            ->latest()
-            ->first();
-    }
-
-    public function hasSubmittedPayment(): bool
-    {
-        return $this->activePayment() !== null;
-    }
-
-    public function hasVerifiedPayment(): bool
-    {
-        return $this->payments()
-            ->where('status', PaymentStatus::VERIFIED)
-            ->exists();
+        return $this->payments()->exists();
     }
 
     public function needsPayment(): bool
     {
         return $this->payment_required
-            && ! $this->hasVerifiedPayment();
-    }
-
-    public function registrationComplete(): bool
-    {
-        if ($this->needsPayment()) {
-            return $this->hasVerifiedPayment();
-        }
-
-        return true;
+            && ! $this->hasPayment();
     }
 
     // submission
@@ -129,7 +104,7 @@ class User extends Authenticatable
     public function canSubmitAbstract(): bool
     {
         return $this->isPresenter()
-            && $this->registrationComplete()
+            && ! $this->needsPayment()
             && ! $this->hasSubmission();
     }
     
