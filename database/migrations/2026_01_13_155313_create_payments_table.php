@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\PaymentStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->string('from_bank')->nullable();
             $table->string('drive_file_id');
             $table->string('original_file_name')->default('undefined');
+            $table->unsignedSmallInteger('status')->default(PaymentStatus::SUBMITTED->value);
             $table->timestamps();
         });
     }

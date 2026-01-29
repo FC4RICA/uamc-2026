@@ -51,7 +51,7 @@
 
         @if (!$user->hasVerifiedPayment())
             <h3 class="mt-4">
-                {{ $activePayment ? 'อัพโหลดใหม่เพื่อแก้ไขข้อมูล' : 'อัพโหลดหลักฐานการชำระเงิน' }}
+                {{ $user->hasPayment() ? 'อัพโหลดใหม่เพื่อแก้ไขข้อมูล' : 'อัพโหลดหลักฐานการชำระเงิน' }}
             </h3>
             <form id="uploadPayment" name="uploadPayment" action='{{ route('member.payment.store') }}' method="POST"
                 enctype="multipart/form-data">

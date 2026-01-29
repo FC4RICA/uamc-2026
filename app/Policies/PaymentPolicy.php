@@ -9,12 +9,12 @@ class PaymentPolicy
 {
     public function create(User $user): bool
     {
-        return $user->needsPayment();
+        return $user->payment_required;
     }
 
     public function store(User $user): bool
     {
-        return $user->needsPayment();
+        return $user->payment_required;
     }
 
     public function download(User $user, Payment $payment): bool
