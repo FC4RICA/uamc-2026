@@ -6,10 +6,16 @@
 @section('content')
     <div class="container px-4 py-5 ">
         <h1 class="text-center">สวัสดี {{ $user->profile->firstname . ' ' . $user->profile->lastname }}</h1>
-        @if ($user->needsPayment())
-            <div class="mt-4 text-danger text-center">
-                <strong>*การลงทะเบียนของคุณยังไม่เสร็จสิ้น กรุณาชำระค่าลงทะเบียนเพื่อเข้าร่วมหรือส่งผลงาน*</strong>
-            </div>
+        @if ($user->payment_required)
+            @if ($user->needsPayment())
+                <div class="mt-4 text-danger text-center">
+                    <strong>*การลงทะเบียนของคุณยังไม่เสร็จสิ้น กรุณาชำระค่าลงทะเบียนเพื่อเข้าร่วมหรือส่งผลงาน*</strong>
+                </div>
+            @elseif (! $user->hasVerifiedPayment())
+                <div class="mt-4 text-success text-center">
+                    <strong>*การลงทะเบียนเสร็จสิ้น คุณได้ส่งหลักฐานการชำระเงินเรียบร้อยแล้ว การตรวจสอบหลักฐานจะใช้เวลา 3-4 วัน*</strong>
+                </div>
+            @endif
         @endif
         <div class="my-5">
             <div class="row ">
@@ -25,11 +31,11 @@
                 @endif
                 @if ($user->hasSubmission())
                     <div class="col-4 text-center m-auto">
-                        <a href="{{ route('member.submission.abstract.edit') }}">
+                        <a href="{{ route('member.submission.abstract.index') }}">
                             <div class="circle mx-auto">
                                 <i class="fas fa-clipboard-check fa-2x" style="margin-top: 10%;"></i>
                             </div>
-                            <label>ตรวจสอบการส่งบทความและผลการพิจารณา</label>
+                            <label>ตรวจสอบการส่งบทคัดย่อและผลการพิจารณา</label>
                         </a>
                     </div>
                 @endif

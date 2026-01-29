@@ -60,6 +60,14 @@ class SubmissionController extends Controller
         }
     }
 
+    public function indexAbstract(): View
+    {
+        $user = Auth::user();
+        $submission = $user->submission;
+        Gate::authorize('view', $submission);
+        return view('member.submission.index', compact('submission'));
+    }
+
     public function editAbstract(): View
     {
         $user = Auth::user();

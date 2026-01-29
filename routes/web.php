@@ -39,6 +39,7 @@ Route::prefix('member')
             Route::name('abstract.')
             ->prefix('/abstract')
             ->group(function () {
+                Route::get('/', 'indexAbstract')->name('index');
                 Route::get('/create', 'createAbstract')->name('create');
                 Route::post('/', 'storeAbstract')->name('store');
                 Route::get('/edit', 'editAbstract')->name('edit');
