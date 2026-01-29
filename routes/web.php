@@ -36,10 +36,15 @@ Route::prefix('member')
         ->prefix('/submissions')
         ->name('submission.')
         ->group(function () {
-            Route::get('/create', 'create')->name('create');
-            Route::post('/', 'store')->name('store');
-            Route::get('/edit', 'edit')->name('edit');
-            Route::put('/', 'update')->name('update');
+            Route::name('abstract.')
+            ->prefix('/abstract')
+            ->group(function () {
+                Route::get('/create', 'createAbstract')->name('create');
+                Route::post('/', 'storeAbstract')->name('store');
+                Route::get('/edit', 'editAbstract')->name('edit');
+                Route::put('/', 'updateAbstract')->name('update');
+                Route::delete('/', 'delete')->name('delete');
+            });
             Route::get('/file/{file}/download', 'fileDownload')->name('file.download');
         });
 

@@ -3,9 +3,8 @@
 namespace App\Actions\Submission;
 
 use App\Contracts\CloudStorage;
-use App\Data\AbstractSubmissionData;
+use App\Data\Submission\CreateAbstractSubmissionData;
 use App\Enums\ParticipationType;
-use App\Enums\PresentationType;
 use App\Enums\SubmissionFileType;
 use App\Enums\SubmissionRoundType;
 use App\Enums\SubmissionStatus;
@@ -33,7 +32,7 @@ class CreateAbstractSubmission
         protected CloudStorage $storage
     ) {}
 
-    public function handle(AbstractSubmissionData $data): void
+    public function handle(CreateAbstractSubmissionData $data): void
     {
         $driveFolderId = null;
 
@@ -65,7 +64,7 @@ class CreateAbstractSubmission
                 }
                 $submission->abstractGroups()->sync($pivotData);
 
-                $profileIds = $this->createProfiles($data->participants, $user->presentationType(), $user->id);
+                $profileIds = $this->createProfiles($data->participants, $submission);
                 $profileIds[] = $user->profile->id;
 
                 $submission->profiles()->sync($profileIds);
@@ -88,7 +87,7 @@ class CreateAbstractSubmission
         }
     }
 
-    private function createSubmission(AbstractSubmissionData $data, User $user, string $folderId): Submission
+    private function createSubmission(CreateAbstractSubmissionData $data, User $user, string $folderId): Submission
     {
         return Submission::create([
             'submitted_by' => $data->userId,
@@ -120,15 +119,15 @@ class CreateAbstractSubmission
         return;
     }
 
-    private function createProfiles(array $participants, PresentationType $type, string $userId): array
+    private function createProfiles(array $participants, Submission $submission): array
     {
         $profileIds = [];
         foreach ($participants as $participant) {
             $profile = Profile::create([
                 ...$participant,
                 'participation_type' => ParticipationType::PRESENTER,
-                'presentation_type' => $type,
-                'created_by' => $userId,
+                'presentation_type' => $submission->presentation_type,
+                'created_by' => $submission->submitted_by,
             ]);
 
             $profileIds[] = $profile->id;

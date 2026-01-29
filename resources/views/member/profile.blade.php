@@ -231,7 +231,7 @@
             <div class="text-center mt-4">
                 <div class="form-group">
                     <button class="btn btn-warning" type="submit">แก้ไขข้อมูล</button>
-                    <button class="btn btn-danger" type="reset">ยกเลิกการแก้ไข</button>
+                    <button class="btn btn-danger" type="reset">รีเซ็ตการแก้ไข</button>
                 </div>
             </div>
         </form>

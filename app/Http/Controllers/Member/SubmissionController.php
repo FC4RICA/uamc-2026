@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Member;
 
 use App\Actions\Submission\CreateAbstractSubmission;
+use App\Actions\Submission\UpdateAbstractSubmission;
 use App\Contracts\CloudStorage;
-use App\Data\AbstractSubmissionData;
+use App\Data\Submission\CreateAbstractSubmissionData;
+use App\Data\Submission\UpdateAbstractSubmissionData;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AbstractSubmissionRequest;
+use App\Http\Requests\CreateAbstractSubmissionRequest;
+use App\Http\Requests\UpdateAbstractSubmissionRequest;
 use App\Models\AbstractGroup;
 use App\Models\Submission;
 use App\Models\SubmissionFile;
@@ -19,7 +22,7 @@ use Illuminate\View\View;
 
 class SubmissionController extends Controller
 {
-    public function create(): View
+    public function createAbstract(): View
     {
         Gate::authorize('create', Submission::class);
 
@@ -34,8 +37,8 @@ class SubmissionController extends Controller
             compact('user', 'groups', 'user_presentation_type', 'profile', 'participants'));
     }
 
-    public function store(
-        AbstractSubmissionRequest $request,
+    public function storeAbstract(
+        CreateAbstractSubmissionRequest $request,
         CreateAbstractSubmission $action,
     ): RedirectResponse
     {
@@ -43,10 +46,10 @@ class SubmissionController extends Controller
 
         try {
             $action->handle(
-                AbstractSubmissionData::fromRequest($request)
+                CreateAbstractSubmissionData::fromRequest($request)
             );
 
-            return back()->with('success', 'Created');
+            return redirect(route('member.index'), 201);
         } catch (QueryException $e) {
             if ($e->getCode() === '23000') { // duplicate key
                 return back()->withErrors([
@@ -57,11 +60,13 @@ class SubmissionController extends Controller
         }
     }
 
-    public function edit(): View
+    public function editAbstract(): View
     {
         $user = Auth::user();
-        $groups = AbstractGroup::all();
         $submission = $user->submission;
+        Gate::authorize('update', $submission);
+
+        $groups = AbstractGroup::all();
 
         return view(
             'member.submission.edit',
@@ -69,12 +74,21 @@ class SubmissionController extends Controller
         );
     }
 
-    public function update(): RedirectResponse
+    public function updateAbstract(
+        UpdateAbstractSubmissionRequest $request,
+        UpdateAbstractSubmission $action
+    ): RedirectResponse
     {
+        $user = Auth::user();
+        $submission = $user->submission;
+        Gate::authorize('update', $submission);
+
+        $action->handle($submission, UpdateAbstractSubmissionData::fromRequest($request));
+        
         return back()->with('status', 'Submission updated successfully.');
     }
 
-    public function delete(): RedirectResponse
+    public function deleteAbstract(): RedirectResponse
     {
         return redirect(route('member.index'));
     }

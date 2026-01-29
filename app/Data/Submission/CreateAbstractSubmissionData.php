@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Data;
+namespace App\Data\Submission;
 
-use App\Http\Requests\AbstractSubmissionRequest;
+use App\Http\Requests\CreateAbstractSubmissionRequest;
 use Illuminate\Http\UploadedFile;
 
-final class AbstractSubmissionData
+final class CreateAbstractSubmissionData extends BaseAbstractSubmissionData
 {
     public function __construct(
         public string $userId,
@@ -17,15 +17,9 @@ final class AbstractSubmissionData
         public array $participants,
     ) {}
 
-    public static function fromRequest(AbstractSubmissionRequest $request): self
-    {
-        $participants = collect(
-            $request->validated('participants', [])
-        )->map(fn (array $p) => array_merge(
-            $p,
-            ProfileData::normalize($p)
-        ))->toArray();
-
+    public static function fromRequest(
+        CreateAbstractSubmissionRequest $request
+    ): self {
         return new self(
             userId: $request->user()->id,
             groups: $request->validated('groups'),
@@ -33,7 +27,9 @@ final class AbstractSubmissionData
             titleEN: $request->validated('title_en'),
             keywords: $request->validated('keywords'),
             abstract: $request->validated('abstract'),
-            participants: $participants,
+            participants: self::normalizeParticipants(
+                $request->validated('participants', [])
+            ),
         );
     }
 }

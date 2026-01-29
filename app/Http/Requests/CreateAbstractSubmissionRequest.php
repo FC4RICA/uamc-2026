@@ -12,7 +12,7 @@ use App\Models\Submission;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class AbstractSubmissionRequest extends FormRequest
+class CreateAbstractSubmissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -41,6 +41,7 @@ class AbstractSubmissionRequest extends FormRequest
 
             'abstract' => ['required', 'file', 'mimes:pdf', 'max:51200'],
 
+            'participants' => ['required', 'array'],
             'participants.*.firstname' => ['required', 'string', 'max:255'],
             'participants.*.lastname' => ['required', 'string', 'max:255'],
             'participants.*.phone' => ['nullable', 'string', 'max:255'],

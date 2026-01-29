@@ -28,7 +28,7 @@ final class ProfileData
                 ($input['occupation_id'] ?? null) === 'other'
                     ? $input['occupation_other'] ?? null
                     : null,
-            'presentation_type' => $input['participation_type'] == ParticipationType::PRESENTER->value ? 
+            'presentation_type' => ($input['participation_type'] ?? null) == ParticipationType::PRESENTER->value ? 
                 $input['presentation_type'] : null,
         ];
     }

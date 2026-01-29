@@ -48,7 +48,7 @@ class Submission extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'submitted_by', 'id');
     }
 
     public function profiles(): BelongsToMany

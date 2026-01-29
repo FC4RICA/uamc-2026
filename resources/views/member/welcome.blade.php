@@ -15,7 +15,7 @@
             <div class="row ">
                 @if ($user->canSubmitAbstract())
                     <div class="col-4 text-center m-auto">
-                        <a href="{{ route('member.submission.create') }}">
+                        <a href="{{ route('member.submission.abstract.create') }}">
                             <div class="circle mx-auto">
                                 <i class="fas fa-book fa-2x" style="margin-top: 10%;"></i>
                             </div>
@@ -25,7 +25,7 @@
                 @endif
                 @if ($user->hasSubmission())
                     <div class="col-4 text-center m-auto">
-                        <a href="{{ route('member.submission.edit') }}">
+                        <a href="{{ route('member.submission.abstract.edit') }}">
                             <div class="circle mx-auto">
                                 <i class="fas fa-clipboard-check fa-2x" style="margin-top: 10%;"></i>
                             </div>

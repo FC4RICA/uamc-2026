@@ -12,7 +12,7 @@ class SubmissionPolicy
      */
     public function view(User $user, Submission $submission): bool
     {
-        return true;
+        return $user->id === $submission->submitted_by;
     }
 
     /**
@@ -28,7 +28,7 @@ class SubmissionPolicy
      */
     public function update(User $user, Submission $submission): bool
     {
-        return true;
+        return $user->id === $submission->submitted_by;
     }
 
     /**
@@ -36,6 +36,6 @@ class SubmissionPolicy
      */
     public function delete(User $user, Submission $submission): bool
     {
-        return false;
+        return $user->id === $submission->submitted_by;
     }
 }

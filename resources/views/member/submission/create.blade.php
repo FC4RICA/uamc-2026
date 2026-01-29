@@ -13,8 +13,7 @@
             <h2><strong>ส่งบทคัดย่อ</strong></h2>
         </div>
         <hr class="separator">
-        {{-- @if ($status == 1) --}}
-        <form id="submitpaper" name="submitpaper" action='{{ route('member.submission.store') }}' method="POST"
+        <form id="submitpaper" name="submitpaper" action='{{ route('member.submission.abstract.store') }}' method="POST"
             enctype="multipart/form-data">
             @csrf
 
@@ -214,10 +213,6 @@
                 </div>
             </div>
         </form>
-
-        {{-- @else
-    <h4 class="text-center"><strong>ขณะนี้ยังไม่เปิดรับผลงาน หรือเลยกำหนดการมาแล้ว</strong></h4>
-    @endif --}}
     </div>
 
 @endsection

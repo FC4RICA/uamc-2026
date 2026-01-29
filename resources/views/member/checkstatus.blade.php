@@ -67,7 +67,7 @@
                 <td class="text-center" width="15%">
                     {{-- <?php $ed_url = 'member/edit/' . $research->research_id ?>
                     <a href="{{ url($ed_url) }}" class="btn btn-primary" style="text-decoration: none; color:white;">แก้ไขข้อมูล/ดูข้อมูล</a> --}}
-                    <a href="{{ route('member.submission.edit', ['id' => $research->research_id]) }}" class="btn btn-primary" style="text-decoration: none; color:white;">แก้ไขข้อมูล/ดูข้อมูล</a>
+                    <a href="{{ route('member.submission.abstract.edit') }}" class="btn btn-primary" style="text-decoration: none; color:white;">แก้ไขข้อมูล/ดูข้อมูล</a>
                 </td>
             </tr>
             @endforeach
