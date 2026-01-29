@@ -48,7 +48,7 @@ class UpdateAbstractSubmissionRequest extends FormRequest
 
             'abstract' => ['nullable', 'file', 'mimes:pdf', 'max:51200'],
 
-            'participants' => ['array'],
+            'participants' => ['nullable', 'array'],
             'participants.*.id' => ['nullable', 'uuid'],
             'participants.*.firstname' => ['required', 'string', 'max:255'],
             'participants.*.lastname' => ['required', 'string', 'max:255'],

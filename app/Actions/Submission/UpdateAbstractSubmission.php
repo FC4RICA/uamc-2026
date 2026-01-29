@@ -78,12 +78,13 @@ class UpdateAbstractSubmission
 
         foreach ($participants as $data) {
             if (isset($data['id'])) {
+                $profile = Profile::whereKey($data['id'])->firstOrFail();
+
                 if (! $submission->profiles->contains($profile->id)) {
                     throw ValidationException::withMessages([
                         'participants' => 'Invalid profile reference.',
                     ]);
                 }
-                $profile = Profile::whereKey($data['id'])->firstOrFail();
 
                 $profile->update(
                     Arr::only($data, [
@@ -120,15 +121,11 @@ class UpdateAbstractSubmission
 
     private function syncGroups(Submission $submission, array $groups): void
     {
-        $pivotData = collect($groups)
-        ->filter(fn ($id) => filled($id))
-        ->mapWithKeys(
-            fn ($groupId, $priority) => [
-                $groupId => ['priority' => $priority]
-            ]
-        )
-        ->toArray();
-
+        $pivotData = [];
+        foreach ($groups as $priority => $groupId) {
+            if(!empty($groupId))
+                $pivotData[$groupId] = ['priority' => $priority];
+        }
         $submission->abstractGroups()->sync($pivotData);
-    }
+}
 }

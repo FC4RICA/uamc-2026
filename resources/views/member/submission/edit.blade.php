@@ -37,8 +37,8 @@
                         <select name="groups[1]" required
                             class="form-select @error('groups.1') is-invalid @enderror">
                             @foreach ($groups as $group)
-                                <option value="{{ $group->id }}" 
-                                    @selected($group == $submission->abstractGroups[0])>
+                                <option value="{{ $group->id }}"
+                                    @selected($group->id == $submission->abstractGroups[0]->id)>
                                     {{ $group->name }}
                                 </option>
                             @endforeach
@@ -58,7 +58,7 @@
                             </option>
                             @foreach ($groups as $group)
                                 <option value="{{ $group->id }}" 
-                                    @selected($group == ($submission->abstractGroups[1] ?? ''))>
+                                    @selected($group->id == ($submission->abstractGroups[1]->id ?? ''))>
                                     {{ $group->name }}
                                 </option>
                             @endforeach

@@ -14,7 +14,7 @@ final class UpdateAbstractSubmissionData extends BaseAbstractSubmissionData
         public string $titleEN,
         public string $keywords,
         public ?UploadedFile $abstract,
-        public ?array $participants,
+        public ?array $participants = [],
     ) {}
 
     public static function fromRequest(
@@ -29,7 +29,7 @@ final class UpdateAbstractSubmissionData extends BaseAbstractSubmissionData
             abstract: $request->validated('abstract'),
             participants: $request->has('participants')
                 ? self::normalizeParticipants($request->validated('participants'))
-                : null,
+                : [],
         );
     }
 }
