@@ -76,7 +76,7 @@
             </p>
         </div>
         <hr class="separator" />
-        <div class="my-5">
+        <div class="my-4">
             <h1 class="text-center"><strong>กลุ่มย่อยสำหรับการนำเสนอแบบบรรยาย <span lang="en">(Oral
                         Presentation)</span><br />และโปสเตอร์ <span lang="en">(Poster Presentation)</span></strong>
             </h1>
@@ -108,6 +108,7 @@
                         </strong></h4>
                 </li>
             </ul>
+            <p class="mt-5">*กลุ่มนำเสนออาจมีการปรับเปลี่ยนตามความเหมาะสม</p>
         </div>
         <hr class="separator" />
         <div class="my-4">

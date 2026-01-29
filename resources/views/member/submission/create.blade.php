@@ -69,6 +69,7 @@
                     </div>
                 </div>
             </div>
+            <p class="fs-6 text-secondary fw-bold">*กลุ่มนำเสนออาจมีการปรับเปลี่ยนตามความเหมาะสม</p>
 
             <h3 class="mt-4">ข้อมูลบทคัดย่อ</h3>
             <div class="row">
