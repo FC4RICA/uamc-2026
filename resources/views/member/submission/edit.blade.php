@@ -144,9 +144,18 @@
                 <div class="form-group">
                     <button class="btn btn-warning" type="submit">แก้ไขข้อมูล</button>
                     <button class="btn btn-outline-danger" type="reset">รีเซ็ตการแก้ไข</button>
-                    <a href="{{ route('member.submission.abstract.delete') }}" class="btn btn-danger">ลบบทคัดย่อ</a>
                 </div>
             </div>
+        </form>
+        <form action="{{ route('member.submission.abstract.delete') }}"
+              method="POST"
+              onsubmit="return confirm('คุณแน่ใจหรือไม่ว่าต้องการลบบทคัดย่อนี้');"
+              class="text-center mt-5">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger">
+                ลบบทคัดย่อ
+            </button>
         </form>
     </div>
 @endsection

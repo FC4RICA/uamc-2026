@@ -11,11 +11,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[UsePolicy(SubmissionPolicy::class)]
 class Submission extends Model
 {
-    use HasUuids;
+    use HasUuids, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -33,6 +34,8 @@ class Submission extends Model
         'status',
     ];
 
+     protected $dates = ['deleted_at'];
+
     /**
      * Get the attributes that should be cast.
      *
@@ -44,6 +47,11 @@ class Submission extends Model
             'presentation_type' => PresentationType::class,
             'status' => SubmissionStatus::class
         ];
+    }
+
+    public function scopeActive($query): mixed
+    {
+        return $query->whereNull('deleted_at');
     }
 
     public function user(): BelongsTo

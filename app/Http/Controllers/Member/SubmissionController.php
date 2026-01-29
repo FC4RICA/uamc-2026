@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Member;
 
 use App\Actions\Submission\CreateAbstractSubmission;
+use App\Actions\Submission\DeleteSubmission;
 use App\Actions\Submission\UpdateAbstractSubmission;
 use App\Contracts\CloudStorage;
 use App\Data\Submission\CreateAbstractSubmissionData;
@@ -96,8 +97,16 @@ class SubmissionController extends Controller
         return back()->with('status', 'Submission updated successfully.');
     }
 
-    public function deleteAbstract(): RedirectResponse
+    public function delete(
+        DeleteSubmission $action,
+    ): RedirectResponse
     {
+        $user = Auth::user();
+        $submission = $user->submission;
+        Gate::authorize('delete', $submission);
+
+        $action->handle($submission);
+
         return redirect(route('member.index'));
     }
 

@@ -44,6 +44,7 @@ Route::prefix('member')
                 Route::post('/', 'storeAbstract')->name('store');
                 Route::get('/edit', 'editAbstract')->name('edit');
                 Route::put('/', 'updateAbstract')->name('update');
+                
                 Route::delete('/', 'delete')->name('delete');
             });
             Route::get('/file/{file}/download', 'fileDownload')->name('file.download');

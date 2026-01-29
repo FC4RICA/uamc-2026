@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\ParticipationType;
 use App\Enums\PaymentStatus;
 use App\Enums\PresentationType;
+use App\Enums\SubmissionStatus;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -127,7 +128,8 @@ class User extends Authenticatable
     
     public function submission(): HasOne
     {
-        return $this->hasOne(Submission::class, 'submitted_by', 'id');
+        return $this->hasOne(Submission::class, 'submitted_by', 'id')
+            ->where('status', '!=', SubmissionStatus::DELETED);
     }
 
     public function hasSubmission(): bool

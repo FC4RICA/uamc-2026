@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\SubmissionStatus;
 use App\Models\Submission;
 use App\Models\User;
 
@@ -36,6 +37,7 @@ class SubmissionPolicy
      */
     public function delete(User $user, Submission $submission): bool
     {
-        return $user->id === $submission->submitted_by;
+        return $user->id === $submission->submitted_by 
+            && $submission->status !== SubmissionStatus::DELETED;
     }
 }
