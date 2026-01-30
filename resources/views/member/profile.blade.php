@@ -13,7 +13,7 @@
             <h2><strong>แก้ไขข้อมูล</strong></h2>
         </div>
         <hr class="separator">
-        <form id="editprofile" name="editprofile" action="{{ route('member.profile.update') }}" method="POST">
+        <form id="edit-profile-form" name="edit-profile-form" action="{{ route('member.profile.update') }}" method="POST">
             @csrf
             @method('PUT')
             {{-- <h3 class="mt-4">ข้อมูลการเข้าใช้งาน</h3>
@@ -230,7 +230,7 @@
 
             <div class="text-center mt-4">
                 <div class="form-group">
-                    <button class="btn btn-warning" type="submit">แก้ไขข้อมูล</button>
+                    <button id="submit-profile" class="btn btn-warning" type="submit">แก้ไขข้อมูล</button>
                     <button class="btn btn-danger" type="reset">รีเซ็ตการแก้ไข</button>
                 </div>
             </div>

@@ -1,8 +1,8 @@
 let formvalid = true;
 
 $(document).ready(function () {
-    validateRegis();
-    validateLogin();
+    // validateRegis();
+    // validateLogin();
     // validateEditProfile();
     // validateSubmission();
     // validateEditPaper();

@@ -22,6 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
         initParticipant(participant);
     });
 
-    attachLoadingOnSubmit('submission-form', '#submit-submission');
+    attachLoadingOnSubmit('edit-submission-form', '#submit-edit-submission');
+    attachLoadingOnSubmit('delete-submission-form', '#submit-delete-submission');
 });
-

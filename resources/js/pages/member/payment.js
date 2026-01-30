@@ -1,6 +1,5 @@
+import { attachLoadingOnSubmit } from "../utils/form-loading";
+
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('#submit-payment')
-    .addEventListener('submit', e => {
-        e.target.querySelector('button[type="submit"]').disabled = true;
-    });
+    attachLoadingOnSubmit('payment-form', '#submit-payment');
 });

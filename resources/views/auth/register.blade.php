@@ -251,7 +251,7 @@
             </div>
             <div style="overflow:auto;">
                 <div style="float:right;">
-                    <button type="submit" class="btn btn-warning">ยืนยัน</button>
+                    <button id="submit-btn" type="submit" class="btn btn-warning">ยืนยัน</button>
                 </div>
             </div>
         </form>

@@ -13,7 +13,7 @@
             <h2><strong>ส่งบทคัดย่อ</strong></h2>
         </div>
         <hr class="separator">
-        <form id="submitpaper" name="submitpaper" action='{{ route('member.submission.abstract.store') }}' method="POST"
+        <form id="submission-form" name="submission-form" action='{{ route('member.submission.abstract.store') }}' method="POST"
             enctype="multipart/form-data">
             @csrf
 

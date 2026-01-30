@@ -13,7 +13,7 @@
             <h2 class="fw-bold">แก้ไขบทคัดย่อ</h2>
         </div>
         <hr class="separator">
-        <form id="editpaper" name="editpaper" action='{{ route('member.submission.abstract.update') }}' method="POST" enctype="multipart/form-data">
+        <form id="edit-submission-form" name="edit-submission-form" action='{{ route('member.submission.abstract.update') }}' method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <h3 class="mt-4">กลุ่มบทคัดย่อ</h3>
@@ -142,18 +142,18 @@
 
             <div class="text-center">
                 <div class="form-group">
-                    <button class="btn btn-warning" type="submit">แก้ไขข้อมูล</button>
+                    <button id="submit-edit-submission" class="btn btn-warning" type="submit">แก้ไขข้อมูล</button>
                     <button class="btn btn-outline-danger" type="reset">รีเซ็ตการแก้ไข</button>
                 </div>
             </div>
         </form>
         <form action="{{ route('member.submission.abstract.delete') }}"
-              method="POST"
+              id="delete-submission-form"
               onsubmit="return confirm('คุณแน่ใจหรือไม่ว่าต้องการลบบทคัดย่อนี้');"
-              class="text-center mt-5">
+              class="text-center mt-5" method="POST">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn btn-danger">
+            <button type="submit" class="btn btn-danger" id="submit-delete-submission">
                 ลบบทคัดย่อ
             </button>
         </form>
@@ -161,5 +161,5 @@
 @endsection
 
 @push('scripts')
-    @vite('resources/js/pages/member/submission.js')
+    @vite('resources/js/pages/member/edit-submission.js')
 @endpush

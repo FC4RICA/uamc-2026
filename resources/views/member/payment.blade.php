@@ -53,7 +53,7 @@
             <h3 class="mt-4">
                 {{ $user->hasPayment() ? 'อัพโหลดใหม่เพื่อแก้ไขข้อมูล' : 'อัพโหลดหลักฐานการชำระเงิน' }}
             </h3>
-            <form id="uploadPayment" name="uploadPayment" action='{{ route('member.payment.store') }}' method="POST"
+            <form id="payment-form" name="payment-form" action='{{ route('member.payment.store') }}' method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="row">
@@ -114,8 +114,9 @@
                 </div>
                 <div class="col-12 col-lg-6 ">
                     <button class="btn btn-warning" type="submit" id="submit-payment">
-                    ส่งหลักฐานการชำระเงิน</button>
-                    <div>
+                        ส่งหลักฐานการชำระเงิน
+                    </button>
+                <div>
             </form>
         @endif
     </div>
