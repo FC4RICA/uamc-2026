@@ -98,7 +98,7 @@
                 </div>
                 <div class="col-12 col-lg-6 form-group">
                     <label>เบอร์โทร</label>
-                    <input name="phone" value="{{ $profile->phone }}" type="tel" required
+                    <input name="phone" value="{{ $profile->phone ?? '' }}" type="tel" required
                         class="form-control @error('phone') is-invalid @enderror" placeholder="เบอร์โทร">
                     @error('phone')
                         <label class="error">{{ $message }}</label>
@@ -185,9 +185,10 @@
                         class="form-select @error('presentation_type') is-invalid @enderror"
                         data-label="[data-presentation-type-label]"
                         @disabled($user->hasSubmission())>
+                        <option value="" @selected(! ($profile->presentation_type ?? false)) disabled>เลือก</option>
                         @foreach ($presentationType as $type)
                             <option value="{{ $type->value }}"
-                                @selected($type == $profile->presentation_type->value)>
+                                @selected($type == $profile->presentation_type?->value)>
                                 {{ $type->label() }}
                             </option>
                         @endforeach
@@ -207,7 +208,7 @@
                     <label>
                         ข้อจำกัดด้านอาหาร / ข้อมูลสุขภาพที่ควรทราบ (ถ้ามี)
                     </label>
-                    <input name="special_requirements" value="{{ $profile->special_requirements }}"
+                    <input name="special_requirements" value="{{ $profile->special_requirements ?? '' }}"
                         class="form-control @error('special_requirements') is-invalid @enderror"
                         placeholder="เช่น มังสวิรัติ, ฮาลาล, แพ้ถั่ว, เบาหวาน" type="text">
                     @error('special_requirements')
