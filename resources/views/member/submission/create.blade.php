@@ -122,7 +122,7 @@
 
             <h3 class="mt-4">ข้อมูลผู้ร่วมผลงาน</h3>
             <div id="participants" class="card mb-4">
-                <h4 class="card-header">ผู้นำเสนอหลัก</h4>
+                <h4 class="card-header">ผู้ส่งผลงาน</h4>
                 <div class="card-body row align-items-end">
                     <div class="col-12 col-sm-6 col-xl-2">
                         <div class="form-group">

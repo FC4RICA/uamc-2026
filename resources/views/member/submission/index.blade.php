@@ -62,7 +62,9 @@
                     </td>
                     <td class="text-center" width="20%">
                         {{ $submission->abstractGroups[0]->name }}<br>
-                        {{ $submission->abstractGroups[1]->name }}
+                        @if ($submission->abstractGroups[1] ?? false)
+                            {{ $submission->abstractGroups[1]->name }}
+                        @endif
                     </td>
                     <td class="text-center" width="15%">
                         {{ $submission->created_at }}

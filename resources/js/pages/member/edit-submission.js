@@ -1,4 +1,5 @@
 import { initParticipant } from '../../components/participant';
+import { attachLoadingOnSubmit } from "../../utils/form-loading";
 
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('#participants-container');

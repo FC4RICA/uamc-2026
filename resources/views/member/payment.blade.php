@@ -112,7 +112,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-6 ">
+                <div class="text-center mt-4">
                     <button class="btn btn-warning" type="submit" id="submit-payment">
                         ส่งหลักฐานการชำระเงิน
                     </button>
