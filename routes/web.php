@@ -65,6 +65,7 @@ Route::prefix('member')
 
 // admin
 Route::prefix('admin')
+    ->middleware(['auth', 'admin'])
     ->name('admin.')
     ->group(function () {
         Route::get('/', [AdminController::class, 'index'])
