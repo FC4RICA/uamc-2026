@@ -16,4 +16,9 @@ class AccessControl
     {
         return AppSetting::enabled(SettingKey::AbstractSubmissionOpen);
     }
+
+    public static function finalSubmissionOpen(): bool
+    {
+        return AppSetting::enabled(SettingKey::FinalSubmissionOpen);
+    }
 }
