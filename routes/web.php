@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\MemberController as AdminMemberController;
+use App\Http\Controllers\Admin\SubmissionController as AdminSubmissionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Member\ProfileController;
@@ -47,6 +49,7 @@ Route::prefix('member')
                 
                 Route::delete('/', 'delete')->name('delete');
             });
+            
             Route::get('/file/{file}/download', 'fileDownload')->name('file.download');
         });
 
@@ -70,13 +73,19 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('/', [AdminController::class, 'index'])
             ->name('index');
-        
-        Route::get('/submission', [AdminController::class, 'indexSubmission'])
-            ->name('submission.index');
 
-        Route::get('/submission/{id}', [AdminController::class, 'showSubmission'])
-            ->name('submission.show');
-        
-        Route::get('/attendee', [AdminController::class, 'indexAttendee'])
-            ->name('attendee.index');
+        Route::controller(AdminSubmissionController::class)
+        ->prefix('/submission')
+        ->name('submission.')
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/{id}', 'show')->name('show');
+        });
+
+        Route::controller(AdminMemberController::class)
+        ->prefix('/member')
+        ->name('member.')
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+        });
     });
