@@ -9,13 +9,18 @@
         <a href="{{ route('admin.submission.index') }}" class="nav-link">จัดการบทคัดย่อ</a>
     </li>
     <li class="nav-item @yield('attended')">
-        <a href="{{ route('admin.attendee.index') }}" class="nav-link">จัดการผู้ลงทะเบียน</a>
+        <a href="{{ route('admin.member.index') }}" class="nav-link">จัดการผู้ลงทะเบียน</a>
+    </li>
+    <li>
+        <hr class="text-white">
     </li>
     <li class="nav-item">
-        <form action="{{ route('logout') }}" method="POST">
+        <form action="{{ route('logout') }}" method="POST" class="nav-link p-0">
             @csrf
-            <button class="nav-link text-inherit bg-none border-0" style="background: none;" type="submit"
-                name="logout" onclick="this.blur();">ออกจากระบบ</button>
+            <button class="nav-link text-inherit bg-none border-0 w-100" style="background: none;" type="submit"
+                name="logout" onclick="this.blur();">
+                ออกจากระบบ
+            </button>
         </form>
     </li>
 </ul>

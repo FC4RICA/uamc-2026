@@ -11,8 +11,6 @@ class SettingController extends Controller
 {
     public function __invoke(SettingKey $key)
     {
-        abort_unless(Auth::user()->is_admin, 403);
-
         $current = AppSetting::enabled($key);
         AppSetting::set($key, ! $current);
 

@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\MemberController as AdminMemberController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubmissionController as AdminSubmissionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Member\MemberController;
@@ -71,11 +72,14 @@ Route::prefix('admin')
     ->middleware(['auth', 'admin'])
     ->name('admin.')
     ->group(function () {
-        Route::get('/', [AdminController::class, 'index'])
+        Route::get('/', AdminDashboardController::class)
             ->name('index');
 
+        Route::post('/settings/{key}/toggle', SettingController::class)
+            ->name('setting.toggle');
+
         Route::controller(AdminSubmissionController::class)
-        ->prefix('/submission')
+        ->prefix('/submissions')
         ->name('submission.')
         ->group(function () {
             Route::get('/', 'index')->name('index');
