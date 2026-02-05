@@ -8,6 +8,7 @@ enum SubmissionStatus: int
     case ACCEPTED = 2;
     case REJECTED = 3;
     case DELETED = 4;
+    case REVISED = 5;
 
     public function label(): string
     {
@@ -16,6 +17,7 @@ enum SubmissionStatus: int
             self::ACCEPTED => 'ยืนยัน',
             self::REJECTED => 'ปฏิเสธ',
             self::DELETED => 'ถูกลบ',
+            self::REVISED => 'ปรับปรุง',
         };
     }
 }
