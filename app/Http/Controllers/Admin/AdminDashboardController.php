@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\PaymentStatus;
 use App\Enums\SettingKey;
 use App\Http\Controllers\Controller;
 use App\Models\Submission;
@@ -38,7 +37,7 @@ class AdminDashboardController extends Controller
 
             'pending_payment' => User::participants()->unpaid()->count(),
             'submitted_payment' => User::participants()->paymentSubmitted()->count(),
-            'verified_payment' => User::participants()->paymentSubmitted()->count(),
+            'verified_payment' => User::participants()->paymentVerified()->count(),
             'required_payment' => User::where('payment_required', true)->count(),
         ];
     }
