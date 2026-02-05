@@ -6,7 +6,7 @@
     'offText' => 'เปิด',
 ])
 
-<div class="card shadow-sm h-100">
+<div class="card h-100">
     <div class="card-body d-flex justify-content-between align-items-center">
         <div class="fw-semibold">
             {{ $label }}

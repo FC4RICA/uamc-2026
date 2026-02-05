@@ -10,8 +10,10 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -64,8 +66,55 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
+
+    public function scopeParticipants(Builder $query): Builder
+    {
+        return $query->where('is_admin', false);
+    }
+
+    public function scopeAttendees(Builder $query): Builder
+    {
+        return $query->whereHas('profile', function ($q) {
+            $q->where('participation_type', ParticipationType::ATTENDEE);
+        });
+    }
+
+    public function scopePresenters(Builder $query): Builder
+    {
+        return $query->whereHas('profile', function ($q) {
+            $q->where('participation_type', ParticipationType::PRESENTER);
+        });
+    }
     
     // payment
+    public function scopePaymentRequired(Builder $query): Builder
+    {
+        return $query->where('payment_required', true);
+    }
+
+    public function scopeUnpaid(Builder $query): Builder
+    {
+        return $query
+            ->paymentRequired()
+            ->whereDoesntHave('payments');
+    }
+
+    public function scopePaymentSubmitted(Builder $query): Builder
+    {
+        return $query
+            ->paymentRequired()
+            ->whereHas('payments', function ($q) {
+                $q->where('status', PaymentStatus::SUBMITTED);
+            });
+    }
+
+    public function scopePaymentVerified(Builder $query): Builder
+    {
+        return $query->whereHas('payments', function ($q) {
+            $q->where('status', PaymentStatus::VERIFIED);
+        });
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\PresentationType;
 use App\Enums\SubmissionStatus;
 use App\Policies\SubmissionPolicy;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
@@ -49,9 +50,29 @@ class Submission extends Model
         ];
     }
 
-    public function scopeActive($query): mixed
+    public function scopeActive(Builder $query): mixed
     {
         return $query->whereNull('deleted_at');
+    }
+
+    public function scopePending(Builder $query): Builder
+    {
+        return $query->where('status', SubmissionStatus::PENDING);
+    }
+
+    public function scopeAccepted(Builder $query): Builder
+    {
+        return $query->where('status', SubmissionStatus::ACCEPTED);
+    }
+
+    public function scopeRevised(Builder $query): Builder
+    {
+        return $query->where('status', SubmissionStatus::REVISED);
+    }
+
+    public function scopeRejected(Builder $query): Builder
+    {
+        return $query->where('status', SubmissionStatus::REJECTED);
     }
 
     public function user(): BelongsTo
