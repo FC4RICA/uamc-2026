@@ -12,8 +12,8 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th width="70%" class="text-center">Template</th>
-                        <th width="30%" class="text-center">ไฟล์</th>
+                        <th width="65%" class="text-center">Template</th>
+                        <th width="35%" class="text-center">ไฟล์</th>
                     </tr>
                 </thead>
                 <tbody>

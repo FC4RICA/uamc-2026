@@ -240,7 +240,7 @@ input.error, textarea.error {
 }
 
 /*เพิ่ม*/
-.table-wrapper {
+/* .table-wrapper {
     background: #fff;
     padding: 20px 25px;
     margin: 30px 0;
@@ -340,7 +340,7 @@ table.table .avatar {
     display: inline-block;
     vertical-align: middle;
     line-height: 10px;
-}
+} */
 .text-success {
     color: #10c469;
 }
@@ -353,7 +353,7 @@ table.table .avatar {
 .text-danger {
     color: #ff5b5b;
 }
-.pagination {
+/* .pagination {
     float: right;
     margin: 0 0 5px;
 }
@@ -394,7 +394,7 @@ table.table .avatar {
 table.table td a.btn {
     color: black;
     text-decoration: none;
-}
+} */
 
 .disabled-button {
     pointer-events: none;

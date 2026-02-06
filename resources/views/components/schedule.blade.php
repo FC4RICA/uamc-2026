@@ -4,30 +4,32 @@
         <hr class="separator" />
     @endif
     {{-- <img src="{{ asset('img/schedule.png') }}" class="img-fluid" alt=""> --}}
-    <table class="table">
-        <tr>
-            <th class="text-center">วันที่</th>
-            <th class="text-center">การดำเนินการ</th>
-        </tr>
-        <tr>
-            <td class="text-center">1 มกราคม 2569</td>
-            <td>เปิดเว็ปไซต์งานประชุมและเปิดให้ลงทะเบียนร่วมงาน</td>
-        </tr>
-        <tr>
-            <td class="text-center">27 กุมภาพันธ์ 2569</td>
-            <td>วันสุดท้ายของการส่งบทคัดย่อของผลงานแบบบรรยายและแบบโปสเตอร์</td>
-        </tr>
-        <tr>
-            <td class="text-center">13 มีนาคม 2569</td>
-            <td>ประกาศผลการคัดเลือกผลงาน</td>
-        </tr>
-        <tr>
-            <td class="text-center">20 มีนาคม 2569</td>
-            <td>วันสุดท้ายของการส่งบทคัดย่อแบบขยาย (extended abstract) และลงทะเบียนเข้าร่วมงาน</td>
-        </tr>
-        <tr>
-            <td class="text-center">29 มีนาคม 2569</td>
-            <td>วันจัดงานประชุม</td>
-        </tr>
-    </table>
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <th width="30%" class="text-center">วันที่</th>
+                <th width="70%" class="text-center">การดำเนินการ</th>
+            </tr>
+            <tr>
+                <td class="text-center">1 มกราคม 2569</td>
+                <td>เปิดเว็ปไซต์งานประชุมและเปิดให้ลงทะเบียนร่วมงาน</td>
+            </tr>
+            <tr>
+                <td class="text-center">27 กุมภาพันธ์ 2569</td>
+                <td>วันสุดท้ายของการส่งบทคัดย่อของผลงานแบบบรรยายและแบบโปสเตอร์</td>
+            </tr>
+            <tr>
+                <td class="text-center">13 มีนาคม 2569</td>
+                <td>ประกาศผลการคัดเลือกผลงาน</td>
+            </tr>
+            <tr>
+                <td class="text-center">20 มีนาคม 2569</td>
+                <td>วันสุดท้ายของการส่งบทคัดย่อแบบขยาย (extended abstract) และลงทะเบียนเข้าร่วมงาน</td>
+            </tr>
+            <tr>
+                <td class="text-center">29 มีนาคม 2569</td>
+                <td>วันจัดงานประชุม</td>
+            </tr>
+        </table>
+    </div>
 </div>
