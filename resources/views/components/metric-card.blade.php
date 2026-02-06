@@ -24,7 +24,7 @@
             <h3 class="mb-0 fw-bold">
                 {{ number_format($value) }}
                 @if (! empty($total))
-                    <small class="text-muted"> / {{ number_format($value) }}</small>
+                    <small class="text-muted"> / {{ number_format($total) }}</small>
                 @endif
             </h3>
         </div>
