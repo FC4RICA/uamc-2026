@@ -13,7 +13,7 @@
             @include('partials.sidebar-member')
         </div>
 
-        <div class="col-12 col-lg-10 overflow-auto">
+        <div class="col-12 col-lg-10">
             @include('partials.carousel')
             @yield('content')
         </div>

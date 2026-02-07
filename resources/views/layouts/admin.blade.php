@@ -13,7 +13,7 @@
             @include('partials.sidebar-admin')
         </div>
 
-        <div class="col-12 col-lg-10 overflow-auto">
+        <div class="col-12 col-lg-10">
             @yield('content')
         </div>
     </div>

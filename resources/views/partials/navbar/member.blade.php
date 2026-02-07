@@ -1,29 +1,37 @@
 <ul class="navbar-nav">
-    <li class="nav-item @yield('home')">
-        <a href="{{ route('member.index') }}" class="nav-link">หน้าแรก</a>
+    <li class="nav-item">
+        <a href="{{ route('member.index') }}" class="nav-link @yield('home')">
+            หน้าแรก
+        </a>
     </li>
     <li class="nav-item">
-        <a href="{{ route('public.home') }}" class="nav-link">กลับหน้าเว็บหลัก</a>
+        <a href="{{ route('public.home') }}" class="nav-link">
+            กลับหน้าเว็บหลัก
+        </a>
     </li>
     @if (Auth::user()->payment_required)
-        <li class="Nav-item @yield('payment')">
-            <a href="{{ route('member.payment.create') }}" class="nav-link">ชำระค่าลงทะเบียน</a>
+        <li class="Nav-item">
+            <a href="{{ route('member.payment.create') }}" class="nav-link @yield('payment')">
+                ชำระค่าลงทะเบียน
+            </a>
         </li>
     @endif
-    <li class="nav-item @yield('profile')">
-        <a href="{{ route('member.profile.edit') }}" class="nav-link">ข้อมูลส่วนตัว</a>
+    <li class="nav-item">
+        <a href="{{ route('member.profile.edit') }}" class="nav-link @yield('profile')">
+            ข้อมูลส่วนตัว
+        </a>
     </li>
     @if (Auth::user()->isPresenter())
-        <li class="nav-item @yield('check')">
+        <li class="nav-item">
             <a href="{{ route('member.submission.abstract.index') }}" disabled
-                class="nav-link {{ Auth::user()->hasSubmission() ?: 'disabled' }}">
+                class="nav-link @yield('check') {{ Auth::user()->hasSubmission() ?: 'disabled' }}">
                 ตรวจสอบการส่งบทคัดย่อ และผลการพิจารณา
             </a>
         </li>
         @abstractSubmissionOpen
-            <li class="nav-item @yield('submission')">
+            <li class="nav-item">
                 <a href="{{ route('member.submission.abstract.create') }}"
-                    class="nav-link {{ Auth::user()->canSubmitAbstract() ?: 'disabled' }}">
+                    class="nav-link @yield('submission') {{ Auth::user()->canSubmitAbstract() ?: 'disabled' }}">
                     ส่งบทคัดย่อ
                 </a>
             </li>

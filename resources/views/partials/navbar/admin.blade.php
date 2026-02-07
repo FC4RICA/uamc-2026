@@ -1,18 +1,26 @@
 <ul class="navbar-nav">
-    <li class="nav-item @yield('dashboard')">
-        <a href='{{ route('admin.index') }}' class="nav-link">หน้าแรก</a>
+    <li class="nav-item">
+        <a href='{{ route('admin.index') }}' class="nav-link @yield('dashboard')">
+            หน้าแรก
+        </a>
     </li>
     <li class="nav-item">
         <a href="{{ route('public.home') }}" class="nav-link">กลับหน้าเว็บหลัก</a>
     </li>
-    <li class="nav-item @yield('participant')">
-        <a href="{{ route('admin.member.index') }}" class="nav-link">จัดการผู้ลงทะเบียน</a>
+    <li class="nav-item">
+        <a href="{{ route('admin.member.index') }}" class="nav-link @yield('participant')">
+            จัดการผู้ลงทะเบียน
+        </a>
     </li>
-    <li class="nav-item @yield('payment')">
-        <a href="{{ route('admin.payment.index') }}" class="nav-link">จัดการการชำระเงิน</a>
+    <li class="nav-item">
+        <a href="{{ route('admin.payment.index') }}" class="nav-link @yield('payment')">
+            จัดการการชำระเงิน
+        </a>
     </li>
-    <li class="nav-item @yield('submission')">
-        <a href="{{ route('admin.submission.index') }}" class="nav-link">จัดการบทคัดย่อ</a>
+    <li class="nav-item">
+        <a href="{{ route('admin.submission.index') }}" class="nav-link @yield('submission')">
+            จัดการบทคัดย่อ
+        </a>
     </li>
     <li>
         <hr class="text-white">
