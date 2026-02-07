@@ -1,4 +1,4 @@
-import { attachLoadingOnSubmit } from "../../utils/form-loading";
+import { attachLoadingOnSubmit } from "../../utils/attachLoadingOnSubmit";
 
 document.addEventListener('DOMContentLoaded', () => {
     attachLoadingOnSubmit('payment-form', '#submit-payment');

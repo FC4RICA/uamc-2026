@@ -1,10 +1,13 @@
 import { initParticipant } from '../../components/participant';
-import { attachLoadingOnSubmit } from "../../utils/form-loading";
+import { attachLoadingOnSubmit } from "../../utils/attachLoadingOnSubmit";
+import { attachConfirmOnSubmit } from '../../utils/attachConfirmOnSubmit';
 
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('#participants-container');
     const addBtn = document.querySelector('#add-participant');
     const template = document.querySelector('#participant-template');
+
+    const initialParticipantsHTML = container.innerHTML;
 
     container
         .querySelectorAll('[data-participant]')
@@ -24,5 +27,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     attachLoadingOnSubmit('edit-submission-form', '#submit-edit-submission');
+
+    attachConfirmOnSubmit('delete-submission-form', 'คุณแน่ใจหรือไม่ว่าต้องการลบบทคัดย่อนี้');
     attachLoadingOnSubmit('delete-submission-form', '#submit-delete-submission');
+
+    const form = document.querySelector('#edit-submission-form');
+    form.addEventListener('reset', () => {
+        setTimeout(() => {
+            container.innerHTML = initialParticipantsHTML;
+
+            container
+                .querySelectorAll('[data-participant]')
+                .forEach(initParticipant);
+        });
+    });
 });
