@@ -26,6 +26,7 @@ class ParticipantForm extends Component
     public function __construct(
         public int|string $index,
         public array $profile = [],
+        public bool $disabled = false,
     ) {
         $this->titles = Title::cases();
         $this->academicTitles = AcademicTitle::cases();
