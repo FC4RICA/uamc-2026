@@ -1,7 +1,3 @@
-@php
-    use App\Enums\ParticipationType;
-@endphp
-
 @extends('layouts.member')
 
 @section('title', 'แก้ไขบทคัดย่อ')
@@ -124,7 +120,7 @@
             </div>
 
             <hr class="separator my-4">
-            <h3 class="mt-4">ข้อมูลผู้ร่วมผลงาน</h3>
+            <h3 class="mt-4">ข้อมูลผู้จัดทำ</h3>
 
             <div id="participants-container">
                 @foreach ($submission->participants as $index => $data)
@@ -149,7 +145,6 @@
         </form>
         <form action="{{ route('member.submission.abstract.delete') }}"
               id="delete-submission-form"
-              onsubmit="return confirm('คุณแน่ใจหรือไม่ว่าต้องการลบบทคัดย่อนี้');"
               class="text-center mt-5" method="POST">
             @csrf
             @method('DELETE')

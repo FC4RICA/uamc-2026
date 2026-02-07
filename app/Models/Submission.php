@@ -65,9 +65,9 @@ class Submission extends Model
         return $query->where('status', SubmissionStatus::ACCEPTED);
     }
 
-    public function scopeRevised(Builder $query): Builder
+    public function scopeReviseRequired(Builder $query): Builder
     {
-        return $query->where('status', SubmissionStatus::REVISED);
+        return $query->where('status', SubmissionStatus::REVISE_REQUIRED);
     }
 
     public function scopeRejected(Builder $query): Builder

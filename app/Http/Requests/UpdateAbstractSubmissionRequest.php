@@ -19,14 +19,12 @@ class UpdateAbstractSubmissionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $submission = Submission::where(
-            'submitted_by',
-            $this->user()->id
-        )->first();
+        $submission = $this->resolveSubmission();
+        if (! $submission) {
+            return false;
+        }
 
-        return $submission
-            ? $this->user()->can('update', $submission)
-            : false;
+        return $this->user()->can('update', $submission);
     }
 
     /**
@@ -183,4 +181,15 @@ class UpdateAbstractSubmissionRequest extends FormRequest
             }
         );
     }
+
+    protected function resolveSubmission(): ?Submission
+{
+    // Admin route
+    if ($this->route('submission') instanceof Submission) {
+        return $this->route('submission');
+    }
+
+    // Member route
+    return Submission::where('submitted_by', $this->user()->id)->first();
+}
 }

@@ -28,40 +28,40 @@ Route::prefix('member')
     ->group(function () {
 
         Route::controller(PaymentController::class)
-        ->prefix('/payments')
-        ->name('payment.')
-        ->group(function () {
-            Route::get('/create', 'create')->name('create');
-            Route::post('/', 'store')->name('store');
-            Route::get('/{payment}/download', 'download')->name('download');
-        });
+            ->prefix('/payments')
+            ->name('payment.')
+            ->group(function () {
+                Route::get('/create', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
+                Route::get('/{payment}/download', 'download')->name('download');
+            });
 
         Route::controller(SubmissionController::class)
-        ->prefix('/submissions')
-        ->name('submission.')
-        ->group(function () {
-            Route::name('abstract.')
-            ->prefix('/abstract')
+            ->prefix('/submissions')
+            ->name('submission.')
             ->group(function () {
-                Route::get('/', 'indexAbstract')->name('index');
-                Route::get('/create', 'createAbstract')->name('create');
-                Route::post('/', 'storeAbstract')->name('store');
-                Route::get('/edit', 'editAbstract')->name('edit');
-                Route::put('/', 'updateAbstract')->name('update');
+                Route::name('abstract.')
+                    ->prefix('/abstract')
+                    ->group(function () {
+                        Route::get('/', 'indexAbstract')->name('index');
+                        Route::get('/create', 'createAbstract')->name('create');
+                        Route::post('/', 'storeAbstract')->name('store');
+                        Route::get('/edit', 'editAbstract')->name('edit');
+                        Route::put('/', 'updateAbstract')->name('update');
+                        
+                        Route::delete('/', 'delete')->name('delete');
+                    });
                 
-                Route::delete('/', 'delete')->name('delete');
+                Route::get('/files/{file}/download', 'fileDownload')->name('file.download');
             });
-            
-            Route::get('/file/{file}/download', 'fileDownload')->name('file.download');
-        });
 
         Route::controller(ProfileController::class)
-        ->prefix('/profiles')
-        ->name('profile.')
-        ->group(function () {
-            Route::get('/edit', 'edit')->name('edit');
-            Route::put('/', 'update')->name('update');
-        });
+            ->prefix('/profiles')
+            ->name('profile.')
+            ->group(function () {
+                Route::get('/edit', 'edit')->name('edit');
+                Route::put('/', 'update')->name('update');
+            });
 
         Route::get('/', [MemberController::class, 'index'])
             ->name('index');
@@ -80,25 +80,29 @@ Route::prefix('admin')
             ->name('setting.toggle');
 
         Route::controller(AdminSubmissionController::class)
-        ->prefix('/submissions')
-        ->name('submission.')
-        ->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::get('/{id}', 'show')->name('show');
-        });
+            ->prefix('/submissions')
+            ->name('submission.')
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/{submission}', 'view')->name('view');
+                Route::get('/{submission}/edit', 'edit')->name('edit');
+                Route::put('/{submission}', 'update')->name('update');
+                Route::get('/{submission}/folder', 'folder')->name('folder');
+                Route::delete('/{submission}', 'delete')->name('delete');
+            });
 
         Route::controller(AdminPaymentController::class)
-        ->prefix('/payments')
-        ->name('payment.')
-        ->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::get('/{id}', 'show')->name('show');
-        });
+            ->prefix('/payments')
+            ->name('payment.')
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/{user}', 'show')->name('show');
+            });
 
         Route::controller(AdminMemberController::class)
-        ->prefix('/member')
-        ->name('member.')
-        ->group(function () {
-            Route::get('/', 'index')->name('index');
-        });
+            ->prefix('/member')
+            ->name('member.')
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+            });
     });
