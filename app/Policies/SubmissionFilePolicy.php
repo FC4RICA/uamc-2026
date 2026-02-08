@@ -9,6 +9,6 @@ class SubmissionFilePolicy
 {
     public function download(User $user, SubmissionFile $submissionFile): bool
     {
-        return $submissionFile->ownerId() === $user->id;
+        return $user->isAdmin() || $submissionFile->ownerId() === $user->id;
     }
 }
