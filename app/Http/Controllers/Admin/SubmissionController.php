@@ -4,14 +4,20 @@ namespace App\Http\Controllers\Admin;
 
 use App\Actions\Submission\DeleteSubmission;
 use App\Actions\Submission\UpdateAbstractSubmission;
+use App\Actions\Submission\UpdateSubmissionStatus;
 use App\Contracts\CloudStorage;
 use App\Data\Submission\UpdateAbstractSubmissionData;
+use App\Enums\SubmissionStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateAbstractSubmissionRequest;
+use App\Http\Requests\UpdateSubmissionStatusRequest;
 use App\Models\AbstractGroup;
 use App\Models\Submission;
+use App\Models\SubmissionRevise;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class SubmissionController extends Controller
 {
@@ -29,7 +35,11 @@ class SubmissionController extends Controller
 
     public function view(Submission $submission): View
     {
-        return view('admin.submission.view', compact('submission'));
+        $previewRevision = new SubmissionRevise([
+            'message' => old('message') ?? '- กรุณาแก้ไขบทคัดย่อให้สอดคล้องกับหัวข้อ',
+        ]);
+
+        return view('admin.submission.view', compact('submission', 'previewRevision'));
     }
 
     public function edit(Submission $submission): View
@@ -73,5 +83,25 @@ class SubmissionController extends Controller
     {
         $action->handle($submission);
         return redirect(route('admin.submission.index'));
+    }
+
+    public function updateStatus(
+        Submission $submission,
+        UpdateSubmissionStatusRequest $request,
+        UpdateSubmissionStatus $action,
+    ): RedirectResponse {
+        Gate::authorize('updateStatus', [
+            $submission,
+            SubmissionStatus::from($request->status),
+        ]);
+
+        $action->handle(
+            $submission, 
+            SubmissionStatus::from($request->validated('status')),
+            $request->validated('message'),
+            Auth::user(),
+        );
+
+        return back()->with('status', 'Submission status updated successfully.');
     }
 }

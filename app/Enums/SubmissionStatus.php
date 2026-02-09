@@ -31,4 +31,32 @@ enum SubmissionStatus: int
             self::REVISE_REQUIRED  => 'info',
         };
     }
+
+    // 
+    public function canTransitionTo(self $target): bool
+    {
+        return in_array($target, match ($this) {
+            self::PENDING => [
+                self::ACCEPTED,
+                self::REJECTED,
+                self::REVISE_REQUIRED,
+            ],
+
+            self::REVISE_REQUIRED => [
+                self::PENDING,
+                self::ACCEPTED,
+                self::REJECTED,
+            ],
+
+            self::ACCEPTED => [
+                self::PENDING,   // admin rollback
+            ],
+
+            self::REJECTED => [
+                self::PENDING,   // admin rollback
+            ],
+
+            self::DELETED => [],
+        }, true);
+    }
 }

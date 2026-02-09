@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[UsePolicy(SubmissionPolicy::class)]
@@ -125,5 +126,22 @@ class Submission extends Model
     public function abstractFiles(): HasMany
     {
         return $this->abstractRound()->files()->orderBy('version');
+    }
+
+    public function revises(): HasMany
+    {
+        return $this->hasMany(SubmissionRevise::class);
+    }
+
+    public function activeRevise(): HasOne
+    {
+        return $this->hasOne(SubmissionRevise::class)
+            ->whereNull('resolved_at')
+            ->latest('round');
+    }
+
+    public function hasActiveRevision(): bool
+    {
+        return $this->status === SubmissionStatus::REVISE_REQUIRED;
     }
 }

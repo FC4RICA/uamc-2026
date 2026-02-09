@@ -40,4 +40,13 @@ class SubmissionPolicy
         return $user->id === $submission->submitted_by 
             && $submission->status !== SubmissionStatus::DELETED;
     }
+
+    public function updateStatus(User $user, Submission $submission, SubmissionStatus $target): bool
+    {
+        if (! $user->is_admin) {
+            return false;
+        }
+
+        return $submission->status->canTransitionTo($target);
+    }
 }
