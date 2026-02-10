@@ -59,4 +59,14 @@ enum SubmissionStatus: int
             self::DELETED => [],
         }, true);
     }
+
+    public static function filterable(): array
+    {
+        return [
+            self::PENDING,
+            self::ACCEPTED,
+            self::REJECTED,
+            self::REVISE_REQUIRED,
+        ];
+    }
 }

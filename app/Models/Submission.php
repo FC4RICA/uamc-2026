@@ -144,4 +144,27 @@ class Submission extends Model
     {
         return $this->status === SubmissionStatus::REVISE_REQUIRED;
     }
+
+    public function scopeFilter($query, array $filters): Builder
+    {
+        return $query
+            ->when($filters['status'] ?? null, fn ($q, $status) =>
+                $q->where('status', $status)
+            )
+            ->when($filters['group'] ?? null, function ($q, $group) {
+                $q->whereHas('abstractGroups', fn ($q) =>
+                    $q->where('abstract_group_id', $group)
+                );
+            })
+            ->when($filters['search'] ?? null, function ($q, $search) {
+                $q->where(function ($q) use ($search) {
+                    $q->where('title_th', 'ilike', "%{$search}%")
+                    ->orWhere('title_en', 'ilike', "%{$search}%")
+                    ->orWhereHas('user.profile', fn ($q) =>
+                        $q->where('firstname', 'ilike', "%{$search}%")
+                            ->orWhere('lastname', 'ilike', "%{$search}%")
+                    );
+                });
+            });
+    }
 }

@@ -16,21 +16,27 @@ use App\Models\Submission;
 use App\Models\SubmissionRevise;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class SubmissionController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         $submissions = Submission::active()
             ->with([
                 'user.profile',
                 'abstractGroups',
             ])
-            ->get();
+            ->filter($request->only(['status', 'group', 'search']))
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
+        
+        $abstractGroups = AbstractGroup::orderBy('id')->get();
 
-        return view('admin.submission.index', compact('submissions'));
+        return view('admin.submission.index', compact('submissions', 'abstractGroups'));
     }
 
     public function view(Submission $submission): View

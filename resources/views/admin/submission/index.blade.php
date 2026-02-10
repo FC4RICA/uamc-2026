@@ -4,6 +4,50 @@
 
 @section('content')
     <div class="container my-4">
+        {{-- filter --}}
+        <form method="GET" class="row g-2 mb-3">
+            <div class="col-md-3">
+                <input
+                    type="text"
+                    name="search"
+                    class="form-control"
+                    placeholder="ค้นหาชื่อบทคัดย่อ / ผู้จัดทำ"
+                    value="{{ request('search') }}"
+                >
+            </div>
+            <div class="col-md-2">
+                <select name="status" class="form-select">
+                    <option value="">ทุกสถานะ</option>
+                    @foreach(\App\Enums\SubmissionStatus::filterable() as $status)
+                        <option value="{{ $status->value }}"
+                            @selected(request('status') == $status->value)>
+                            {{ $status->label() }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select name="group" class="form-select">
+                    <option value="">ทุกกลุ่มนำเสนอ</option>
+                    @foreach($abstractGroups as $group)
+                        <option value="{{ $group->id }}"
+                            @selected(request('group') == $group->id)>
+                            {{ $group->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-2 col-lg-1">
+                <button class="btn btn-primary w-100">ค้นหา</button>
+            </div>
+            <div class="col-md-2 col-lg-1">
+                <a href="{{ route('admin.submission.index') }}" class="btn btn-outline-secondary w-100">
+                    ล้างค่า
+                </a>
+            </div>
+        </form>
+
+        {{-- table --}}
         <div class="table-responsive">
             <table class="table table-striped table-bordered fs-6 text table-hover">
                 <thead class="table-light align-middle">
@@ -24,7 +68,7 @@
                     @foreach($submissions as $i => $submission)
                         <tr>
                             <td class="text-center">
-                                {{ $i + 1 }}
+                                {{ $submissions->firstItem() + $i }}
                             </td>
                             <td>
                                 {{ $submission->title_th }}
@@ -65,6 +109,11 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+
+        {{-- pagination --}}
+        <div class="d-flex justify-content-center mt-3">
+            {{ $submissions->links() }}
         </div>
     </div>
 @endsection

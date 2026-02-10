@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Listeners\RedirectAfterRegister;
 use App\Services\AccessControl;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Event;
@@ -34,5 +35,7 @@ class AppServiceProvider extends ServiceProvider
 
         Blade::if('registrationOpen', fn() => AccessControl::registrationOpen());
         Blade::if('abstractSubmissionOpen', fn() => AccessControl::abstractSubmissionOpen());
+
+        Paginator::useBootstrap();
     }
 }
