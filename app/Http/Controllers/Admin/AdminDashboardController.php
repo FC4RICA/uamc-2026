@@ -31,7 +31,7 @@ class AdminDashboardController extends Controller
             'submissions' => Submission::active()->count(),
 
             'pending_submission' => Submission::active()->pending()->count(),
-            'revised_submission' => Submission::active()->revised()->count(),
+            'revised_submission' => Submission::active()->reviseRequired()->count(),
             'accepted_submission' => Submission::active()->accepted()->count(),
             'rejected_submission' => Submission::active()->rejected()->count(),
 
