@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Admin\MemberController as AdminMemberController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubmissionController as AdminSubmissionController;
@@ -84,7 +84,7 @@ Route::prefix('admin')
             ->name('submission.')
             ->group(function () {
                 Route::get('/', 'index')->name('index');
-                Route::get('/{submission}', 'view')->name('view');
+                Route::get('/{submission}', 'show')->name('show');
                 Route::get('/{submission}/edit', 'edit')->name('edit');
                 Route::put('/{submission}', 'update')->name('update');
                 Route::get('/{submission}/folder', 'folder')->name('folder');
@@ -100,9 +100,9 @@ Route::prefix('admin')
                 Route::get('/{user}', 'show')->name('show');
             });
 
-        Route::controller(AdminMemberController::class)
-            ->prefix('/member')
-            ->name('member.')
+        Route::controller(AdminUserController::class)
+            ->prefix('/users')
+            ->name('user.')
             ->group(function () {
                 Route::get('/', 'index')->name('index');
             });

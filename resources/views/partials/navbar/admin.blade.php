@@ -8,8 +8,8 @@
         <a href="{{ route('public.home') }}" class="nav-link">กลับหน้าเว็บหลัก</a>
     </li>
     <li class="nav-item">
-        <a href="{{ route('admin.member.index') }}" class="nav-link @yield('participant')">
-            จัดการผู้ลงทะเบียน
+        <a href="{{ route('admin.user.index') }}" class="nav-link @yield('user')">
+            จัดการผู้ใช้งาน
         </a>
     </li>
     <li class="nav-item">

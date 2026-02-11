@@ -96,7 +96,7 @@
                                 <h5 class="m-0"><x-status-badge :status="$submission->status" /></h5>
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('admin.submission.view', $submission) }}">
+                                <a href="{{ route('admin.submission.show', $submission) }}">
                                     <h5 class="m-0"><i class="fa fa-edit"></i></h5>
                                 </a>
                             </td>

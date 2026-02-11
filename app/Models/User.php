@@ -185,4 +185,50 @@ class User extends Authenticatable
     {
         return $this->submission !== null;
     }
+
+    public function scopeFilter($query, array $filters): Builder
+    {
+        return $query
+            ->when($filters['participationType'] ?? null, function ($q, $type) {
+                $q->whereHas('profile', function ($profileQuery) use ($type) {
+                    $profileQuery->where('participation_type', $type);
+                });
+            })
+            ->when($filters['submission'] ?? null, function ($q, $submission) {
+                if ($submission === 'submitted') {
+                    $q->whereHas('submission');
+                }
+                if ($submission === 'not_submitted') {
+                    $q->whereDoesntHave('submission');
+                }
+            })
+            ->when($filters['payment'] ?? null, function ($q, $payment) {
+                if ($payment === 'not_required') {
+                    $q->where('payment_required', false);
+                }
+                if ($payment === 'unpaid') {
+                    $q->paymentRequired()
+                    ->whereDoesntHave('payments');
+                }
+                if ($payment === 'submitted') {
+                    $q->paymentRequired()
+                    ->whereHas('payments', fn ($p) =>
+                        $p->where('status', PaymentStatus::SUBMITTED)
+                    );
+                }
+                if ($payment === 'verified') {
+                    $q->whereHas('payments', fn ($p) =>
+                        $p->where('status', PaymentStatus::VERIFIED)
+                    );
+                }
+            })
+            ->when($filters['role'] ?? null, function ($q, $role) {
+                if ($role === 'member') {
+                    $q->where('is_admin', false);
+                }
+                if ($role === 'admin') {
+                    $q->where('is_admin', true);
+                }
+            });
+    }
 }

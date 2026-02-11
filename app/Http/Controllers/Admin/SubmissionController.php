@@ -45,7 +45,7 @@ class SubmissionController extends Controller
             'message' => old('message') ?? '- กรุณาแก้ไขบทคัดย่อให้สอดคล้องกับหัวข้อ',
         ]);
 
-        return view('admin.submission.view', compact('submission', 'previewRevision'));
+        return view('admin.submission.show', compact('submission', 'previewRevision'));
     }
 
     public function edit(Submission $submission): View
