@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Enums\ParticipationType;
 use App\Enums\PaymentStatus;
 use App\Enums\PresentationType;
-use App\Enums\SubmissionStatus;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -178,7 +177,7 @@ class User extends Authenticatable
     public function submission(): HasOne
     {
         return $this->hasOne(Submission::class, 'submitted_by', 'id')
-            ->where('status', '!=', SubmissionStatus::DELETED);
+            ->active();
     }
 
     public function hasSubmission(): bool
@@ -186,12 +185,17 @@ class User extends Authenticatable
         return $this->submission !== null;
     }
 
-    public function scopeFilter($query, array $filters): Builder
+    public function scopeFilter(Builder $query, array $filters): Builder
     {
         return $query
             ->when($filters['participationType'] ?? null, function ($q, $type) {
                 $q->whereHas('profile', function ($profileQuery) use ($type) {
                     $profileQuery->where('participation_type', $type);
+                });
+            })
+            ->when($filters['presentationType'] ?? null, function ($q, $type) {
+                $q->whereHas('profile', function ($profileQuery) use ($type) {
+                    $profileQuery->where('presentation_type', $type);
                 });
             })
             ->when($filters['submission'] ?? null, function ($q, $submission) {
@@ -203,23 +207,24 @@ class User extends Authenticatable
                 }
             })
             ->when($filters['payment'] ?? null, function ($q, $payment) {
-                if ($payment === 'not_required') {
-                    $q->where('payment_required', false);
-                }
-                if ($payment === 'unpaid') {
-                    $q->paymentRequired()
-                    ->whereDoesntHave('payments');
-                }
-                if ($payment === 'submitted') {
-                    $q->paymentRequired()
-                    ->whereHas('payments', fn ($p) =>
-                        $p->where('status', PaymentStatus::SUBMITTED)
-                    );
-                }
-                if ($payment === 'verified') {
-                    $q->whereHas('payments', fn ($p) =>
-                        $p->where('status', PaymentStatus::VERIFIED)
-                    );
+                switch ($payment) {
+                    case 'not_required':
+                        $q->where('payment_required', false);
+                        break;
+                    case 'unpaid':
+                        $q->paymentRequired()->whereDoesntHave('payments');
+                        break;
+                    case 'submitted':
+                        $q->paymentRequired()
+                            ->whereHas('payments', fn ($p) =>
+                                $p->where('status', PaymentStatus::SUBMITTED)
+                            );
+                        break;
+                    case 'verified':
+                        $q->whereHas('payments', fn ($p) =>
+                            $p->where('status', PaymentStatus::VERIFIED)
+                        );
+                        break;
                 }
             })
             ->when($filters['role'] ?? null, function ($q, $role) {
@@ -230,5 +235,22 @@ class User extends Authenticatable
                     $q->where('is_admin', true);
                 }
             });
+    }
+
+    public function paymentStatus(): string
+    {
+        if (! $this->payment_required) {
+            return 'ไม่ต้องชำระ';
+        }
+
+        if (! $this->hasPayment()) {
+            return 'ยังไม่ได้ชำระ';
+        }
+
+        if (! $this->hasVerifiedPayment()) {
+            return 'ยังไม่ได้ตรวจสอบ';
+        }
+
+        return 'ชำระแล้ว';
     }
 }

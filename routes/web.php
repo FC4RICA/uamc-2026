@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubmissionController as AdminSubmissionController;
 use Illuminate\Support\Facades\Route;
@@ -106,4 +107,13 @@ Route::prefix('admin')
             ->group(function () {
                 Route::get('/', 'index')->name('index');
             });
+
+        Route::controller(AdminProfileController::class)
+            ->prefix('/profiles')
+            ->name('profile.')
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/{profile}', 'show')->name('show');
+            });
+            
     });

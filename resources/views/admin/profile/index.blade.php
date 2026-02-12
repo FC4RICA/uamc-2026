@@ -1,21 +1,19 @@
 @extends('layouts.admin')
-@section('title', 'บัญชีผู้ใช้งาน')
-@section('user', 'active')
+@section('title', 'ผู้เข้าร่วมงาน')
+@section('profile', 'active')
 
 @section('content')
     <div class="container my-4">
         {{-- filter --}}
         <form method="GET" class="row g-2 mb-3">
-            <div class="col-md-3 col-lg-2">
-                <select name="role" class="form-select">
-                    <option value="">ผู้ใช้งานทั้งหมด</option>
-                    <option value="member" @selected(request('role') == 'member')>
-                        สมาชิก
-                    </option>
-                    <option value="admin" @selected(request('role') == 'admin')>
-                        แอดมิน
-                    </option>
-                </select>
+            <div class="col-md-3">
+                <input
+                    type="text"
+                    name="search"
+                    class="form-control"
+                    placeholder="ค้นหาชื่อผู้สมัคร / มหาวิทยาลัย"
+                    value="{{ request('search') }}"
+                >
             </div>
             <div class="col-md-3 col-lg-2">
                 <select name="participationType" class="form-select">
@@ -40,17 +38,6 @@
                 </select>
             </div>
             <div class="col-md-3 col-xl-2">
-                <select name="submission" class="form-select">
-                    <option value="">สถานะการส่งบทคัดย่อทั้งหมด</option>
-                    <option value="submitted" @selected(request('submission') == 'submitted')>
-                        ส่งแล้ว
-                    </option>
-                    <option value="not_submitted" @selected(request('submission') == 'not_submitted')>
-                        ยังไม่ได้ส่ง
-                    </option>
-                </select>
-            </div>
-            <div class="col-md-3 col-xl-2">
                 <select name="payment" class="form-select">
                     <option value="">สถานะการชำระเงินทั้งหมด</option>
                     <option value="not_required" @selected(request('payment') == 'not_required')>
@@ -71,7 +58,7 @@
                 <button class="btn btn-primary w-100">ค้นหา</button>
             </div>
             <div class="col-md-2 col-lg-1">
-                <a href="{{ route('admin.user.index') }}" class="btn btn-outline-secondary w-100">
+                <a href="{{ route('admin.profile.index') }}" class="btn btn-outline-secondary w-100">
                     ล้างค่า
                 </a>
             </div>
@@ -83,45 +70,61 @@
                 <thead class="table-light align-middle">
                     <tr>
                         <th class="text-center">#</th>
-                        <th>อีเมล</th>
-                        <th>ประเภทผู้ใช้</th>
+                        <th>ชื่อ-นามสกุล</th>
+                        <th>มหาวิทยาลัย/หน่วยงาน</th>
                         <th>ประเภทการเข้าร่วม</th>
                         <th>ประเภทการนำเสนอ</th>
-                        <th>ส่งบทคัดย่อ</th>
+                        <th>บทคัดย่อ</th>
                         <th>การชำระเงิน</th>
+                        <th>ประเภทโปรไฟล์</th>
                         <th>สร้างเมื่อ</th>
-                        <th>ดูข้อมูลผู้ใช้</th>
+                        <th>แก้ไข</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($users as $i => $user)
+                    @foreach($profiles as $i => $p)
                         <tr>
                             <td class="text-center">
-                                {{ $users->firstItem() + $i }}
+                                {{ $profiles->firstItem() + $i }}
                             </td>
                             <td>
-                                {{ $user->email }}
+                                {{ implode(' ', [($p->academic_title->acronyms() ?? $p->title->acronyms()), $p->firstname, $p->lastname]) }}
                             </td>
                             <td>
-                                {{ $user->isAdmin() ? 'แอดมิน' : 'สมาชิก' }}
+                                {{ $p->organization->name ?? $p->organization_other }}
                             </td>
                             <td>
-                                {{ $user->profile?->participation_type->label() ?? '-' }}
+                                {{ $p->participation_type->label() }}
                             </td>
                             <td>
-                                {{ $user->profile?->presentation_type?->minLabel() ?? '-' }}
+                                {{ $p->presentation_type?->minLabel() ?? '-' }}
                             </td>
                             <td>
-                                {{ $user->isPresenter() ? ($user->hasSubmission() ? 'ส่งแล้ว' : 'ยังไม่ได้ส่ง') : '-' }}
+                                @if ($p->submission())
+                                    <a href="{{ route('admin.submission.show', $p->submission()) }}">
+                                        <span class="badge bg-{{ $p->submission()->status->tone() }}">
+                                            {{ $p->submission()->status->label() }}
+                                        </span>
+                                    </a>
+                                @else
+                                    <span>-</span>
+                                @endif
                             </td>
                             <td>
-                                {{ $user->paymentStatus() }}
+                                {{ $p->creator->paymentStatus() }}
                             </td>
                             <td>
-                                <small>{{ $user->created_at }}</small>
+                                @if($p->user_id)
+                                    <span class="badge bg-primary">บัญชีผู้ใช้</span>
+                                @else
+                                    <span class="badge bg-secondary">ผู้ร่วมผลงาน</span>
+                                @endif
+                            </td>
+                            <td>
+                                <small>{{ $p->created_at }}</small>
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('admin.profile.show', $user) }}">
+                                <a href="{{ route('admin.profile.show', $p) }}">
                                     <h5 class="m-0"><i class="fa fa-edit"></i></h5>
                                 </a>
                             </td>
@@ -133,7 +136,7 @@
 
         {{-- pagination --}}
         <div class="d-flex justify-content-center mt-3">
-            {{ $users->links() }}
+            {{ $profiles->links() }}
         </div>
     </div>
 @endsection

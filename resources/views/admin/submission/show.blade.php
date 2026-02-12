@@ -1,7 +1,7 @@
 @use('App\Enums\SubmissionStatus')
 
 @extends('layouts.admin')
-@section('title', 'จัดการบทความ')
+@section('title', 'รายละเอียดบทคัดย่อ')
 @section('submission', 'active')
 
 @section('content')

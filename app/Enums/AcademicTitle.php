@@ -18,4 +18,14 @@ enum AcademicTitle:int
             self::ASST_PROF => 'ผู้ช่วยศาสตราจารย์',
         };
     }
+
+    public function acronyms(): ?string
+    {
+        return match ($this) {
+            self::NONE => null,
+            self::PROF => 'ศ.',
+            self::ASSOC_PROF => 'รศ.',
+            self::ASST_PROF => 'ผศ.',
+        };
+    }
 }

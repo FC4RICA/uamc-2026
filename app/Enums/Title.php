@@ -18,4 +18,14 @@ enum Title:int
             self::OTHER => 'อื่น ๆ',
         };
     }
+
+    public function acronyms(): ?string
+    {
+        return match ($this) {
+            self::MR => 'นาย',
+            self::MRS => 'นาง',
+            self::MISS => 'น.ส.',
+            self::OTHER => null,
+        };
+    }
 }

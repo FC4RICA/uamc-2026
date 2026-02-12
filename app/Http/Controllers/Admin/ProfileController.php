@@ -3,26 +3,37 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Organization;
+use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class ProfileController extends Controller
 {
     public function index(Request $request): View
     {
-        $users = User::with('profile')
+        $profiles = Profile::realParticipants()
+            ->with([
+                'organization', 
+                'user.payments', 
+                'submissions'
+            ])
             ->filter($request->only([
                 'participationType', 
                 'presentationType', 
-                'submission', 
                 'payment', 
-                'role'
+                'search'
             ]))
             ->latest()
             ->paginate(15)
             ->withQueryString();
 
-        return view('admin.user.index', compact('users'));
+        return view('admin.profile.index', compact('profiles'));
+    }
+
+    public function show(Profile $profile)
+    {
+        return;
     }
 }

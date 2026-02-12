@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'จัดการบทความ')
+@section('title', 'รายการบทคัดย่อ')
 @section('submission', 'active')
 
 @section('content')
@@ -60,7 +60,8 @@
                         <th>กลุ่มนำเสนอหลัก</th>
                         <th>กลุ่มนำเสนอรอง</th>
                         <th>สถานะ</th>
-                        <th>จัดการ</th>
+                        <th>สร้างเมื่อ</th>
+                        <th>แก้ไข</th>
                         <th>ไฟล์</th>
                     </tr>
                 </thead>
@@ -94,6 +95,9 @@
                             </td>
                             <td class="text-center">
                                 <h5 class="m-0"><x-status-badge :status="$submission->status" /></h5>
+                            </td>
+                            <td>
+                                <small>{{ $submission->created_at }}</small>
                             </td>
                             <td class="text-center">
                                 <a href="{{ route('admin.submission.show', $submission) }}">

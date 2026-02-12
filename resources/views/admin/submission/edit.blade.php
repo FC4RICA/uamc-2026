@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'จัดการบทความ')
+@section('title', 'แก้ไขบทคัดย่อ')
 @section('submission', 'active')
 
 @section('content')

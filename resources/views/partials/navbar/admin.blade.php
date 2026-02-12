@@ -9,17 +9,22 @@
     </li>
     <li class="nav-item">
         <a href="{{ route('admin.user.index') }}" class="nav-link @yield('user')">
-            จัดการผู้ใช้งาน
+            บัญชีผู้ใช้งาน
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ route('admin.profile.index') }}" class="nav-link @yield('profile')">
+            ผู้เข้าร่วมงาน
         </a>
     </li>
     <li class="nav-item">
         <a href="{{ route('admin.payment.index') }}" class="nav-link @yield('payment')">
-            จัดการการชำระเงิน
+            การชำระเงิน
         </a>
     </li>
     <li class="nav-item">
         <a href="{{ route('admin.submission.index') }}" class="nav-link @yield('submission')">
-            จัดการบทคัดย่อ
+            บทคัดย่อ
         </a>
     </li>
     <li>

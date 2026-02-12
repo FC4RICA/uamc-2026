@@ -127,5 +127,5 @@ class UpdateAbstractSubmission
                 $pivotData[$groupId] = ['priority' => $priority];
         }
         $submission->abstractGroups()->sync($pivotData);
-}
+    }
 }

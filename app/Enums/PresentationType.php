@@ -22,4 +22,12 @@ enum PresentationType: int
             self::POSTER => 'P',
         };
     }
+
+    public function minLabel(): string
+    {
+        return match ($this) {
+            self::ORAL => 'บรรยาย',
+            self::POSTER => 'โปสเตอร์',
+        };
+    }
 }
