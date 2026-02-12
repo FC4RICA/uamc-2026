@@ -39,7 +39,7 @@ class SubmissionController extends Controller
         return view('admin.submission.index', compact('submissions', 'abstractGroups'));
     }
 
-    public function view(Submission $submission): View
+    public function show(Submission $submission): View
     {
         $previewRevision = new SubmissionRevise([
             'message' => old('message') ?? '- กรุณาแก้ไขบทคัดย่อให้สอดคล้องกับหัวข้อ',

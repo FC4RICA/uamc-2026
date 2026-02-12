@@ -10,10 +10,12 @@ use App\Enums\PresentationType;
 use App\Enums\Title;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Profile extends Model
 {
-    use HasUuids;
+    use HasUuids, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

@@ -51,6 +51,32 @@ class Submission extends Model
         ];
     }
 
+    protected static function booted()
+    {
+        static::deleting(function ($submission) {
+            $submission->profiles()
+                ->whereNull('user_id')
+                ->get()
+                ->each(function ($profile) use ($submission) {
+
+                    if ($submission->isForceDeleting()) {
+                        $profile->forceDelete();
+                    } else {
+                        $profile->delete();
+                    }
+                });
+        });
+
+        static::restored(function ($submission) {
+            $submission->profiles()
+                ->withTrashed()
+                ->whereNull('user_id')
+                ->get()
+                ->each
+                ->restore();
+        });
+    }
+
     public function scopeActive(Builder $query): mixed
     {
         return $query->whereNull('deleted_at');
@@ -145,7 +171,7 @@ class Submission extends Model
         return $this->status === SubmissionStatus::REVISE_REQUIRED;
     }
 
-    public function scopeFilter($query, array $filters): Builder
+    public function scopeFilter(Builder $query, array $filters): Builder
     {
         return $query
             ->when($filters['status'] ?? null, fn ($q, $status) =>
