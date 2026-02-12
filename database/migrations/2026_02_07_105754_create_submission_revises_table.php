@@ -17,9 +17,9 @@ return new class extends Migration
             $table->unsignedTinyInteger('round');
             $table->string('target_email')->nullable();
             $table->text('message');
-            $table->foreignId('requested_by')
+            $table->foreignUuid('requested_by')
                 ->nullable()
-                ->constrained('users')
+                ->constrained('users', 'id')
                 ->nullOnDelete();
             $table->timestamp('resolved_at')->nullable();
             $table->timestamps();
