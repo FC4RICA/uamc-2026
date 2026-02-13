@@ -38,7 +38,7 @@ class SubmissionPolicy
     public function delete(User $user, Submission $submission): bool
     {
         return $user->id === $submission->submitted_by 
-            && $submission->status !== SubmissionStatus::DELETED;
+            && ! $submission->trashed();
     }
 
     public function updateStatus(User $user, Submission $submission, SubmissionStatus $target): bool

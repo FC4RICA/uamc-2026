@@ -124,7 +124,7 @@
                                 <small>{{ $p->created_at }}</small>
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('admin.profile.show', $p) }}">
+                                <a href="{{ route('admin.profile.edit', $p) }}">
                                     <h5 class="m-0"><i class="fa fa-edit"></i></h5>
                                 </a>
                             </td>

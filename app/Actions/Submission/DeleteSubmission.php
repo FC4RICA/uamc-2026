@@ -11,10 +11,6 @@ class DeleteSubmission
     public function handle(Submission $submission): void
     {
         DB::transaction(function () use ($submission) {
-            $submission->update([
-                'status' => SubmissionStatus::DELETED,
-            ]);
-
             $submission->delete(); // soft delete
         });
 

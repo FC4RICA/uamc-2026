@@ -14,6 +14,7 @@ export default defineConfig({
                 'resources/js/pages/member/edit-submission.js',
                 'resources/js/pages/member/profile.js',
                 'resources/js/pages/admin/view-submission.js',
+                'resources/js/pages/admin/user.js',
             ],
             refresh: true,
         }),

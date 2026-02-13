@@ -7,7 +7,7 @@ enum SubmissionStatus: int
     case PENDING = 1;
     case ACCEPTED = 2;
     case REJECTED = 3;
-    case DELETED = 4;
+    case DELETED = 4; // unused status, Using deleted_at field and Submission->trashed() instead. Keeping for old db
     case REVISE_REQUIRED = 5;
 
     public function label(): string

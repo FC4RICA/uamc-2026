@@ -106,6 +106,9 @@ Route::prefix('admin')
             ->name('user.')
             ->group(function () {
                 Route::get('/', 'index')->name('index');
+                Route::get('/{user}', 'edit')->name('edit');
+                Route::patch('/{user}/email', 'updateEmail')->name('update-email');
+                Route::delete('/{user}', 'delete')->name('delete');
             });
 
         Route::controller(AdminProfileController::class)
@@ -113,7 +116,8 @@ Route::prefix('admin')
             ->name('profile.')
             ->group(function () {
                 Route::get('/', 'index')->name('index');
-                Route::get('/{profile}', 'show')->name('show');
+                Route::get('/{profile}', 'edit')->name('edit');
+                Route::put('/{profile}', 'update')->name('update');
             });
             
     });

@@ -79,7 +79,10 @@ class Submission extends Model
 
     public function scopeActive(Builder $query): mixed
     {
-        return $query->whereNull('deleted_at');
+        return $query->whereNull('deleted_at')
+            ->whereHas('user', function ($q) {
+                $q->whereNull('deleted_at');
+            });
     }
 
     public function scopePending(Builder $query): Builder

@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\AcademicTitle;
+use App\Enums\Education;
+use App\Enums\ParticipationType;
+use App\Enums\PresentationType;
+use App\Enums\Title;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProfileRequest;
+use App\Models\Occupation;
 use App\Models\Organization;
 use App\Models\Profile;
-use App\Models\User;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -32,8 +39,28 @@ class ProfileController extends Controller
         return view('admin.profile.index', compact('profiles'));
     }
 
-    public function show(Profile $profile)
+    public function edit(Profile $profile)
     {
-        return;
+        $user = $profile->creator;
+
+        $titles = Title::cases();
+        $academicTitles = AcademicTitle::cases();
+        $education = Education::cases();
+        $participationType = ParticipationType::cases();
+        $presentationType = PresentationType::cases();
+        $organizations = Organization::all();
+        $occupations = Occupation::all();
+
+        return view('admin.profile.edit', compact(
+            'user', 'profile', 'titles', 'academicTitles', 'education',
+            'participationType', 'presentationType', 'organizations', 'occupations'
+        ));
+    }
+
+    public function update(ProfileRequest $request, Profile $profile): RedirectResponse
+    {
+        $profile->update($request->validated());
+
+        return back()->with('status', 'Profile updated successfully.');
     }
 }

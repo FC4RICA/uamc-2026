@@ -1,10 +1,5 @@
-@php
-    use App\Enums\ParticipationType;
-@endphp
-
-@extends('layouts.member')
+@extends('layouts.admin')
 @section('title', 'แก้ไขข้อมูล')
-
 @section('profile', 'active')
 
 @section('content')
@@ -13,18 +8,9 @@
             <h2><strong>แก้ไขข้อมูล</strong></h2>
         </div>
         <hr class="separator">
-        <form id="edit-profile-form" name="edit-profile-form" action="{{ route('member.profile.update') }}" method="POST">
+        <form id="edit-profile-form" name="edit-profile-form" action="{{ route('admin.profile.update', $profile) }}" method="POST">
             @csrf
             @method('PUT')
-            <h3 class="mt-4">ข้อมูลการเข้าใช้งาน</h3>
-            <div class="form-group">
-                <label>อีเมล</label>
-                <input value="{{ $user->email }}" type="email" disabled
-                    class="form-control @error('email') is-invalid @enderror">
-                @error('email')
-                    <label class="error">{{ $message }}</label>
-                @enderror
-            </div>
 
             <h3 class="mt-4">ข้อมูลส่วนตัว</h3>
             <div class="row">
@@ -165,7 +151,7 @@
                     <label>ประเภทการเข้าร่วม</label>
                     <select name="participation_type" data-target="[data-presentation-type]"
                         class="form-select @error('participation_type') is-invalid @enderror"
-                        required data-toggle-select data-value="{{ ParticipationType::PRESENTER->value }}"
+                        required data-toggle-select data-value="{{ \App\Enums\ParticipationType::PRESENTER->value }}"
                         @disabled($user->hasSubmission())>
                         @foreach ($participationType as $role)
                             <option value="{{ $role->value }}" 
@@ -216,22 +202,11 @@
                 </div>
             </div>
 
-            {{-- <h3  class="mt-4">ระบุรหัสผ่านเพื่อเปลี่ยนแปลงข้อมูล</h3>
-            <div class="form-group">
-                <label for="password">รหัสผ่าน</label>
-                <input id="password" name="password" type="password" class="form-control" placeholder="รหัสผ่าน"
-                    require>
-            </div>
-            <div class="form-group">
-                <label for="confirmpassword">ยืนยันรหัสผ่าน</label>
-                <input id="confirmpassword" name="confirmpassword" type="password" class="form-control"
-                    placeholder="รหัสผ่าน" require>
-            </div> --}}
-
             <div class="text-center mt-4">
                 <div class="form-group">
                     <button id="submit-profile" class="btn btn-warning" type="submit">แก้ไขข้อมูล</button>
                     <button class="btn btn-danger" type="reset">รีเซ็ตการแก้ไข</button>
+                    <a href="{{ route('admin.profile.index') }}" class="btn btn-secondary">ไปหน้ารายชื่อผู้เข้าร่วมงาน</a>
                 </div>
             </div>
         </form>

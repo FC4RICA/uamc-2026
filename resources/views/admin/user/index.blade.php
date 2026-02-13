@@ -90,7 +90,7 @@
                         <th>ส่งบทคัดย่อ</th>
                         <th>การชำระเงิน</th>
                         <th>สร้างเมื่อ</th>
-                        <th>ดูข้อมูลผู้ใช้</th>
+                        <th>แก้ไข</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -121,7 +121,7 @@
                                 <small>{{ $user->created_at }}</small>
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('admin.profile.show', $user) }}">
+                                <a href="{{ route('admin.user.edit', $user) }}">
                                     <h5 class="m-0"><i class="fa fa-edit"></i></h5>
                                 </a>
                             </td>
