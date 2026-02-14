@@ -43,10 +43,13 @@ class UpdateSubmissionStatus
     private function revise(Submission $submission, string $message, User $actor): void
     {
         DB::transaction(function () use ($submission, $message, $actor) {
+            $submission->increment('current_revision_round');
             $submission->update([
                 'status' => SubmissionStatus::REVISE_REQUIRED,
                 'current_revision_round' => $submission->current_revision_round + 1,
             ]);
+
+            $submission->refresh();
 
             $revision = SubmissionRevise::create([
                 'submission_id' => $submission->id,
