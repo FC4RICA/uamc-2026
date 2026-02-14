@@ -28,7 +28,7 @@ enum SubmissionStatus: int
             self::ACCEPTED => 'success',
             self::REJECTED => 'danger',
             self::DELETED  => 'muted',
-            self::REVISE_REQUIRED  => 'info',
+            self::REVISE_REQUIRED  => 'primary',
         };
     }
 

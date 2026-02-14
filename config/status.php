@@ -7,5 +7,6 @@ return [
         'danger'  => 'bg-danger',
         'info'    => 'bg-info text-dark',
         'muted'   => 'bg-secondary',
+        'primary' => 'bg-primary',
     ],
 ];

@@ -50,7 +50,7 @@
                 <form method="POST" id="pending-submission-form" action="{{ route('admin.submission.status.update', $submission) }}">
                     @csrf
                     <input type="hidden" name="status" value="{{ SubmissionStatus::PENDING->value }}">
-                    <button class="btn btn-danger" id="submit-pending-submission">
+                    <button class="btn btn-warning" id="submit-pending-submission">
                         ย้อนสถานะเป็นรอพิจารณา
                     </button>
                 </form>
