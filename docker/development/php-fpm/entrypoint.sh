@@ -12,10 +12,13 @@ echo "User: $(id)"
 chown -R ${USER_ID}:${GROUP_ID} /var/www/storage /var/www/bootstrap/cache || true
 
 # Clear configurations to avoid caching issues in development
-echo "Clearing configurations..."
-php artisan config:clear
-php artisan route:clear
-php artisan view:clear
+if [ "$1" = "php-fpm" ]; then
+  echo "Clearing configurations..."
+
+  php artisan config:clear
+  php artisan route:clear
+  php artisan view:clear
+fi
 
 # Run the default command (e.g., php-fpm or bash)
 exec "$@"

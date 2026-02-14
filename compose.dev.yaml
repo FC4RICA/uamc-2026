@@ -33,9 +33,7 @@ services:
         UID: ${UID:-1000}
         GID: ${GID:-1000}
     env_file:
-      # Load the environment variables from the Laravel application
       - .env
-    # user: "${UID:-1000}:${GID:-1000}"
     volumes:
       # Mount the application code for live updates
       - ./:/var/www
@@ -52,6 +50,34 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+
+  queue:
+    build:
+      context: .
+      dockerfile: ./docker/common/php-fpm/Dockerfile
+      target: development
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    command: php artisan queue:work --tries=3 --timeout=90 --sleep=3 --max-jobs=1000
+    volumes:
+      - ./:/var/www
+      - laravel-storage-development:/var/www/storage
+      - laravel-cache-development:/var/www/bootstrap/cache
+    env_file:
+      - .env
+    networks:
+      - laravel-development
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -f 'artisan queue:work' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
+    stop_grace_period: 30s 
 
   postgres:
     image: postgres:16
