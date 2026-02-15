@@ -67,7 +67,7 @@
                         @endif
                     </td>
                     <td class="text-center" width="15%">
-                        {{ $submission->created_at }}
+                        {{ $submission->created_at->format('j M g:i A') }}
                     </td>
                     <td class="text-center" width="15%">
                         <a href="{{ route('member.submission.abstract.edit') }}" 

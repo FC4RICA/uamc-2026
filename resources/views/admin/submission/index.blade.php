@@ -97,7 +97,7 @@
                                 <h5 class="m-0"><x-status-badge :status="$submission->status" /></h5>
                             </td>
                             <td>
-                                <small>{{ $submission->created_at }}</small>
+                                <small>{{ $submission->created_at->format('j M g:i A') }}</small>
                             </td>
                             <td class="text-center">
                                 <a href="{{ route('admin.submission.show', $submission) }}">

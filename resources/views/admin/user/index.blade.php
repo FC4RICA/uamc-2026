@@ -118,7 +118,7 @@
                                 {{ $user->paymentStatus() }}
                             </td>
                             <td>
-                                <small>{{ $user->created_at }}</small>
+                                <small>{{ $user->created_at->format('j M g:i A') }}</small>
                             </td>
                             <td class="text-center">
                                 <a href="{{ route('admin.user.edit', $user) }}">

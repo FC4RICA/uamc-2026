@@ -121,7 +121,7 @@
                                 @endif
                             </td>
                             <td>
-                                <small>{{ $p->created_at }}</small>
+                                <small>{{ $p->created_at->format('j M g:i A') }}</small>
                             </td>
                             <td class="text-center">
                                 <a href="{{ route('admin.profile.edit', $p) }}">
