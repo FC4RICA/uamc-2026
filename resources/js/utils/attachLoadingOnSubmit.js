@@ -19,6 +19,11 @@ export function attachLoadingOnSubmit(
         button.disabled = true;
         button.setAttribute('aria-disabled', 'true');
         button.textContent = originalText + '...';
+
+        setTimeout(() => {
+            button.disabled = false;
+            button.innerHTML = originalText;
+        }, 10000);
     });
 
     form.addEventListener('reset', () => {
