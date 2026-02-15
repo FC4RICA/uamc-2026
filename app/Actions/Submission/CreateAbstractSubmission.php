@@ -52,8 +52,8 @@ class CreateAbstractSubmission
                 fileName: $info['filename'] . '_v1.' . $info['extension'],
             );
 
-            DB::transaction(function () use ($data, $user, $folderId, $fileId) {
-                $submission = $this->createSubmission($data, $user, $folderId);
+            DB::transaction(function () use ($data, $user, $folderId, $fileId, $submissionId) {
+                $submission = $this->createSubmission($data, $user, $folderId, $submissionId);
 
                 $abstract_round = $this->createSubmissionAbstractRound($submission);
                 $this->createAbstractFile($data->abstract, $fileId, $abstract_round->id);
@@ -87,9 +87,10 @@ class CreateAbstractSubmission
         }
     }
 
-    private function createSubmission(CreateAbstractSubmissionData $data, User $user, string $folderId): Submission
+    private function createSubmission(CreateAbstractSubmissionData $data, User $user, string $folderId, string $submissionId): Submission
     {
         return Submission::create([
+            'id' => $submissionId,
             'submitted_by' => $data->userId,
             'presentation_type' => $user->presentationType(),
             'title_th' => $data->titleTH,
