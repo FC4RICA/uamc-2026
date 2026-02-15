@@ -28,6 +28,7 @@ class SubmissionController extends Controller
             ->with([
                 'user.profile',
                 'abstractGroups',
+                'revises'
             ])
             ->filter($request->only(['status', 'group', 'search']))
             ->latest()

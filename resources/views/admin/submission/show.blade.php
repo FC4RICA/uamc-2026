@@ -84,7 +84,14 @@
     </div>
     <hr class="separator">
 
-    <h5 class="mt-4 text">ID: {{ $submission->id }}</h5>
+    <h5 class="my-4 text">ID: {{ $submission->id }}</h5>
+
+    @if ($submission->revises)
+        @foreach ($submission->revises as $revision)
+            <x-revision-card :revision="$revision"/>
+        @endforeach
+        <hr class="separator my-4">
+    @endif
 
     <h3 class="mt-4">กลุ่มบทคัดย่อ</h3>
     <div class="row">
@@ -103,7 +110,6 @@
                 <label>สาขาของผลงาน</label>
                 <input class="form-control-plaintext fs-6" disabled
                     value="{{ $submission->abstractGroups[0]->name }}">
-                </select>
             </div>
         </div>
         <div class="col-12 col-lg-6">
@@ -111,7 +117,6 @@
                 <label>สาขาของผลงาน (สำรอง)</label>
                 <input class="form-control-plaintext fs-6" disabled
                     value="{{ $submission->abstractGroups[1]?->name ?? 'ไม่เลือก' }}">
-                </select>
             </div>
         </div>
     </div>
@@ -144,9 +149,7 @@
                 <label>บทคัดย่อ</label>
                 <div class="mt-1 mb-2 d-flex gap-3">
                     @foreach ($submission->abstractFiles as $abstract)
-                        <a href="{{ route('member.submission.file.download', $abstract) }}" class="fs-6 text fw-bold">
-                            {{ $abstract->original_file_name }}
-                        </a>
+                        <x-submission-file-card :file="$abstract" />
                     @endforeach
                 </div>
             </div>
