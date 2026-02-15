@@ -103,9 +103,7 @@
                     <label>บทคัดย่อ (PDF) *</label>
                     <div class="mt-1 mb-2 d-flex gap-3">
                         @foreach ($submission->abstractFiles as $abstract)
-                            <a href="{{ route('member.submission.file.download', $abstract) }}" class="fs-6 text fw-bold">
-                                {{ $abstract->original_file_name }}
-                            </a>
+                            <x-submission-file-card :file="$abstract" />
                         @endforeach
                     </div>
                     <input type="file" name="abstract"
