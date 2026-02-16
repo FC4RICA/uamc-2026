@@ -87,7 +87,7 @@
                                 {{ $submission->abstractGroups[0]->name }}
                             </td>
                             <td>
-                                @if ($submission->abstractGroups[1])
+                                @if (! empty($submission->abstractGroups[1]))
                                     {{ $submission->abstractGroups[1]->name }}
                                 @else
                                     ไม่มี
