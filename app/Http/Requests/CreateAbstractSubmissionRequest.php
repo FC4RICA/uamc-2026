@@ -177,4 +177,18 @@ class CreateAbstractSubmissionRequest extends FormRequest
             }
         );
     }
+
+    protected function prepareForValidation(): void
+    {
+        // remove group[2] if passing empty null or empty string
+        $groups = $this->input('groups', []);
+
+        if (array_key_exists(2, $groups) && empty($groups[2])) {
+            unset($groups[2]);
+        }
+
+        $this->merge([
+            'groups' => $groups,
+        ]);
+    }
 }
