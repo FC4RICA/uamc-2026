@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('submission_revises', function (Blueprint $table) {
+        Schema::create('submission_revisions', function (Blueprint $table) {
             $table->id();
             $table->foreignUuid('submission_id')->constrained()->cascadeOnDelete();
             $table->unsignedTinyInteger('round');
@@ -20,6 +20,10 @@ return new class extends Migration
             $table->foreignUuid('requested_by')
                 ->nullable()
                 ->constrained('users', 'id')
+                ->nullOnDelete();
+            $table->foreignUuid('submission_file_id')
+                ->nullable()
+                ->constrained()
                 ->nullOnDelete();
             $table->timestamp('resolved_at')->nullable();
             $table->timestamps();
@@ -38,7 +42,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('submission_revises');
+        Schema::dropIfExists('submission_revisions');
 
         Schema::table('submissions', function (Blueprint $table) {
             $table->dropColumn('current_revision_round');

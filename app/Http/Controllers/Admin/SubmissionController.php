@@ -13,7 +13,7 @@ use App\Http\Requests\UpdateAbstractSubmissionRequest;
 use App\Http\Requests\UpdateSubmissionStatusRequest;
 use App\Models\AbstractGroup;
 use App\Models\Submission;
-use App\Models\SubmissionRevise;
+use App\Models\SubmissionRevision;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ class SubmissionController extends Controller
             ->with([
                 'user.profile',
                 'abstractGroups',
-                'revises'
+                'revisions'
             ])
             ->filter($request->only(['status', 'group', 'search']))
             ->latest()
@@ -42,7 +42,7 @@ class SubmissionController extends Controller
 
     public function show(Submission $submission): View
     {
-        $previewRevision = new SubmissionRevise([
+        $previewRevision = new SubmissionRevision([
             'message' => old('message') ?? '- กรุณาแก้ไขบทคัดย่อให้สอดคล้องกับหัวข้อ',
         ]);
 

@@ -3,9 +3,9 @@
 namespace App\Actions\Submission;
 
 use App\Enums\SubmissionStatus;
-use App\Mail\SubmissionReviseRequestedMail;
+use App\Mail\SubmissionRevisionRequestedMail;
 use App\Models\Submission;
-use App\Models\SubmissionRevise;
+use App\Models\SubmissionRevision;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -51,7 +51,7 @@ class UpdateSubmissionStatus
 
             $submission->refresh();
 
-            $revision = SubmissionRevise::create([
+            $revision = SubmissionRevision::create([
                 'submission_id' => $submission->id,
                 'round' => $submission->current_revision_round,
                 'message' => $message,
@@ -60,7 +60,7 @@ class UpdateSubmissionStatus
             ]);
 
             Mail::to($submission->user->email)
-                ->queue(new SubmissionReviseRequestedMail($submission, $revision));
+                ->queue(new SubmissionRevisionRequestedMail($submission, $revision));
         });
     }
 

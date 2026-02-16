@@ -68,7 +68,7 @@
                 </a>
             </div>
             <div class="mx-1">
-                <a href="{{ route('admin.submission.edit', $submission) }}" class="btn btn-outline-warning">
+                <a href="{{ route('admin.submission.edit', $submission) }}" class="btn btn-outline-secondary">
                     <i class="fa fa-edit me-2"></i>แก้ไขข้อมูล
                 </a>
             </div>
@@ -86,8 +86,8 @@
 
     <h5 class="my-4 text">ID: {{ $submission->id }}</h5>
 
-    @if ($submission->revises)
-        @foreach ($submission->revises as $revision)
+    @if ($submission->hasRevision())
+        @foreach ($submission->revisions as $revision)
             <x-revision-card :revision="$revision"/>
         @endforeach
         <hr class="separator my-4">

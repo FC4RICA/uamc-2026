@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class SubmissionRevise extends Model
+class SubmissionRevision extends Model
 {
     protected $fillable = [
         'submission_id',
@@ -14,6 +14,7 @@ class SubmissionRevise extends Model
         'target_email',
         'requested_by',
         'resolved_at',
+        'submission_file_id',
     ];
     
     protected function casts(): array
@@ -36,6 +37,11 @@ class SubmissionRevise extends Model
 
     public function isResolved(): bool
     {
-        return ! is_null($this->resolved_at);
+        return ! is_null($this->resolved_at) && $this->submissionFile()->exists();
+    }
+
+    public function submissionFile(): BelongsTo
+    {
+        return $this->belongsTo(SubmissionFile::class);
     }
 }

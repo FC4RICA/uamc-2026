@@ -3,14 +3,14 @@
 namespace App\Mail;
 
 use App\Models\Submission;
-use App\Models\SubmissionRevise;
+use App\Models\SubmissionRevision;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class SubmissionReviseRequestedMail extends Mailable
+class SubmissionRevisionRequestedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,7 +19,7 @@ class SubmissionReviseRequestedMail extends Mailable
      */
     public function __construct(
         public Submission $submission,
-        public SubmissionRevise $revision,
+        public SubmissionRevision $revision,
     ) {}
 
     /**

@@ -157,14 +157,19 @@ class Submission extends Model
         return $this->abstractRound()->files()->orderBy('version');
     }
 
-    public function revises(): HasMany
+    public function revisions(): HasMany
     {
-        return $this->hasMany(SubmissionRevise::class);
+        return $this->hasMany(SubmissionRevision::class);
     }
 
-    public function activeRevise(): HasOne
+    public function hasRevision(): bool
     {
-        return $this->hasOne(SubmissionRevise::class)
+        return $this->revisions()->exists();
+    }
+
+    public function activeRevision(): HasOne
+    {
+        return $this->hasOne(SubmissionRevision::class)
             ->whereNull('resolved_at')
             ->latest('round');
     }
