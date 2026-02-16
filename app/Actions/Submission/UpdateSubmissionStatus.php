@@ -46,7 +46,6 @@ class UpdateSubmissionStatus
             $submission->increment('current_revision_round');
             $submission->update([
                 'status' => SubmissionStatus::REVISE_REQUIRED,
-                'current_revision_round' => $submission->current_revision_round + 1,
             ]);
 
             $submission->refresh();
