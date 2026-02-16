@@ -1,10 +1,10 @@
 <div id="imgSlide" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="{{ asset('img/banner.png') }}" class="d-block w-100" />
+            <img src="{{ asset('img/banner.png') }}" class="d-block w-100 object-fit-contain" style="aspect-ratio: 4.3 / 1;"/>
         </div>
         <div class="carousel-item">
-            <img src="{{ asset('img/slide1-2.jpg') }}" class="d-block w-100" />
+            <img src="{{ asset('img/slide1-2.jpg') }}" class="d-block w-100 object-fit-cover" style="aspect-ratio: 4.3 / 1;"/>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#imgSlide" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
