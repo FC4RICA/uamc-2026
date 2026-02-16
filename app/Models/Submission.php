@@ -34,6 +34,7 @@ class Submission extends Model
         'keywords',
         'drive_folder_id',
         'status',
+        'current_revision_round',
     ];
 
      protected $dates = ['deleted_at'];
@@ -177,6 +178,11 @@ class Submission extends Model
     public function hasActiveRevision(): bool
     {
         return $this->status === SubmissionStatus::REVISE_REQUIRED;
+    }
+
+    public function resolvedRevision(): HasMany
+    {
+        return $this->revisions()->resolved()->orderByDesc('round');
     }
 
     public function scopeFilter(Builder $query, array $filters): Builder

@@ -12,7 +12,7 @@
                 {{ $submission->status->label() }}
             </span>
 
-            @if ($submission->hasActiveRevision())
+            @if ($submission->hasRevision())
                 <span class="ms-2 text-muted">
                     รอบปรับปรุง #{{ $submission->current_revision_round }}
                 </span>
@@ -87,7 +87,7 @@
     <h5 class="my-4 text">ID: {{ $submission->id }}</h5>
 
     @if ($submission->hasRevision())
-        @foreach ($submission->revisions as $revision)
+        @foreach ($submission->revisions->reverse() as $revision)
             <x-revision-card :revision="$revision"/>
         @endforeach
         <hr class="separator my-4">

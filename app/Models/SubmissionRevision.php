@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
+use App\Policies\SubmissionRevisionPolicy;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[UsePolicy(SubmissionRevisionPolicy::class)]
 class SubmissionRevision extends Model
 {
     protected $fillable = [
@@ -23,6 +27,12 @@ class SubmissionRevision extends Model
             'resolved_at' => 'datetime',
             'round' => 'int',
         ];
+    }
+
+    public function scopeResolved(Builder $query): Builder
+    {
+        return $query->whereNull('resolved_at')
+            ->whereNull('submission_file_id');
     }
 
     public function submission(): BelongsTo

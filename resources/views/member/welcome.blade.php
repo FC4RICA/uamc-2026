@@ -6,17 +6,35 @@
 @section('content')
     <div class="container px-4 py-5 ">
         <h1 class="text-center">สวัสดี {{ $user->profile->firstname . ' ' . $user->profile->lastname }}</h1>
-        @if ($user->payment_required)
-            @if ($user->needsPayment())
-                <div class="mt-4 text-danger text-center">
-                    <strong>*การลงทะเบียนของคุณยังไม่เสร็จสิ้น กรุณาชำระค่าลงทะเบียนเพื่อเข้าร่วมหรือส่งผลงาน*</strong>
-                </div>
-            @elseif (! $user->hasVerifiedPayment())
-                <div class="mt-4 text-success text-center">
-                    <strong>*การลงทะเบียนเสร็จสิ้น คุณได้ส่งหลักฐานการชำระเงินเรียบร้อยแล้ว การตรวจสอบหลักฐานจะใช้เวลา 3-4 วัน*</strong>
-                </div>
+
+        {{-- registration and submission status --}}
+        <div class="mt-4 text-center">
+            {{-- registration --}}
+            @if ($user->payment_required)
+                @if ($user->needsPayment())
+                    <span class="text-danger fw-bold">
+                        *การลงทะเบียนของคุณยังไม่เสร็จสิ้น กรุณาชำระค่าลงทะเบียนเพื่อเข้าร่วมหรือส่งผลงาน*
+                    </span>
+                @elseif (! $user->hasVerifiedPayment())
+                    <span class="text-success fw-bold">
+                        *การลงทะเบียนเสร็จสิ้น คุณได้ส่งหลักฐานการชำระเงินเรียบร้อยแล้ว การตรวจสอบหลักฐานจะใช้เวลา 3-4 วัน*
+                    </span>
+                @endif
             @endif
-        @endif
+
+            {{-- submission status --}}
+            @if ($user->submission?->hasActiveRevision())
+                <h3 class="text-primary fw-bold">
+                    ผู้ประเมินได้ขอให้คุณแก้ไขบทคัดย่อตามข้อเสนอแนะ #{{ $user->submission->current_revision_round }}</br>
+                </h3>
+                <h5>
+                    <a href="{{ route('member.submission.abstract.revision', $user->submission->activeRevision) }}">
+                        ไปยังหน้ารายละเอียดการแก้ไขบทคัดย่อ
+                    </a>
+                </h5>
+            @endif
+        </div>
+
         <div class="my-5">
             <div class="row ">
                 @if ($user->canSubmitAbstract())

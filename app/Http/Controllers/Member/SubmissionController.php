@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Member;
 use App\Actions\Submission\CreateAbstractSubmission;
 use App\Actions\Submission\DeleteSubmission;
 use App\Actions\Submission\UpdateAbstractSubmission;
+use App\Actions\Submission\UploadRevisionAbstract;
 use App\Contracts\CloudStorage;
 use App\Data\Submission\CreateAbstractSubmissionData;
 use App\Data\Submission\UpdateAbstractSubmissionData;
@@ -14,8 +15,10 @@ use App\Http\Requests\UpdateAbstractSubmissionRequest;
 use App\Models\AbstractGroup;
 use App\Models\Submission;
 use App\Models\SubmissionFile;
+use App\Models\SubmissionRevision;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -107,7 +110,7 @@ class SubmissionController extends Controller
 
         $action->handle($submission);
 
-        return redirect(route('member.index'));
+        return redirect()->route('member.index');
     }
 
     public function fileDownload(
@@ -127,5 +130,29 @@ class SubmissionController extends Controller
             },
             $file->original_file_name
         );
+    }
+
+    public function abstractRevision(
+        SubmissionRevision $revision,
+    ): View {
+        Gate::authorize('view', $revision);
+
+        return view('member.submission.revision', compact('revision'));
+    }
+
+    public function uploadRevision(
+        Request $request,
+        SubmissionRevision $revision,
+        UploadRevisionAbstract $action,
+    ): RedirectResponse {
+        Gate::authorize('upload', $revision);
+
+         $validated = $request->validate([
+            'abstract' => ['required', 'file', 'mimes:pdf', 'max:51200'],
+        ]);
+
+        $action->handle($revision, $validated['abstract']);
+
+        return back();
     }
 }
