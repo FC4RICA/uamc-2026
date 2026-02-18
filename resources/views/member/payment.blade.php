@@ -37,13 +37,13 @@
             @endif
 
             @if ($user->hasPayment())
-                <div class="mt-4  d-flex gap-3">
+                <div class="mt-4">
                     <strong>ไฟล์ล่าสุด:</strong>
-                    @foreach ($user->payments as $payment)
-                        <a href="{{ route('member.payment.download', $payment) }}" class="fs-6 text fw-bold">
-                            {{ $payment->original_file_name }}
-                        </a>
-                    @endforeach
+                    <div class="d-flex gap-3">
+                        @foreach ($user->payments as $payment)
+                            <x-payment-file-card :payment="$payment"/>
+                        @endforeach
+                    </div>
                 </div>
             @endif
         </div>
