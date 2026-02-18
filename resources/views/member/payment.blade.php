@@ -79,8 +79,6 @@
                             @enderror
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-12 col-lg-6 ">
                         <div class="form-group">
                             <label for="from_bank">โอนจากบัญชีธนาคาร</label>
@@ -92,15 +90,13 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-12 col-lg-6 ">
+                    {{-- <div class="col-12 col-lg-6 ">
                         <div class="form-group">
                             <label for="price">จำนวนเงิน (บาท)</label>
                             <input id="price" name="price" type="number" class="form-control" value="100"
                                 disabled>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
+                    </div> --}}
                     <div class="col-12 col-lg-6 ">
                         <div class="form-group">
                             <label for="receipt">อัพโหลดหลักฐานการชำระเงิน</label>
