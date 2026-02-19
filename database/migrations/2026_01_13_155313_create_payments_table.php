@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('from_bank')->nullable();
             $table->string('drive_file_id');
             $table->string('original_file_name')->default('undefined');
-            $table->unsignedSmallInteger('status')->default(PaymentStatus::SUBMITTED->value);
+            $table->unsignedSmallInteger('status')->default(PaymentStatus::PENDING->value);
             $table->timestamps();
         });
     }

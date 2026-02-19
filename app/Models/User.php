@@ -119,7 +119,7 @@ class User extends Authenticatable
         return $query
             ->paymentRequired()
             ->whereHas('payments', function ($q) {
-                $q->where('status', PaymentStatus::SUBMITTED);
+                $q->where('status', PaymentStatus::PENDING);
             });
     }
 
@@ -233,7 +233,7 @@ class User extends Authenticatable
                     case 'submitted':
                         $q->paymentRequired()
                             ->whereHas('payments', fn ($p) =>
-                                $p->where('status', PaymentStatus::SUBMITTED)
+                                $p->where('status', PaymentStatus::PENDING)
                             );
                         break;
                     case 'verified':

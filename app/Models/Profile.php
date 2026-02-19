@@ -127,7 +127,7 @@ class Profile extends Model
                         case 'submitted':
                             $q->paymentRequired()
                                 ->whereHas('payments', fn ($p) =>
-                                    $p->where('status', PaymentStatus::SUBMITTED)
+                                    $p->where('status', PaymentStatus::PENDING)
                                 );
                             break;
                         case 'verified':
