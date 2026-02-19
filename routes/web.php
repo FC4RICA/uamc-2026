@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\DriveController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
@@ -120,5 +121,7 @@ Route::prefix('admin')
                 Route::get('/{profile}', 'edit')->name('edit');
                 Route::put('/{profile}', 'update')->name('update');
             });
-            
+        
+        Route::get('/drive/image/{id}', [DriveController::class, 'show'])
+            ->name('drive.image');
     });
