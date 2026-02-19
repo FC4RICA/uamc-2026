@@ -116,27 +116,9 @@ class Profile extends Model
                 $q->where('presentation_type', $type);
             })
             ->when($filters['payment'] ?? null, function ($q, $payment) {
-                $q->whereHas('creator', function ($q) use ($payment) {
-                    switch ($payment) {
-                        case 'not_required':
-                            $q->where('payment_required', false);
-                            break;
-                        case 'unpaid':
-                            $q->paymentRequired()->whereDoesntHave('payments');
-                            break;
-                        case 'submitted':
-                            $q->paymentRequired()
-                                ->whereHas('payments', fn ($p) =>
-                                    $p->where('status', PaymentStatus::PENDING)
-                                );
-                            break;
-                        case 'verified':
-                            $q->whereHas('payments', fn ($p) =>
-                                $p->where('status', PaymentStatus::VERIFIED)
-                            );
-                            break;
-                    }
-                });
+                $q->whereHas('creator', fn ($user) =>
+                    $user->filterByPayment($payment)
+                );
             })
             ->when($filters['search'] ?? null, function ($q, $search) {
                 $q->where(function ($q) use ($search) {

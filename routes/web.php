@@ -101,6 +101,8 @@ Route::prefix('admin')
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/{user}', 'show')->name('show');
+                Route::post('/{payment}/verify', 'verify')->name('verify');
+                Route::post('/{payment}/reject', 'reject')->name('reject');
             });
 
         Route::controller(AdminUserController::class)

@@ -1,4 +1,3 @@
-import { initToggleSelect } from "../../components/toggleSelect";
 import { attachLoadingOnSubmit } from "../../utils/attachLoadingOnSubmit";
 import { attachConfirmOnSubmit } from '../../utils/attachConfirmOnSubmit';
 

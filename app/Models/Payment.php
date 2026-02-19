@@ -41,4 +41,9 @@ class Payment extends Model
             'status' => PaymentStatus::class,
         ];
     }
+
+    public function isPending(): bool
+    {
+        return $this->status === PaymentStatus::PENDING;
+    }
 }

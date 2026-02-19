@@ -25,16 +25,26 @@
 
 
         <div class="row mt-4 mb-5">
-            @if ($user->hasPayment())
-                <h4 class="text-warning fw-bold">
-                    ส่งหลักฐานแล้ว หากข้อมูลไม่ถูกต้อง สามารถอัพโหลดใหม่ได้
-                </h4>
-            @else
-                <h4 class="fw-bold">
+            <h4 class="fw-bold">
+                @if ($user->hasVerifiedPayment())
+                    <h4 class="text-success">
+                        การชำระเงินของคุณได้รับการยืนยันแล้ว
+                    </h4>
+                @elseif ($user->hasPayment())
+                    @if ($user->paymentsRejected())
+                        <span class="text-danger">
+                            หลักฐานการชำระเงินของคุณถูกปฏิเสธ กรุณาตรวจสอบและอัพโหลดใหม่อีกครั้ง
+                        </span>
+                    @else
+                        <span class="text-warning">
+                            ส่งหลักฐานแล้ว หากข้อมูลไม่ถูกต้องคุณสามารถอัพโหลดใหม่อีกครั้งได้
+                        </span>
+                    @endif
+                @else
                     ผู้สมัครที่ไม่ได้มาจากมหาวิทยาลัยเจ้าภาพร่วมต้องชำระค่าลงทะเบียน 100 บาท ต่อ คน
                     เพื่อเข้าร่วมหรือส่งผลงาน
-                </h4>
-            @endif
+                @endif
+            </h4>
 
             @if ($user->hasPayment())
                 <div class="mt-4">

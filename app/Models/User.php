@@ -111,7 +111,19 @@ class User extends Authenticatable
     {
         return $query
             ->paymentRequired()
-            ->whereDoesntHave('payments');
+            ->where(function ($q) {
+            $q->whereDoesntHave('payments')
+
+            ->orWhere(function ($q2) {
+                $q2->whereHas('payments')
+                   ->whereDoesntHave('payments', function ($p) {
+                       $p->whereIn('status', [
+                           PaymentStatus::VERIFIED,
+                           PaymentStatus::PENDING,
+                       ]);
+                   });
+            });
+        });
     }
 
     public function scopePaymentSubmitted(Builder $query): Builder
@@ -145,6 +157,20 @@ class User extends Authenticatable
         return $this->payments()
             ->where('status', PaymentStatus::VERIFIED)
             ->exists();
+    }
+
+    public function paymentsRejected(): bool
+    {
+        if (! $this->payment_required) {
+            return false;
+        }
+
+        return $this->payments()
+            ->whereNotIn('status', [PaymentStatus::REJECTED])
+            ->doesntExist()
+            && $this->payments()
+                ->where('status', PaymentStatus::REJECTED)
+                ->exists();
     }
 
     public function needsPayment(): bool
@@ -223,25 +249,7 @@ class User extends Authenticatable
                 }
             })
             ->when($filters['payment'] ?? null, function ($q, $payment) {
-                switch ($payment) {
-                    case 'not_required':
-                        $q->where('payment_required', false);
-                        break;
-                    case 'unpaid':
-                        $q->paymentRequired()->whereDoesntHave('payments');
-                        break;
-                    case 'submitted':
-                        $q->paymentRequired()
-                            ->whereHas('payments', fn ($p) =>
-                                $p->where('status', PaymentStatus::PENDING)
-                            );
-                        break;
-                    case 'verified':
-                        $q->whereHas('payments', fn ($p) =>
-                            $p->where('status', PaymentStatus::VERIFIED)
-                        );
-                        break;
-                }
+                $q->filterByPayment($payment);
             })
             ->when($filters['role'] ?? null, function ($q, $role) {
                 if ($role === 'member') {
@@ -259,14 +267,67 @@ class User extends Authenticatable
             return 'ไม่ต้องชำระ';
         }
 
-        if (! $this->hasPayment()) {
+        $payments = $this->payments;
+
+        if ($payments->isEmpty()) {
             return 'ยังไม่ได้ชำระ';
         }
 
-        if (! $this->hasVerifiedPayment()) {
+        if ($payments->contains('status', PaymentStatus::VERIFIED)) {
+            return 'ชำระแล้ว';
+        }
+
+        if ($payments->contains('status', PaymentStatus::PENDING)) {
             return 'ยังไม่ได้ตรวจสอบ';
         }
 
-        return 'ชำระแล้ว';
+        if ($this->paymentsRejected()) {
+            return 'ถูกปฏิเสธ';
+        }
+
+        return 'ไม่ทราบสถานะ';
+    }
+
+    public function scopeFilterByPayment(Builder $query, ?string $payment): Builder
+    {
+        return $query->when($payment, function ($q, $payment) {
+            switch ($payment) {
+
+                case 'not_required':
+                    $q->where('payment_required', false);
+                    break;
+
+                case 'unpaid':
+                    $q->paymentRequired()
+                    ->whereDoesntHave('payments');
+                    break;
+
+                case 'submitted':
+                    $q->paymentRequired()
+                    ->whereHas('payments', fn ($p) =>
+                        $p->where('status', PaymentStatus::PENDING)
+                    );
+                    break;
+
+                case 'verified':
+                    $q->whereHas('payments', fn ($p) =>
+                        $p->where('status', PaymentStatus::VERIFIED)
+                    );
+                    break;
+
+                case 'rejected':
+                    $q->paymentRequired()
+                    ->whereDoesntHave('payments', fn ($p) =>
+                        $p->where('status', PaymentStatus::VERIFIED)
+                    )
+                    ->whereDoesntHave('payments', fn ($p) =>
+                        $p->where('status', PaymentStatus::PENDING)
+                    )
+                    ->whereHas('payments', fn ($p) =>
+                        $p->where('status', PaymentStatus::REJECTED)
+                    );
+                    break;
+            }
+        });
     }
 }

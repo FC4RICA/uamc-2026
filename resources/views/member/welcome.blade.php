@@ -10,17 +10,25 @@
         {{-- registration and submission status --}}
         <div class="mt-4 text-center">
             {{-- registration --}}
-            @if ($user->payment_required)
-                @if ($user->needsPayment())
-                    <span class="text-danger fw-bold">
-                        *การลงทะเบียนของคุณยังไม่เสร็จสิ้น กรุณาชำระค่าลงทะเบียนเพื่อเข้าร่วมหรือส่งผลงาน*
-                    </span>
-                @elseif (! $user->hasVerifiedPayment())
-                    <span class="text-success fw-bold">
-                        *การลงทะเบียนเสร็จสิ้น คุณได้ส่งหลักฐานการชำระเงินเรียบร้อยแล้ว การตรวจสอบหลักฐานจะใช้เวลา 3-4 วัน*
-                    </span>
+            <p class="fw-bold">
+                @if ($user->payment_required)
+                    @if ($user->needsPayment())
+                        <span class="text-danger">
+                            *การลงทะเบียนของคุณยังไม่เสร็จสิ้น กรุณาชำระค่าลงทะเบียนเพื่อเข้าร่วมหรือส่งผลงาน*
+                        </span>
+                    @elseif (! $user->hasVerifiedPayment())
+                        @if ($user->paymentsRejected())
+                            <span class="text-danger">
+                                *หลักฐานการชำระเงินของคุณถูกปฏิเสธ กรุณาตรวจสอบและอัพโหลดใหม่อีกครั้ง*
+                            </span>
+                        @else
+                            <span class="text-success">
+                                *การลงทะเบียนเสร็จสิ้น คุณได้ส่งหลักฐานการชำระเงินเรียบร้อยแล้ว การตรวจสอบหลักฐานจะใช้เวลา 3-4 วัน*
+                            </span>
+                        @endif
+                    @endif
                 @endif
-            @endif
+            </p>
 
             {{-- submission status --}}
             @if ($user->submission?->hasActiveRevision())
