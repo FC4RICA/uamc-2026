@@ -7,7 +7,12 @@
         <div class="d-flex justify-content-between">
             <h2 class="fw-bold">ข้อมูลบัญชีผู้ใช้งาน</h2>
             <div class="d-flex">
-                <form action=""
+                <div class="mx-1">
+                    <a href="{{ route('admin.profile.edit', $profile) }}" class="btn btn-outline-secondary">
+                        <i class="fa fa-edit me-2"></i>แก้ไขข้อมูล
+                    </a>
+                </div>
+                <form action="" 
                     id="delete-user-form" class="mx-1" method="POST">
                     @csrf
                     @method('DELETE')
@@ -107,12 +112,7 @@
                 </div>
             @endif
         </div>
-
-        <div class="text-center mt-4">
-            <a class="btn btn-warning" href="{{ route('admin.profile.edit', $profile) }}">ไปยังหน้าแก้ไขข้อมูล</a>
-        </div>
     </div>
-
 @endsection
 
 @push('scripts')
