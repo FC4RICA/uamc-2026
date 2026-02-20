@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Export\ExportSubmissionsToCsv;
 use App\Actions\Submission\DeleteSubmission;
 use App\Actions\Submission\UpdateAbstractSubmission;
 use App\Actions\Submission\UpdateSubmissionStatus;
@@ -19,6 +20,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class SubmissionController extends Controller
 {
@@ -110,5 +112,23 @@ class SubmissionController extends Controller
         );
 
         return back()->with('status', 'Submission status updated successfully.');
+    }
+
+    public function export(
+        Request $request,
+        ExportSubmissionsToCsv $action,
+    ): StreamedResponse {
+        $submissions = Submission::active()
+            ->with([
+                'user.profile',
+                'abstractGroups',
+            ])
+            ->filter($request->only(['status', 'group', 'search']))
+            ->latest()
+            ->cursor();
+
+        $filename = 'submissions_' . now()->format('Ymd_His') . '.csv';
+
+        return $action->handle($submissions, $filename);
     }
 }

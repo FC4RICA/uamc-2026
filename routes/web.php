@@ -87,6 +87,7 @@ Route::prefix('admin')
             ->name('submission.')
             ->group(function () {
                 Route::get('/', 'index')->name('index');
+                Route::get('/export', 'export')->name('export');
                 Route::get('/{submission}', 'show')->name('show');
                 Route::get('/{submission}/edit', 'edit')->name('edit');
                 Route::put('/{submission}', 'update')->name('update');

@@ -45,6 +45,12 @@
                     ล้างค่า
                 </a>
             </div>
+            <div class="col-md-2 col-lg-1">
+                <a href="{{ route('admin.submission.export', request()->query()) }}"
+                    class="btn btn-success w-100">
+                    Export
+                </a>
+            </div>
         </form>
 
         {{-- table --}}
