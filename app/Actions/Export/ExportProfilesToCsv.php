@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Export;
 
 use Symfony\Component\HttpFoundation\StreamedResponse;
 

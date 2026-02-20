@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Actions\ExportProfilesToCsv;
+use App\Actions\Export\ExportProfilesToCsv;
 use App\Enums\AcademicTitle;
 use App\Enums\Education;
 use App\Enums\ParticipationType;
