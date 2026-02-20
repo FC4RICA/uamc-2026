@@ -120,7 +120,8 @@ Route::prefix('admin')
             ->name('profile.')
             ->group(function () {
                 Route::get('/', 'index')->name('index');
-                Route::get('/{profile}', 'edit')->name('edit');
+                Route::get('/export', 'export')->name('export');
+                Route::get('/{profile}/edit', 'edit')->name('edit');
                 Route::put('/{profile}', 'update')->name('update');
             });
         

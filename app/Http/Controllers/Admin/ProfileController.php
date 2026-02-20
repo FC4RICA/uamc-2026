@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\ExportProfilesToCsv;
 use App\Enums\AcademicTitle;
 use App\Enums\Education;
 use App\Enums\ParticipationType;
@@ -15,6 +16,7 @@ use App\Models\Profile;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ProfileController extends Controller
 {
@@ -62,5 +64,27 @@ class ProfileController extends Controller
         $profile->update($request->validated());
 
         return back()->with('status', 'Profile updated successfully.');
+    }
+
+    public function export(Request $request, ExportProfilesToCsv $action): StreamedResponse
+    {
+        $profiles = Profile::realParticipants()
+            ->with([
+                'organization',
+                'user.payments',
+                'submissions'
+            ])
+            ->filter($request->only([
+                'participationType',
+                'presentationType',
+                'payment',
+                'search'
+            ]))
+            ->latest()
+            ->cursor();
+
+        $filename = 'participants_' . now()->format('Ymd_His') . '.csv';
+
+        return $action->handle($profiles, $filename);
     }
 }
