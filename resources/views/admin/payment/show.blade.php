@@ -30,7 +30,7 @@
         <div class="row mt-4 mb-5">
             @foreach ($user->payments()->latest()->get() as $payment)
             <div class="col-12 col-xxl-6 mb-4">
-                <x-payment-card :paymen="$payment" />
+                <x-payment-card :payment="$payment" />
             </div>
             @endforeach
         </div>
