@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Data\ProfileData;
 use App\Enums\AcademicTitle;
 use App\Enums\Education;
 use App\Enums\ParticipationType;
@@ -28,31 +29,47 @@ class ProfileRequest extends FormRequest
                 'required',
                 Rule::enum(ParticipationType::class),
                 function ($attr, $value, $fail) {
-                    if ($this->user()->hasSubmission()) {
+                    $user = $this->targetUser();
+                    $isChanged = $user->profile->participation_type->value != $value;
+                    if ($isChanged && $user->hasSubmission()) {
                         $fail('You cannot change participation type after submitting.');
                     }
                 },
             ],
             'presentation_type' => [
-                Rule::requiredIf(fn () => ($input['participation_type'] ?? null) == ParticipationType::PRESENTER->value),
+                Rule::requiredIf(fn () => $this->participation_type == ParticipationType::PRESENTER->value),
                 Rule::when(
-                    ($input['participation_type'] ?? null) == ParticipationType::PRESENTER->value, 
+                    $this->participation_type == ParticipationType::PRESENTER->value, 
                     Rule::enum(PresentationType::class)
                 ),
                 'nullable',
                 function ($attr, $value, $fail) {
-                    if ($this->user()->hasSubmission()) {
+                    $user = $this->targetUser();
+                    $isChanged = $user->profile->presentation_type->value != $value;
+                    if ($isChanged && $user->hasSubmission()) {
                         $fail('You cannot change presentation type after submitting.');
                     }
                 },
             ],
             'organization_id' => [
                 'required',
-                Rule::when(
-                    fn ($value) => $value !== 'other',
-                    Rule::exists(Organization::class, 'id'),
-                    Rule::in(['other'])
-                ),
+                function ($attr, $value, $fail) {
+                    if ($value === 'other') return;
+
+                    if (!Organization::whereKey($value)->exists()) {
+                        $fail('The selected organization is invalid.');
+                    }
+                },
+                function ($attr, $value, $fail) {
+                    $user = $this->targetUser();
+                    $incoming = $value === 'other' ? null : (int) $value;
+
+                    $isChanged = $user->profile->organization_id !== $incoming;
+
+                    if ($isChanged && ($user->hasSubmission() || $user->hasPayment())) {
+                        $fail('You cannot change organization after submission or payment.');
+                    }
+                },
             ],
             'organization_other' => [
                 'required_if:organization_id,other',
@@ -62,11 +79,13 @@ class ProfileRequest extends FormRequest
             ],
             'occupation_id' => [
                 'required',
-                Rule::when(
-                    fn ($value) => $value !== 'other',
-                    Rule::exists(Occupation::class, 'id'),
-                    Rule::in(['other'])
-                ),
+                function ($attr, $value, $fail) {
+                    if ($value === 'other') return;
+
+                    if (!Occupation::whereKey($value)->exists()) {
+                        $fail('The selected organization is invalid.');
+                    }
+                },
             ],
             'occupation_other' => [
                 'required_if:occupation_id,other',
@@ -75,6 +94,18 @@ class ProfileRequest extends FormRequest
                 'max:255',
             ],
         ];
+    }
+
+    protected function targetUser()
+    {
+        return $this->route('profile')?->creator ?? $this->user();
+    }
+
+    public function validated($key = null, $default = null)
+    {
+        return ProfileData::normalize(
+            parent::validated($key, $default)
+        );
     }
 
     public function messages(): array

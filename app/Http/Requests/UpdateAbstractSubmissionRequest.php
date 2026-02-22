@@ -183,13 +183,13 @@ class UpdateAbstractSubmissionRequest extends FormRequest
     }
 
     protected function resolveSubmission(): ?Submission
-{
-    // Admin route
-    if ($this->route('submission') instanceof Submission) {
-        return $this->route('submission');
-    }
+    {
+        // Admin route
+        if ($this->route('submission') instanceof Submission) {
+            return $this->route('submission');
+        }
 
-    // Member route
-    return Submission::where('submitted_by', $this->user()->id)->first();
-}
+        // Member route
+        return Submission::where('submitted_by', $this->user()->id)->first();
+    }
 }

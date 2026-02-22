@@ -112,7 +112,7 @@
                         data-toggle-select data-target="[data-occupation-other]" data-value="other">
                         @foreach ($occupations as $ocu)
                             <option value="{{ $ocu->id }}" 
-                                @selected($ocu->id == $profile->organization_id)>
+                                @selected($ocu->id == $profile->occupation_id)>
                                 {{ $ocu->name }}
                             </option>
                         @endforeach
@@ -138,17 +138,21 @@
                     <label>สถานที่ทำงาน/สถาบันการศึกษา/หน่วยงาน</label>
                     <select name="organization_id" data-value="other" required
                         class="form-select @error('organization_id') is-invalid @enderror" 
-                        data-toggle-select data-target="[data-organization-other]" >
+                        data-toggle-select data-target="[data-organization-other]"
+                        @disabled($user->hasSubmission() || $user->hasPayment())>
                         @foreach ($organizations as $org)
                             <option value="{{ $org->id }}" @selected($org->id == $profile->organization_id)>
                                 {{ $org->name }}
                             </option>
                         @endforeach
-                        <option value="other">อื่นๆ</option>
+                        <option value="other" @selected($profile->organization_other)>อื่นๆ</option>
                     </select>
                     @error('organization_id')
                         <label class="error">{{ $message }}</label>
                     @enderror
+                    @if ($user->hasSubmission() || $user->hasPayment())
+                        <input type="hidden" name="organization_id" value="{{ $profile->organization_id }}">
+                    @endif
                 </div>
                 <div class="col-12 col-lg-6 form-group">
                     <input name="organization_other"
@@ -177,6 +181,9 @@
                     @error('participation_type')
                         <label for="participation_type" class="error">{{ $message }}</label>
                     @enderror
+                    @if ($user->hasSubmission())
+                        <input type="hidden" name="participation_type" value="{{ $profile->participation_type->value }}">
+                    @endif
                 </div>
                 <div class="col-12 col-lg-6 form-group">
                     <label data-presentation-type-label>ประเภทการนำเสนอ</label>
@@ -195,6 +202,9 @@
                     @error('presentation_type')
                         <label class="error">{{ $message }}</label>
                     @enderror
+                    @if ($user->hasSubmission())
+                        <input type="hidden" name="presentation_type" value="{{ $profile->presentation_type?->value }}">
+                    @endif
                 </div>
                 @if ($user->hasSubmission())
                     <div class="col-12 fs-6 text-danger fw-bold mb-4">

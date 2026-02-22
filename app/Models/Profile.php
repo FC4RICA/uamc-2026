@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use App\Enums\AcademicTitle;
 use App\Enums\Education;
 use App\Enums\ParticipationType;
-use App\Enums\PaymentStatus;
 use App\Enums\PresentationType;
 use App\Enums\Title;
 use Illuminate\Database\Eloquent\Builder;

@@ -52,29 +52,18 @@ class CreateNewUser implements CreatesNewUsers
         )->validate();
 
         return DB::transaction(function () use ($input) {
+            $normalized = ProfileData::normalize($input);
+
             $user = User::create([
-                'email' => $input['email'],
-                'password' => Hash::make($input['password']),
-                'payment_required' => $input['organization_id'] === 'other',
+                'email' => $normalized['email'],
+                'password' => Hash::make($normalized['password']),
+                'payment_required' => $normalized['organization_id'] === null,
             ]);
 
-            $profileData = array_merge(
-                ProfileData::normalize($input),
-                [
-                    'user_id' => $user->id,
-                    'firstname' => $input['firstname'],
-                    'lastname' => $input['lastname'],
-                    'phone' => $input['phone'],
-                    'special_requirements' => $input['special_requirements'],
-                    'title' => $input['title'],
-                    'academic_title' => $input['academic_title'],
-                    'education' => $input['education'],
-                    'participation_type' => $input['participation_type'],
-                    'created_by' => $user->id,
-                ]
-            );
+            $normalized['user_id'] = $user->id;
+            $normalized['created_by'] = $user->id;
 
-            Profile::create($profileData);
+            Profile::create($normalized);
 
             return $user;
         });

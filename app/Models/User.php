@@ -142,6 +142,12 @@ class User extends Authenticatable
         });
     }
 
+    public function recalculatePaymentRequirement(): void
+    {
+        $this->payment_required = is_null($this->profile->organization_id);
+        $this->save();
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
