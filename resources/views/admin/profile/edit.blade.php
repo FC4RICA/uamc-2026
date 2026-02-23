@@ -124,8 +124,7 @@
                     <label>สถานที่ทำงาน/สถาบันการศึกษา/หน่วยงาน</label>
                     <select name="organization_id" data-value="other" required
                         class="form-select @error('organization_id') is-invalid @enderror" 
-                        data-toggle-select data-target="[data-organization-other]"
-                        @disabled($user->hasSubmission() || $user->hasPayment())>
+                        data-toggle-select data-target="[data-organization-other]">
                         @foreach ($organizations as $org)
                             <option value="{{ $org->id }}" @selected($org->id == $profile->organization_id)>
                                 {{ $org->name }}
@@ -136,9 +135,9 @@
                     @error('organization_id')
                         <label class="error">{{ $message }}</label>
                     @enderror
-                    @if ($user->hasSubmission() || $user->hasPayment())
+                    {{-- @if ($user->hasSubmission() || $user->hasPayment())
                         <input type="hidden" name="organization_id" value="{{ $profile->organization_id }}">
-                    @endif
+                    @endif --}}
                 </div>
                 <div class="col-12 col-lg-6 form-group">
                     <input name="organization_other"
@@ -150,6 +149,11 @@
                     @enderror
                 </div>
             </div>
+            @if ($user->hasPayment())
+                <div class="col-12 fs-6 text-danger fw-bold mb-4">
+                    *ไม่สามารถแก้ไขได้หลังจากการส่งหลักฐานการชำระเงิน กรุณาติดต่อแอดมินเพื่อแก้ไข*
+                </div>
+            @endif
             <div class="row">
                 <div class="col-12 col-lg-6 form-group">
                     <label>ประเภทการเข้าร่วม</label>
