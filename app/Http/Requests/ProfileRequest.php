@@ -61,6 +61,9 @@ class ProfileRequest extends FormRequest
                     }
                 },
                 function ($attr, $value, $fail) {
+                    // Admin bypass
+                    if ($this->user()->isAdmin()) return;
+
                     $user = $this->targetUser();
                     $incoming = $value === 'other' ? null : (int) $value;
 

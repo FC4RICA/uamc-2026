@@ -154,6 +154,11 @@
                         <input type="hidden" name="organization_id" value="{{ $profile->organization_id }}">
                     @endif
                 </div>
+                @if ($user->hasPayment())
+                    <div class="col-12 fs-6 text-danger fw-bold mb-4">
+                        *ไม่สามารถแก้ไขได้หลังจากการส่งหลักฐานการชำระเงิน กรุณาติดต่อแอดมินเพื่อแก้ไข*
+                    </div>
+                @endif
                 <div class="col-12 col-lg-6 form-group">
                     <input name="organization_other"
                         value="{{ $profile->organization_other }}" type="text"
