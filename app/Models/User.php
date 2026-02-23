@@ -107,6 +107,11 @@ class User extends Authenticatable
         return $query->where('payment_required', true);
     }
 
+    public function scopeHasPayment(Builder $query): Builder
+    {
+        return $query->whereHas('payments');
+    }
+
     public function scopeUnpaid(Builder $query): Builder
     {
         return $query

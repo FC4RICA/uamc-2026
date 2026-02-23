@@ -9,6 +9,9 @@
             <div class="col-md-3 col-xl-2">
                 <select name="payment" class="form-select">
                     <option value="">สถานะการชำระเงินทั้งหมด</option>
+                    <option value="not_required" @selected(request('payment') == 'not_required')>
+                        ไม่ต้องชำระ
+                    </option>
                     <option value="unpaid" @selected(request('payment') == 'unpaid')>
                         ยังไม่ได้ชำระ
                     </option>

@@ -16,7 +16,7 @@ class PaymentController extends Controller
     public function index(Request $request): View
     {
         $users = User::participants()
-            ->paymentRequired()
+            ->hasPayment()
             ->with([
                 'payments',
                 'profile',
