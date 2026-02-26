@@ -41,7 +41,11 @@
                 </li>
                 <li class="nav-item">
                     @if (Auth::user())
-                        <a href="{{ route('member.index') }}" class="nav-link"><strong>หน้าสมาชิก</strong></a>
+                        @if (Auth::user()->isAdmin())
+                            <a href="{{ route('admin.index') }}" class="nav-link"><strong>หน้าแอดมิน</strong></a>
+                        @else
+                            <a href="{{ route('member.index') }}" class="nav-link"><strong>หน้าสมาชิก</strong></a>
+                        @endif
                     @else
                         @registrationOpen
                              <a href="{{ route('register') }}"

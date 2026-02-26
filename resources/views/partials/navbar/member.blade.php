@@ -9,6 +9,13 @@
             กลับหน้าเว็บหลัก
         </a>
     </li>
+    @if (Auth::user()->isAdmin())
+        <li class="nav-item">
+            <a href="{{ route('admin.index') }}" class="nav-link">
+                หน้าแอดมิน
+            </a>
+        </li>
+    @endif
     @if (Auth::user()->payment_required)
         <li class="Nav-item">
             <a href="{{ route('member.payment.create') }}" class="nav-link @yield('payment')">
