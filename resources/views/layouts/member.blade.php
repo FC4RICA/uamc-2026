@@ -2,7 +2,7 @@
 
 @section('header')
     <div class="header">
-        <span class="topbar">The 10th Undergraduate in Applied Mathematics Conference</span>
+        <span class="topbar">The 14th Undergraduate in Applied Mathematics Conference</span>
         @include('partials.nav-member')
     </div>
 @endsection
