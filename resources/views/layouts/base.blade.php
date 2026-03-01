@@ -32,17 +32,6 @@
     @include('components.pdpa')
     @include('components.footer')
 
-    {{-- Shared JS --}}
-    <script src="{{ asset('js/jquery-3.4.1.js') }}"></script>
-    {{-- <script src="{{ asset('js/popper.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.js') }}"></script> --}}
-    <script src="{{ asset('js/jquery.validate.js') }}"></script>
-    {{-- might cause bug (only used in member layout) --}}
-    <script src="{{ asset('js/additional-methods.js') }}"></script>
-
-    <script src="{{ asset('js/control.js') }}"></script>
-    <script src="{{ asset('js/form-validate.js') }}"></script>
-
     @stack('scripts')
 </body>
 
