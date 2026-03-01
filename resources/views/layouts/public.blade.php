@@ -18,4 +18,5 @@
 
         @yield('content')
     </div>
+    <x-submission-annoucement />
 @endsection
