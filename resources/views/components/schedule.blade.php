@@ -5,7 +5,7 @@
     @endif
     {{-- <img src="{{ asset('img/schedule.png') }}" class="img-fluid" alt=""> --}}
     <div class="table-responsive">
-        <table class="table">
+        <table class="table align-middle">
             <tr>
                 <th width="30%" class="text-center">วันที่</th>
                 <th width="70%" class="text-center">การดำเนินการ</th>
@@ -15,7 +15,10 @@
                 <td>เปิดเว็ปไซต์งานประชุมและเปิดให้ลงทะเบียนร่วมงาน</td>
             </tr>
             <tr>
-                <td class="text-center">27 กุมภาพันธ์ 2569</td>
+                <td class="text-center">
+                    <span class="text-decoration-line-through">27 กุมภาพันธ์ 2569</span><br>
+                    6 มิถุนายน 2569
+                </td>
                 <td>วันสุดท้ายของการส่งบทคัดย่อของผลงานแบบบรรยายและแบบโปสเตอร์</td>
             </tr>
             <tr>
