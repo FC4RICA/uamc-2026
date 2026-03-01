@@ -17,7 +17,7 @@
             <tr>
                 <td class="text-center">
                     <span class="text-decoration-line-through">27 กุมภาพันธ์ 2569</span><br>
-                    6 มิถุนายน 2569
+                    6 มีนาคม 2569
                 </td>
                 <td>วันสุดท้ายของการส่งบทคัดย่อของผลงานแบบบรรยายและแบบโปสเตอร์</td>
             </tr>
