@@ -45,16 +45,18 @@
 
         <div class="my-5">
             <div class="row ">
-                @if ($user->canSubmitAbstract())
-                    <div class="col-4 text-center m-auto">
-                        <a href="{{ route('member.submission.abstract.create') }}">
-                            <div class="circle mx-auto">
-                                <i class="fas fa-book fa-2x" style="margin-top: 10%;"></i>
-                            </div>
-                            <label>ส่งบทคัดย่อ</label>
-                        </a>
-                    </div>
-                @endif
+                @abstractSubmissionOpen
+                    @if ($user->canSubmitAbstract())
+                        <div class="col-4 text-center m-auto">
+                            <a href="{{ route('member.submission.abstract.create') }}">
+                                <div class="circle mx-auto">
+                                    <i class="fas fa-book fa-2x" style="margin-top: 10%;"></i>
+                                </div>
+                                <label>ส่งบทคัดย่อ</label>
+                            </a>
+                        </div>
+                    @endif
+                @endabstractSubmissionOpen
                 @if ($user->hasSubmission())
                     <div class="col-4 text-center m-auto">
                         <a href="{{ route('member.submission.abstract.index') }}">
