@@ -32,7 +32,7 @@ class SubmissionController extends Controller
                 'abstractGroups',
                 'revisions'
             ])
-            ->filter($request->only(['status', 'group', 'search']))
+            ->filter($request->only(['status', 'group', 'search', 'presentationType']))
             ->latest()
             ->paginate(15)
             ->withQueryString();
@@ -123,7 +123,7 @@ class SubmissionController extends Controller
                 'user.profile',
                 'abstractGroups',
             ])
-            ->filter($request->only(['status', 'group', 'search']))
+            ->filter($request->only(['status', 'group', 'search', 'presentationType']))
             ->latest()
             ->cursor();
 

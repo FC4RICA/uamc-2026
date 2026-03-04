@@ -205,6 +205,11 @@ class Submission extends Model
                             ->orWhere('lastname', 'ilike', "%{$search}%")
                     );
                 });
+            })
+            ->when($filters['presentationType'] ?? null, function ($q, $type) {
+                $q->whereHas('user.profile', fn ($q) =>
+                    $q->where('presentation_type', $type)
+                );
             });
     }
 }

@@ -26,6 +26,17 @@
                     @endforeach
                 </select>
             </div>
+            <div class="col-md-3 col-lg-2">
+                <select name="presentationType" class="form-select">
+                    <option value="">ทุกประเภทการนำเสนอ</option>
+                    @foreach(\App\Enums\PresentationType::cases() as $type)
+                        <option value="{{ $type->value }}"
+                            @selected(request('presentationType') == $type->value)>
+                            {{ $type->minLabel() }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
             <div class="col-md-3">
                 <select name="group" class="form-select">
                     <option value="">ทุกกลุ่มนำเสนอ</option>
@@ -62,7 +73,7 @@
                         <th>ชื่อบทคัดย่อภาษาไทย</th>
                         <th>ชื่อบทคัดย่อภาษาอังกฤษ</th>
                         <th>ผู้จัดทำ</th>
-                        {{-- <th>มหาวิทยาลัย</th> --}}
+                        <th>ประเภทการนำเสนอ</th>
                         <th>กลุ่มนำเสนอหลัก</th>
                         <th>กลุ่มนำเสนอรอง</th>
                         <th>สถานะ</th>
@@ -86,9 +97,9 @@
                             <td>
                                 {{ $submission->user->profile->firstname . ' ' . $submission->user->profile->lastname }}
                             </td>
-                            {{-- <td>
-                                {{ $submission->user->profile->organization->name ?? $submission->user->profile->organization_other }}
-                            </td> --}}
+                            <td>
+                                {{ $submission->user->profile->presentation_type->minLabel() }}
+                            </td>
                             <td>
                                 {{ $submission->abstractGroups[0]->name }}
                             </td>
