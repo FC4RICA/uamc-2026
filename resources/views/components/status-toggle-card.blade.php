@@ -20,13 +20,12 @@
             <form method="POST" action="{{ $action }}">
                 @csrf
                 <button
-                    type="submit" onclick="this.disabled=true;"
+                    type="submit"
                     class="btn {{ $enabled ? 'btn-outline-danger' : 'btn-outline-success' }}"
                 >
                     {{ $enabled ? $onText : $offText }}
                 </button>
             </form>
         </div>
-
     </div>
 </div>

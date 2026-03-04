@@ -42,10 +42,6 @@ class FortifyServiceProvider extends ServiceProvider
         });
         
         Fortify::registerView(function () {
-            if (!AccessControl::registrationOpen()) {
-                abort(404);
-            }
-
             $titles = Title::cases();
             $academicTitles = AcademicTitle::cases();
             $education = Education::cases();

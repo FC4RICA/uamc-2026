@@ -12,6 +12,7 @@ use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Member\ProfileController;
 use App\Http\Controllers\Member\SubmissionController;
 use App\Http\Controllers\Member\PaymentController;
+use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 Route::name('public.')
     ->group(function () {
@@ -21,6 +22,13 @@ Route::name('public.')
         Route::view('/about', 'public.about')->name('about');
         Route::view('/rules', 'public.rules')->name('rules');
         Route::view('/templates', 'public.form-template')->name('templates');
+    });
+
+Route::name('register')
+    ->middleware(['web', 'guest'])
+    ->group(function () {
+        Route::get('/register', [RegisteredUserController::class, 'create']);
+        Route::post('/register', [RegisteredUserController::class, 'store'])->middleware('feature:registration');
     });
 
 // member
@@ -45,12 +53,16 @@ Route::prefix('member')
                 Route::name('abstract.')
                     ->prefix('/abstract')
                     ->group(function () {
+                        // routes that are disabled when abstract submission is closed
+                        Route::middleware('feature:abstract')->group(function () {
+                            Route::get('/create', 'createAbstract')->name('create');
+                            Route::post('/', 'storeAbstract')->name('store');
+                            Route::delete('/', 'delete')->name('delete');
+                        });
+
                         Route::get('/', 'indexAbstract')->name('index');
-                        Route::get('/create', 'createAbstract')->name('create');
-                        Route::post('/', 'storeAbstract')->name('store');
                         Route::get('/edit', 'editAbstract')->name('edit');
                         Route::put('/', 'updateAbstract')->name('update');
-                        Route::delete('/', 'delete')->name('delete');
                         Route::get('/revisions/{revision}', 'abstractRevision')->name('revision');
                         Route::post('/revisions/{revision}', 'uploadRevision')->name('upload-revision');
                     });

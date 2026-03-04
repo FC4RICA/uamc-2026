@@ -11,13 +11,14 @@
 
 @section('content')
     <div class="container my-4">
+        @registrationOpen
         <div class="row">
             <div class="col-12">
                 <h1 class="text-center"><strong>ลงทะเบียน</strong></h1>
             </div>
         </div>
         <hr class="separator">
-        {{-- @if ($status == 1) --}}
+
         <form action="{{ route('register') }}" name="registration-form" id="registration-form" method="POST">
             @csrf
 
@@ -255,9 +256,9 @@
                 </div>
             </div>
         </form>
-        {{-- @else
-        <h1 class="text-center"><strong>ระบบยังไม่เปิดให้ลงทะเบียนในขณะนี้</strong></h1>
-    @endif --}}
+        @else
+            <h1 class="text-center mt-5 pt-5"><strong>ระบบได้ปิดรับการลงทะเบียนแล้ว</strong></h1>
+        @endregistrationOpen
     </div>
 @endsection
 
