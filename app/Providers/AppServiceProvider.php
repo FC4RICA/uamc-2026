@@ -35,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
 
         Blade::if('registrationOpen', fn() => AccessControl::registrationOpen());
         Blade::if('abstractSubmissionOpen', fn() => AccessControl::abstractSubmissionOpen());
+        Blade::if('finalSubmissionOpen', fn() => AccessControl::finalSubmissionOpen());
 
         Paginator::useBootstrap();
     }

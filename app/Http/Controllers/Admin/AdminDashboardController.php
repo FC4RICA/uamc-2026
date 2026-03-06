@@ -51,6 +51,9 @@ class AdminDashboardController extends Controller
             SettingKey::AbstractSubmissionOpen->value => [
                 'label' => 'การเปิดรับผลงาน',
             ],
+            SettingKey::FinalSubmissionOpen->value => [
+                'label' => 'การเปิดส่งผลงานฉบับสมบูรณ์'
+            ]
         ];
 
         return collect($actions)->map(function ($config, $key) {

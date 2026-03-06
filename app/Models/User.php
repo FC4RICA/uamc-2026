@@ -238,6 +238,11 @@ class User extends Authenticatable
         return $this->submission !== null;
     }
 
+    public function hasAcceptedSubmission(): bool
+    {
+        return $this->submission()->accepted()->existed();
+    }
+
     public function scopeFilter(Builder $query, array $filters): Builder
     {
         return $query
