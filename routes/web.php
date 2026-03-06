@@ -24,10 +24,9 @@ Route::name('public.')
         Route::view('/templates', 'public.form-template')->name('templates');
     });
 
-Route::name('register')
-    ->middleware(['web', 'guest'])
+Route::middleware(['web', 'guest'])
     ->group(function () {
-        Route::get('/register', [RegisteredUserController::class, 'create']);
+        Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
         Route::post('/register', [RegisteredUserController::class, 'store'])->middleware('feature:registration');
     });
 
@@ -53,7 +52,7 @@ Route::prefix('member')
                 Route::name('abstract.')
                     ->prefix('/abstract')
                     ->group(function () {
-                        // routes that are disabled when abstract submission is closed
+                        // Disabled when abstract submission is closed
                         Route::middleware('feature:abstract')->group(function () {
                             Route::get('/create', 'createAbstract')->name('create');
                             Route::post('/', 'storeAbstract')->name('store');
@@ -65,6 +64,18 @@ Route::prefix('member')
                         Route::put('/', 'updateAbstract')->name('update');
                         Route::get('/revisions/{revision}', 'abstractRevision')->name('revision');
                         Route::post('/revisions/{revision}', 'uploadRevision')->name('upload-revision');
+                    });
+
+                Route::name('final.')
+                    ->prefix('/final')
+                    ->group(function () {
+                        // Disabled when final submission is closed
+                        Route::middleware('feature:final')->group(function () {
+                            Route::get('/create', 'createFinal')->name('create');
+                            Route::get('/', 'storeFinal')->name('store');
+                        });
+
+
                     });
                 
                 Route::get('/files/{file}/download', 'fileDownload')->name('file.download');
