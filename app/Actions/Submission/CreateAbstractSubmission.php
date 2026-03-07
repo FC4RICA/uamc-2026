@@ -109,12 +109,12 @@ class CreateAbstractSubmission
         ]);
     }
 
-    private function createAbstractFile(UploadedFile $file, string $drive_file_id, string $submission_round_id): void
+    private function createAbstractFile(UploadedFile $file, string $driveFileId, string $submissionRoundId): void
     {
         SubmissionFile::create([
-            'submission_round_id' => $submission_round_id,
+            'submission_round_id' => $submissionRoundId,
             'file_type' => SubmissionFileType::ABSTRACT,
-            'drive_file_id' => $drive_file_id,
+            'drive_file_id' => $driveFileId,
             'original_file_name' => $file->getClientOriginalName(),
         ]);
         return;
