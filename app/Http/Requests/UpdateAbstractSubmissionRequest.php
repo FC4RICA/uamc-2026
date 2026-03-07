@@ -190,6 +190,6 @@ class UpdateAbstractSubmissionRequest extends FormRequest
         }
 
         // Member route
-        return Submission::where('submitted_by', $this->user()->id)->first();
+        return $this->user()->submission;
     }
 }
