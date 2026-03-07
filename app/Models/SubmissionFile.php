@@ -25,7 +25,6 @@ class SubmissionFile extends Model
         'drive_file_id',
         'original_file_name',
         'version',
-        'is_current'
     ];
 
     /**
@@ -37,7 +36,6 @@ class SubmissionFile extends Model
     {
         return [
             'file_type' => SubmissionFileType::class,
-            'is_current' => 'boolean',
             'version' => 'int',
         ];
     }

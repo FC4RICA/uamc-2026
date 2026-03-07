@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\SubmissionFileType;
 use App\Enums\SubmissionRoundType;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -46,8 +48,21 @@ class SubmissionRound extends Model
         return $this->hasMany(SubmissionFile::class);
     }
 
-    public function file(string $type): SubmissionFile
+    public function posterFiles(): HasMany
     {
-        return $this->files()->where('file_type', $type)->first();
+        return $this->hasMany(SubmissionFile::class)
+            ->where('file_type', SubmissionFileType::POSTER);
+    }
+
+    public function extendedAbstractFiles(): HasMany
+    {
+        return $this->hasMany(SubmissionFile::class)
+            ->where('file_type', SubmissionFileType::EXTENDED_ABSTRACT);
+    }
+
+    public function recommendationLetterFiles(): HasMany
+    {
+        return $this->hasMany(SubmissionFile::class)
+            ->where('file_type', SubmissionFileType::RECOMMENDATION_LETTER);
     }
 }

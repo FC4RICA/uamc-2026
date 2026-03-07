@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\PresentationType;
+use App\Enums\SubmissionRoundType;
 use App\Enums\SubmissionStatus;
 use App\Policies\SubmissionPolicy;
 use Illuminate\Database\Eloquent\Builder;
@@ -145,12 +146,12 @@ class Submission extends Model
 
     public function abstractRound(): SubmissionRound
     {
-        return $this->rounds()->where('round_type', 'abstract')->first();
+        return $this->rounds()->where('round_type', SubmissionRoundType::ABSTRACT)->first();
     }
 
     public function finalRound(): ?SubmissionRound
     {
-        return $this->rounds()->where('round_type', 'final')->first();
+        return $this->rounds()->where('round_type', SubmissionRoundType::FINAL)->first();
     }
 
     public function abstractFiles(): HasMany
