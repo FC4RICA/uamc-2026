@@ -36,15 +36,42 @@
                     ผู้ประเมินได้ขอให้คุณแก้ไขบทคัดย่อตามข้อเสนอแนะ #{{ $user->submission->current_revision_round }}</br>
                 </h3>
                 <h5>
-                    <a href="{{ route('member.submission.abstract.revision', $user->submission->activeRevision) }}">
+                    <a href="{{ route('member.submission.abstract.revision', $user->submission->activeRevision) }}"
+                        class="btn btn-primary my-2">
                         ไปยังหน้ารายละเอียดการแก้ไขบทคัดย่อ
                     </a>
                 </h5>
             @endif
+            @finalSubmissionOpen
+                @if ($user->canSubmitFinal())
+                    <h3 class="text-success fw-bold">
+                        ผลงานของท่านได้รับการพิจารณาให้เข้าร่วมนำเสนอ</br>
+                        กรุณาส่งเอกสารเพิ่มเติมสำหรับการนำเสนอ
+                    </h3>
+                    <h5>
+                        <a href="{{ route('member.submission.final.index') }}" 
+                            class="btn btn-success my-2">
+                            ไปยังหน้าส่งเอกสารเพิ่มเติม
+                        </a>
+                    </h5>
+                @endif
+            @endfinalSubmissionOpen
         </div>
 
         <div class="my-5">
             <div class="row ">
+                @finalSubmissionOpen
+                    @if (Auth::user()->canSubmitFinal())
+                        <div class="col-4 text-center m-auto">
+                            <a href="{{ route('member.submission.final.index') }}">
+                                <div class="circle mx-auto">
+                                    <i class="fas fa-book fa-2x" style="margin-top: 10%;"></i>
+                                </div>
+                                <label>ส่งเอกสารรอบที่ 2</label>
+                            </a>
+                        </div>
+                    @endif
+                @endfinalSubmissionOpen
                 @abstractSubmissionOpen
                     @if ($user->canSubmitAbstract())
                         <div class="col-4 text-center m-auto">

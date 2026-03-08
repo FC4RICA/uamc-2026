@@ -49,4 +49,25 @@ class SubmissionPolicy
 
         return $submission->status->canTransitionTo($target);
     }
+
+    /**
+     * Determine whether the user can view the second round of the submission.
+     */
+    public function viewFinal(User $user, Submission $submission): bool
+    {
+        return $submission->status == SubmissionStatus::ACCEPTED;
+    }
+
+    /**
+     * Determine whether the user can submit the second round of the submission.
+     */
+    public function createFinal(User $user): bool
+    {
+        return $user->canSubmitFinal();
+    }
+
+    public function updateFinal(User $user, Submission $submission): bool
+    {
+        return $submission->status == SubmissionStatus::ACCEPTED && $submission->finalRound();
+    }
 }

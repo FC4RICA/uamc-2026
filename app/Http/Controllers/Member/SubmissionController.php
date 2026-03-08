@@ -3,15 +3,19 @@
 namespace App\Http\Controllers\Member;
 
 use App\Actions\Submission\CreateAbstractSubmission;
+use App\Actions\Submission\CreateFinalSubmission;
 use App\Actions\Submission\DeleteSubmission;
 use App\Actions\Submission\UpdateAbstractSubmission;
+use App\Actions\Submission\UpdateFinalSubmission;
 use App\Actions\Submission\UploadRevisionAbstract;
 use App\Contracts\CloudStorage;
 use App\Data\Submission\CreateAbstractSubmissionData;
 use App\Data\Submission\UpdateAbstractSubmissionData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateAbstractSubmissionRequest;
+use App\Http\Requests\CreateFinalSubmissionRequest;
 use App\Http\Requests\UpdateAbstractSubmissionRequest;
+use App\Http\Requests\UpdateFinalSubmissionRequest;
 use App\Models\AbstractGroup;
 use App\Models\Submission;
 use App\Models\SubmissionFile;
@@ -69,7 +73,7 @@ class SubmissionController extends Controller
         $user = Auth::user();
         $submission = $user->submission;
         Gate::authorize('view', $submission);
-        return view('member.submission.index', compact('submission'));
+        return view('member.submission.index', compact('submission', 'user'));
     }
 
     public function editAbstract(): View
@@ -155,4 +159,47 @@ class SubmissionController extends Controller
 
         return back();
     }
+
+   public function indexFinal(): View
+   {
+        $user = Auth::user();
+        $submission = $user->submission;
+        $finalRound = $submission->finalRound();
+
+        Gate::authorize('viewFinal', $submission);
+
+        return view('member.submission.final', compact('user', 'submission', 'finalRound'));
+   }
+
+   public function storeFinal(
+        CreateFinalSubmissionRequest $request,
+        CreateFinalSubmission $action,
+   ): RedirectResponse {
+        $submission = Auth::user()->submission;
+
+        $action->handle(
+            submission: $submission,
+            recommendation: $request->file('recommendation_letter'),
+            extendedAbstract: $request->file('extended_abstract'),
+            poster: $request->file('poster')
+        );
+
+        return back();
+   }
+
+   public function updateFinal(
+        UpdateFinalSubmissionRequest $request,
+        UpdateFinalSubmission $action,
+   ): RedirectResponse {
+        $submission = Auth::user()->submission;
+
+        $action->handle(
+            submission: $submission,
+            recommendation: $request->file('recommendation_letter'),
+            extendedAbstract: $request->file('extended_abstract'),
+            poster: $request->file('poster'),
+        );
+
+        return back();
+   }
 }

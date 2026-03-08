@@ -71,11 +71,10 @@ Route::prefix('member')
                     ->group(function () {
                         // Disabled when final submission is closed
                         Route::middleware('feature:final')->group(function () {
-                            Route::get('/create', 'createFinal')->name('create');
-                            Route::get('/', 'storeFinal')->name('store');
+                            Route::get('/', 'indexFinal')->name('index');
+                            Route::post('/', 'storeFinal')->name('store');
+                            Route::put('/', 'updateFinal')->name('update');
                         });
-
-
                     });
                 
                 Route::get('/files/{file}/download', 'fileDownload')->name('file.download');

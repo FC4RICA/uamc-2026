@@ -240,7 +240,12 @@ class User extends Authenticatable
 
     public function hasAcceptedSubmission(): bool
     {
-        return $this->submission()->accepted()->existed();
+        return $this->submission->accepted()->exists();
+    }
+
+    public function canSubmitFinal(): bool
+    {
+        return $this->hasAcceptedSubmission() && ! $this->submission->finalRound();
     }
 
     public function scopeFilter(Builder $query, array $filters): Builder

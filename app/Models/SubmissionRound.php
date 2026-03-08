@@ -50,19 +50,16 @@ class SubmissionRound extends Model
 
     public function posterFiles(): HasMany
     {
-        return $this->hasMany(SubmissionFile::class)
-            ->where('file_type', SubmissionFileType::POSTER);
+        return $this->files()->where('file_type', SubmissionFileType::POSTER);
     }
 
     public function extendedAbstractFiles(): HasMany
     {
-        return $this->hasMany(SubmissionFile::class)
-            ->where('file_type', SubmissionFileType::EXTENDED_ABSTRACT);
+        return $this->files()->where('file_type', SubmissionFileType::EXTENDED_ABSTRACT);
     }
 
     public function recommendationLetterFiles(): HasMany
     {
-        return $this->hasMany(SubmissionFile::class)
-            ->where('file_type', SubmissionFileType::RECOMMENDATION_LETTER);
+        return $this->files()->where('file_type', SubmissionFileType::RECOMMENDATION_LETTER);
     }
 }

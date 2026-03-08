@@ -43,6 +43,16 @@
                 </a>
             </li>
         @endabstractSubmissionOpen
+        @finalSubmissionOpen
+            @if (Auth::user()->hasAcceptedSubmission())
+                <li class="nav-item">
+                    <a href="{{ route('member.submission.final.index') }}"
+                        class="nav-link @yield('final')">
+                        ส่งเอกสารรอบที่ 2
+                    </a>
+                </li>
+            @endif
+        @endfinalSubmissionOpen
     @endif
     <li>
         <hr class="text-white">

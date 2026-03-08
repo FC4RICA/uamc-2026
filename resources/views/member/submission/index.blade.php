@@ -10,41 +10,48 @@
         </div>
 
         <div class="text-center mt-4 mb-5">
-            <h3>
-                {{-- TODO: add publish status to access control --}}
-                @if (true) 
-                    @switch($submission->status)
-                        @case(\App\Enums\SubmissionStatus::PENDING)
-                            อยู่ในระหว่างการตรวจสอบ
-                        @break
+            {{-- TODO: add publish status to access control --}}
+            @if (true) 
+                @switch($submission->status)
+                    @case(\App\Enums\SubmissionStatus::PENDING)
+                        อยู่ในระหว่างการตรวจสอบ
+                    @break
 
-                        @case(\App\Enums\SubmissionStatus::ACCEPTED)
-                            <span class="text-success fw-bold">
-                                ขอแสดงความยินดี บทความคุณได้รับคัดเลือก
-                            </span>
-                        @break
-
-                        @case(\App\Enums\SubmissionStatus::REJECTED)
-                            <span class="text-danger fw-bold">
-                                ขอแสดงความเสียใจ บทความคุณไม่ได้รับคัดเลือก
-                            </span>
-                        @break
-
-                        @case(\App\Enums\SubmissionStatus::REVISE_REQUIRED)
-                            <span class="text-primary fw-bold">
-                                ผู้ประเมินได้ขอให้คุณแก้ไขบทคัดย่อตามข้อเสนอแนะ #{{ $submission->current_revision_round }}</br>
-                            </span>
+                    @case(\App\Enums\SubmissionStatus::ACCEPTED)
+                        <h3 class="text-success fw-bold">
+                            ผลงานของท่านได้รับการพิจารณาให้เข้าร่วมนำเสนอ</br>
+                            กรุณาส่งเอกสารเพิ่มเติมสำหรับการนำเสนอ
+                        </h3>
+                        @if ($user->canSubmitFinal())
                             <h5>
-                                <a href="{{ route('member.submission.abstract.revision', $submission->activeRevision) }}">
-                                    ไปยังหน้ารายละเอียดการแก้ไขบทคัดย่อ
+                                <a href="{{ route('member.submission.final.index') }}" 
+                                    class="btn btn-success my-2">
+                                    ไปยังหน้าส่งเอกสารเพิ่มเติม
                                 </a>
                             </h5>
-                        @break
-                    @endswitch
-                @else
-                    ขณะนี้ยังไม่มีการประกาศผลการคัดเลือก
-                @endif
-            </h3>
+                        @endif
+                    @break
+
+                    @case(\App\Enums\SubmissionStatus::REJECTED)
+                        <h3 class="text-danger fw-bold">
+                            ขอแสดงความเสียใจ บทความของคุณไม่ได้รับคัดเลือก
+                        </h3>
+                    @break
+
+                    @case(\App\Enums\SubmissionStatus::REVISE_REQUIRED)
+                        <h3 class="text-primary fw-bold">
+                            ผู้ประเมินได้ขอให้คุณแก้ไขบทคัดย่อตามข้อเสนอแนะ #{{ $submission->current_revision_round }}</br>
+                        </h3>
+                        <h5>
+                            <a href="{{ route('member.submission.abstract.revision', $submission->activeRevision) }}">
+                                ไปยังหน้ารายละเอียดการแก้ไขบทคัดย่อ
+                            </a>
+                        </h5>
+                    @break
+                @endswitch
+            @else
+                ขณะนี้ยังไม่มีการประกาศผลการคัดเลือก
+            @endif
         </div>
 
         <hr class="separator">
