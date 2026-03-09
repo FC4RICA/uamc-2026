@@ -5,6 +5,7 @@
 
 @section('content')
     <div class="container mt-4 mb-5">
+        {{-- Sponsors --}}
         <div class="text-center my-2">
             <h1 class="text-center"><strong>ประชาสัมพันธ์</strong></h1>
             <hr class="separator" />
@@ -24,10 +25,10 @@
                         ดูรายชื่อผลงาน
                     </a>
                 </li>
-            </ul>
-        </div> --}}
+            </ul>--}}
+        </div>
 
-            {{-- <div class="presentation-list mb-3">
+        {{-- <div class="presentation-list mb-3">
             <img class="img-fluid mb-3 shadow" src="img/book-of-abstract.png" style="max-height: 50rem;" /><br/><br/>
             <a href="{{ asset('download/book-of-abstract.pdf') }}" class="btn btn-warning" target="_blank" rel="noopener noreferrer">
                 Book of abstract
@@ -40,9 +41,24 @@
             </a>
         </div> --}}
 
-        <img class="img-fluid" src="{{ asset('img/UAMC2026.png') }}" style="max-height: 50rem;" />
+        {{-- Poster --}}
+        {{-- <img class="img-fluid" src="{{ asset('img/UAMC2026.png') }}" style="max-height: 50rem;" /> --}}
 
+        <div class="row my-5">
+            <h1 class="col-12 text-center fw-bold mb-4">ขอบคุณผู้สนับสนุน</h1>
+            <div class="col-4">
+                <img class="img-fluid rounded-4" src="{{ asset('img/dhipaya-logo.jpg') }}"/>
+            </div>
+            <div class="col-4">
+                <img class="img-fluid rounded-4" src="{{ asset('img/sift-logo.png') }}" style="background-color: #bf0d3e;"/>
+            </div>
+            <div class="col-4">
+                <img class="img-fluid rounded-4 img-thumbnail" src="{{ asset('img/miraah-logo.jpg') }}"/>
+            </div>
         </div>
+
+        <hr class="separator" />
+
         <div class="my-5">
             <h1 class="text-center"><strong>ภาควิชาคณิตศาสตร์ คณะวิทยาศาสตร์
                     มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</strong></h1>
