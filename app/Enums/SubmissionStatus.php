@@ -7,8 +7,7 @@ enum SubmissionStatus: int
     case PENDING = 1;
     case ACCEPTED = 2;
     case REJECTED = 3;
-    case DELETED = 4; // unused status, Using deleted_at field and Submission->trashed() instead. Keeping for old db
-    case REVISE_REQUIRED = 5;
+    case REVISE_REQUIRED = 4;
 
     public function label(): string
     {
@@ -16,7 +15,6 @@ enum SubmissionStatus: int
             self::PENDING => 'รอการตรวจสอบ',
             self::ACCEPTED => 'ยืนยัน',
             self::REJECTED => 'ปฏิเสธ',
-            self::DELETED => 'ถูกลบ',
             self::REVISE_REQUIRED => 'ปรับปรุง',
         };
     }
@@ -27,7 +25,6 @@ enum SubmissionStatus: int
             self::PENDING  => 'warning',
             self::ACCEPTED => 'success',
             self::REJECTED => 'danger',
-            self::DELETED  => 'muted',
             self::REVISE_REQUIRED  => 'primary',
         };
     }
@@ -55,8 +52,6 @@ enum SubmissionStatus: int
             self::REJECTED => [
                 self::PENDING,   // admin rollback
             ],
-
-            self::DELETED => [],
         }, true);
     }
 
