@@ -136,5 +136,7 @@
         </div>
         <hr class="separator mb-5">
         @include('components.schedule', ['showLineBreak' => false])
+        <hr class="separator my-5">
+        @include('components.timetable', ['showLineBreak' => false])
     </div>
 @endsection

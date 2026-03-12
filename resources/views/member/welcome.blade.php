@@ -104,7 +104,9 @@
                 </div>
             </div>
         </div>
-        @include('components.schedule', ['showLineBreak' => true])
-        @include('components.timetable', ['showLineBreak' => true])
+        <div class="my-5 d-grid gap-5">
+            @include('components.schedule', ['showLineBreak' => true])
+            @include('components.timetable', ['showLineBreak' => true])
+        </div>
     </div>
 @endsection

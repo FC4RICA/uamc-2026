@@ -7,8 +7,8 @@
     <div class="table-responsive">
         <table class="table align-middle">
             <tr>
-                <th width="30%" class="text-center">วันที่</th>
-                <th width="70%" class="text-center">การดำเนินการ</th>
+                <th width="35%" class="text-center">วันที่</th>
+                <th width="65%" class="text-center">การดำเนินการ</th>
             </tr>
             <tr>
                 <td class="text-center">1 มกราคม 2569</td>
