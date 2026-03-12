@@ -18,5 +18,5 @@
 
         @yield('content')
     </div>
-    <x-submission-annoucement />
+    {{-- <x-submission-annoucement /> --}}
 @endsection
