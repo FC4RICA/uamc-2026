@@ -44,7 +44,7 @@
             </li>
         @endabstractSubmissionOpen
         @finalSubmissionOpen
-            @if (Auth::user()->hasAcceptedSubmission())
+            @if (Auth::user()->hasAcceptedAbstract())
                 <li class="nav-item">
                     <a href="{{ route('member.submission.final.index') }}"
                         class="nav-link @yield('final')">

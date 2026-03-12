@@ -18,7 +18,7 @@
             <div class="col-md-2">
                 <select name="status" class="form-select">
                     <option value="">ทุกสถานะ</option>
-                    @foreach(\App\Enums\SubmissionStatus::filterable() as $status)
+                    @foreach(\App\Enums\SubmissionStatus::cases() as $status)
                         <option value="{{ $status->value }}"
                             @selected(request('status') == $status->value)>
                             {{ $status->label() }}
@@ -111,7 +111,7 @@
                                 @endif
                             </td>
                             <td class="text-center">
-                                <h5 class="m-0"><x-status-badge :status="$submission->status" /></h5>
+                                <h5 class="m-0"><x-status-badge :status="$submission->abstractRound()->status" /></h5>
                             </td>
                             <td>
                                 <small>{{ $submission->created_at->format('j M g:i A') }}</small>

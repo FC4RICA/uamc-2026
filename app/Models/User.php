@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\ParticipationType;
 use App\Enums\PaymentStatus;
 use App\Enums\PresentationType;
+use App\Enums\SubmissionStatus;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -238,14 +239,14 @@ class User extends Authenticatable
         return $this->submission !== null;
     }
 
-    public function hasAcceptedSubmission(): bool
+    public function hasAcceptedAbstract(): bool
     {
-        return $this->submission->accepted()->exists();
+        return $this->submission->abstractRound()?->status == SubmissionStatus::ACCEPTED;
     }
 
     public function canSubmitFinal(): bool
     {
-        return $this->hasAcceptedSubmission() && ! $this->submission->finalRound();
+        return $this->hasAcceptedAbstract() && ! $this->submission->finalRound();
     }
 
     public function scopeFilter(Builder $query, array $filters): Builder

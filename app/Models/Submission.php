@@ -34,8 +34,6 @@ class Submission extends Model
         'title_en',
         'keywords',
         'drive_folder_id',
-        'status',
-        'current_revision_round',
     ];
 
      protected $dates = ['deleted_at'];
@@ -49,7 +47,6 @@ class Submission extends Model
     {
         return [
             'presentation_type' => PresentationType::class,
-            'status' => SubmissionStatus::class
         ];
     }
 
@@ -87,24 +84,12 @@ class Submission extends Model
             });
     }
 
-    public function scopePending(Builder $query): Builder
+    public function scopeRoundStatus(Builder $query, SubmissionRoundType $round, SubmissionStatus $status): Builder
     {
-        return $query->where('status', SubmissionStatus::PENDING);
-    }
-
-    public function scopeAccepted(Builder $query): Builder
-    {
-        return $query->where('status', SubmissionStatus::ACCEPTED);
-    }
-
-    public function scopeReviseRequired(Builder $query): Builder
-    {
-        return $query->where('status', SubmissionStatus::REVISE_REQUIRED);
-    }
-
-    public function scopeRejected(Builder $query): Builder
-    {
-        return $query->where('status', SubmissionStatus::REJECTED);
+        return $query->whereHas('rounds', function ($query) use ($round, $status) {
+            $query->where('round_type', $round)
+                ->where('status', $status);
+        });
     }
 
     public function user(): BelongsTo
@@ -146,12 +131,12 @@ class Submission extends Model
 
     public function abstractRound(): SubmissionRound
     {
-        return $this->rounds()->where('round_type', SubmissionRoundType::ABSTRACT)->first();
+        return $this->rounds()->firstWhere('round_type', SubmissionRoundType::ABSTRACT);
     }
 
     public function finalRound(): ?SubmissionRound
     {
-        return $this->rounds()->where('round_type', SubmissionRoundType::FINAL)->first();
+        return $this->rounds()->firstWhere('round_type', SubmissionRoundType::FINAL);
     }
 
     public function abstractFiles(): HasMany
@@ -189,9 +174,12 @@ class Submission extends Model
     public function scopeFilter(Builder $query, array $filters): Builder
     {
         return $query
-            ->when($filters['status'] ?? null, fn ($q, $status) =>
-                $q->where('status', $status)
-            )
+            ->when($filters['status'] ?? null, function ($q, $status) {
+                $q->whereHas('rounds', function ($q) use ($status) {
+                    $q->where('round_type', SubmissionRoundType::ABSTRACT)
+                    ->where('status', $status);
+                });
+            })
             ->when($filters['group'] ?? null, function ($q, $group) {
                 $q->whereHas('abstractGroups', fn ($q) =>
                     $q->where('abstract_group_id', $group)

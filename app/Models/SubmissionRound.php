@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Enums\SubmissionFileType;
 use App\Enums\SubmissionRoundType;
-use Illuminate\Database\Eloquent\Collection;
+use App\Enums\SubmissionStatus;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,6 +23,8 @@ class SubmissionRound extends Model
         'submission_id',
         'round_type',
         'submitted_at',
+        'status',
+        'current_revision_round',
     ];
 
     /**
@@ -34,7 +36,8 @@ class SubmissionRound extends Model
     {
         return [
             'submitted_at' => 'datetime',
-            'round_type' => SubmissionRoundType::class
+            'round_type' => SubmissionRoundType::class,
+            'status' => SubmissionStatus::class,
         ];
     }
 

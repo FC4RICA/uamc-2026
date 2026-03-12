@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\SettingKey;
+use App\Enums\SubmissionRoundType;
+use App\Enums\SubmissionStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Submission;
 use App\Models\User;
@@ -30,10 +32,10 @@ class AdminDashboardController extends Controller
             'attendees'  => User::participants()->attendees()->count(),
             'submissions' => Submission::active()->count(),
 
-            'pending_submission' => Submission::active()->pending()->count(),
-            'revised_submission' => Submission::active()->reviseRequired()->count(),
-            'accepted_submission' => Submission::active()->accepted()->count(),
-            'rejected_submission' => Submission::active()->rejected()->count(),
+            'pending_submission' => Submission::active()->roundStatus(SubmissionRoundType::ABSTRACT, SubmissionStatus::PENDING)->count(),
+            'revised_submission' => Submission::active()->roundStatus(SubmissionRoundType::ABSTRACT, SubmissionStatus::REVISE_REQUIRED)->count(),
+            'accepted_submission' => Submission::active()->roundStatus(SubmissionRoundType::ABSTRACT, SubmissionStatus::ACCEPTED)->count(),
+            'rejected_submission' => Submission::active()->roundStatus(SubmissionRoundType::ABSTRACT, SubmissionStatus::REJECTED)->count(),
 
             'pending_payment' => User::participants()->unpaid()->count(),
             'submitted_payment' => User::participants()->paymentSubmitted()->count(),

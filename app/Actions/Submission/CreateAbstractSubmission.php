@@ -96,7 +96,6 @@ class CreateAbstractSubmission
             'title_th' => $data->titleTH,
             'title_en' => $data->titleEN,
             'keywords' => $data->keywords,
-            'status' => SubmissionStatus::PENDING,
             'drive_folder_id' => $folderId,
         ]);
     }
@@ -106,6 +105,7 @@ class CreateAbstractSubmission
         return SubmissionRound::create([
             'submission_id' => $submission->id,
             'round_type' => SubmissionRoundType::ABSTRACT,
+            'status' => SubmissionStatus::PENDING,
         ]);
     }
 

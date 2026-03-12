@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class SubmissionRevision extends Model
 {
     protected $fillable = [
-        'submission_id',
+        'submission_round_id',
         'round',
         'message',
         'target_email',
@@ -35,9 +35,9 @@ class SubmissionRevision extends Model
             ->whereNull('submission_file_id');
     }
 
-    public function submission(): BelongsTo
+    public function submissionRound(): BelongsTo
     {
-        return $this->belongsTo(Submission::class);
+        return $this->belongsTo(SubmissionRound::class);
     }
 
     public function requester(): BelongsTo

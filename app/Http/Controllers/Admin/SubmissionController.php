@@ -8,6 +8,7 @@ use App\Actions\Submission\UpdateAbstractSubmission;
 use App\Actions\Submission\UpdateSubmissionStatus;
 use App\Contracts\CloudStorage;
 use App\Data\Submission\UpdateAbstractSubmissionData;
+use App\Enums\SubmissionRoundType;
 use App\Enums\SubmissionStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateAbstractSubmissionRequest;
@@ -30,9 +31,16 @@ class SubmissionController extends Controller
             ->with([
                 'user.profile',
                 'abstractGroups',
-                'revisions'
+                'revisions',
+                'rounds' => fn ($q) =>
+                    $q->where('round_type', SubmissionRoundType::ABSTRACT)
             ])
-            ->filter($request->only(['status', 'group', 'search', 'presentationType']))
+            ->filter($request->only([
+                'status', 
+                'group', 
+                'search', 
+                'presentationType'
+            ]))
             ->latest()
             ->paginate(15)
             ->withQueryString();
