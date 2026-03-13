@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Actions\Export\ExportSubmissionsToCsv;
 use App\Actions\Submission\DeleteSubmission;
 use App\Actions\Submission\UpdateAbstractSubmission;
+use App\Actions\Submission\UpdateSubmissionRoundStatus;
 use App\Actions\Submission\UpdateSubmissionStatus;
 use App\Contracts\CloudStorage;
 use App\Data\Submission\UpdateAbstractSubmissionData;
@@ -102,10 +103,10 @@ class SubmissionController extends Controller
         return redirect(route('admin.submission.index'));
     }
 
-    public function updateStatus(
+    public function updateRoundStatus(
         Submission $submission,
         UpdateSubmissionStatusRequest $request,
-        UpdateSubmissionStatus $action,
+        UpdateSubmissionRoundStatus $action,
     ): RedirectResponse {
         Gate::authorize('updateStatus', [
             $submission,

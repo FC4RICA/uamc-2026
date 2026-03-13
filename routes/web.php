@@ -115,7 +115,7 @@ Route::prefix('admin')
                 Route::put('/{submission}', 'update')->name('update');
                 Route::get('/{submission}/folder', 'folder')->name('folder');
                 Route::delete('/{submission}', 'delete')->name('delete');
-                Route::post('/{submission}/status', 'updateStatus')->name('status.update');
+                Route::post('/{submission}/{type}/status', 'updateRoundStatus')->name('round.status.update');
             });
 
         Route::controller(AdminPaymentController::class)
