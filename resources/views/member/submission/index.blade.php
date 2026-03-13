@@ -18,11 +18,11 @@
                     @break
 
                     @case(\App\Enums\SubmissionStatus::ACCEPTED)
-                        <h3 class="text-success fw-bold">
-                            ผลงานของท่านได้รับการพิจารณาให้เข้าร่วมนำเสนอ</br>
-                            กรุณาส่งเอกสารเพิ่มเติมสำหรับการนำเสนอ
-                        </h3>
                         @if ($user->canSubmitFinal())
+                            <h3 class="text-success fw-bold">
+                                ผลงานของท่านได้รับการพิจารณาให้เข้าร่วมนำเสนอ</br>
+                                กรุณาส่งเอกสารเพิ่มเติมสำหรับการนำเสนอ
+                            </h3>
                             <h5>
                                 <a href="{{ route('member.submission.final.index') }}" 
                                     class="btn btn-success my-2">

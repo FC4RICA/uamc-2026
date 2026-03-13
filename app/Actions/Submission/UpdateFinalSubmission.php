@@ -4,7 +4,6 @@ namespace App\Actions\Submission;
 
 use App\Contracts\CloudStorage;
 use App\Enums\SubmissionFileType;
-use App\Enums\SubmissionRoundType;
 use App\Models\Submission;
 use App\Models\SubmissionFile;
 use App\Models\SubmissionRound;
@@ -24,12 +23,14 @@ class UpdateFinalSubmission
     public function handle(
         Submission $submission,
         ?UploadedFile $recommendation,
+        ?UploadedFile $publicationConsent,
         ?UploadedFile $extendedAbstract,
         ?UploadedFile $poster,
     ): void {
-        DB::transaction(function () use ($submission, $recommendation, $extendedAbstract, $poster) {
+        DB::transaction(function () use ($submission, $recommendation, $extendedAbstract, $poster, $publicationConsent) {
             $files = [
                 SubmissionFileType::RECOMMENDATION_LETTER->value => $recommendation,
+                SubmissionFileType::PUBLICATION_CONSENT->value => $publicationConsent,
                 SubmissionFileType::EXTENDED_ABSTRACT->value => $extendedAbstract,
                 SubmissionFileType::POSTER->value => $poster,
             ];
@@ -57,7 +58,7 @@ class UpdateFinalSubmission
     ): void {
         $latestVersion = (int) $round->files()
             ->where('file_type', $type)
-            ->max('version');
+            ->max('version') ?? 0;
         $version = $latestVersion + 1;
         $info = pathinfo($file->getClientOriginalName());
 
