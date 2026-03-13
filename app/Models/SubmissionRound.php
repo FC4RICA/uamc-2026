@@ -62,4 +62,9 @@ class SubmissionRound extends Model
     {
         return $this->files()->where('file_type', SubmissionFileType::RECOMMENDATION_LETTER);
     }
+
+    public function publicationConsentFiles(): HasMany
+    {
+        return $this->files()->where('file_type', SubmissionFileType::PUBLICATION_CONSENT);
+    }
 }

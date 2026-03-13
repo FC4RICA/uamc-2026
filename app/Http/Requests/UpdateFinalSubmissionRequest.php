@@ -31,6 +31,7 @@ class UpdateFinalSubmissionRequest extends FormRequest
 
         $rules = [
             'recommendation_letter' => ['nullable', 'file', 'mimes:pdf', 'max:51200'],
+            'publication_consent' => ['required','file','mimes:pdf', 'max:51200'],
         ];
         
 
@@ -53,6 +54,7 @@ class UpdateFinalSubmissionRequest extends FormRequest
 
             if (
                 !$this->hasFile('extended_abstract') &&
+                !$this->hasFile('publication_consent') &&
                 !$this->hasFile('poster') &&
                 !$this->hasFile('recommendation_letter')
             ) {

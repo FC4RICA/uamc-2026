@@ -31,6 +31,7 @@ class CreateFinalSubmissionRequest extends FormRequest
 
         $rules = [
             'recommendation_letter' => ['required','file','mimes:pdf', 'max:51200'],
+            'publication_consent' => ['required','file','mimes:pdf', 'max:51200'],
         ];
 
         if ($submission->presentation_type == PresentationType::ORAL) {

@@ -24,14 +24,16 @@ class CreateFinalSubmission
     public function handle(
         Submission $submission,
         UploadedFile $recommendation,
+        UploadedFile $publicationConsent,
         ?UploadedFile $extendedAbstract,
         ?UploadedFile $poster,
     ): void {
-        DB::transaction(function () use ($submission, $recommendation, $extendedAbstract, $poster) {
+        DB::transaction(function () use ($submission, $recommendation, $publicationConsent, $extendedAbstract, $poster) {
             $round = $this->createSubmissionFinalRound($submission);
 
             $files = [
                 SubmissionFileType::RECOMMENDATION_LETTER->value => $recommendation,
+                SubmissionFileType::PUBLICATION_CONSENT->value => $publicationConsent,
                 SubmissionFileType::EXTENDED_ABSTRACT->value => $extendedAbstract,
                 SubmissionFileType::POSTER->value => $poster,
             ];
