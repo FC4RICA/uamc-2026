@@ -8,6 +8,7 @@ enum SubmissionFileType: string
     case EXTENDED_ABSTRACT = 'extended_abstract';
     case POSTER = 'poster';
     case RECOMMENDATION_LETTER = ' recommendation_letter';
+    case PUBLICATION_CONSENT = 'publication_consent';
 
     public function label(): string
     {
@@ -16,6 +17,7 @@ enum SubmissionFileType: string
             self::EXTENDED_ABSTRACT => 'บทคัดย่อแบบขยาย',
             self::POSTER => 'โปสเตอร์',
             self::RECOMMENDATION_LETTER => 'หนังสือรับรองจากอาจารย์ที่ปรึกษา',
+            self::PUBLICATION_CONSENT => 'เอกสาสรยินยอมการเผยแรพร่ผลงาน'
         };
     }
 }

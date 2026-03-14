@@ -180,8 +180,9 @@ class SubmissionController extends Controller
         $action->handle(
             submission: $submission,
             recommendation: $request->file('recommendation_letter'),
+            publicationConsent: $request->file('publication_consent'),
             extendedAbstract: $request->file('extended_abstract'),
-            poster: $request->file('poster')
+            poster: $request->file('poster'),
         );
 
         return back();
@@ -196,6 +197,7 @@ class SubmissionController extends Controller
         $action->handle(
             submission: $submission,
             recommendation: $request->file('recommendation_letter'),
+            publicationConsent: $request->file('publication_consent'),
             extendedAbstract: $request->file('extended_abstract'),
             poster: $request->file('poster'),
         );
