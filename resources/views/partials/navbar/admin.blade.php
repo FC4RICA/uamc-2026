@@ -27,6 +27,11 @@
             บทคัดย่อ
         </a>
     </li>
+    <li class="nav-item">
+        <a href="{{ route('admin.submission.accepted.index') }}" class="nav-link @yield('final')">
+            ผลงานที่ผ่านการคัดเลือก
+        </a>
+    </li>
     <li>
         <hr class="text-white">
     </li>

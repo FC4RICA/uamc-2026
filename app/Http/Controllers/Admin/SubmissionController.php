@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Export\ExportFinalSubmissionsToCsv;
 use App\Actions\Export\ExportSubmissionsToCsv;
 use App\Actions\Submission\DeleteSubmission;
 use App\Actions\Submission\UpdateAbstractSubmission;
@@ -88,8 +89,7 @@ class SubmissionController extends Controller
     public function delete(
         Submission $submission,
         DeleteSubmission $action,
-    ): RedirectResponse
-    {
+    ): RedirectResponse {
         $action->handle($submission);
         return redirect(route('admin.submission.index'));
     }
@@ -124,6 +124,45 @@ class SubmissionController extends Controller
                 'abstractGroups',
             ])
             ->filter($request->only(['status', 'group', 'search', 'presentationType']))
+            ->latest()
+            ->cursor();
+
+        $filename = 'submissions_' . now()->format('Ymd_His') . '.csv';
+
+        return $action->handle($submissions, $filename);
+    }
+
+    public function indexFinal(Request $request): View
+    {
+        $submissions = Submission::active()
+            ->accepted()
+            ->with([
+                'user.profile',
+                'abstractGroups',
+                'rounds'
+            ])
+            ->filter($request->only(['group', 'search', 'presentationType', 'finalStatus']))
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
+        
+        $abstractGroups = AbstractGroup::orderBy('id')->get();
+
+        return view('admin.submission.final', compact('submissions', 'abstractGroups'));
+    }
+
+    public function exportFinal(
+        Request $request,
+        ExportFinalSubmissionsToCsv $action,
+    ): StreamedResponse {
+        $submissions = Submission::active()
+            ->accepted()
+            ->with([
+                'user.profile',
+                'abstractGroups',
+                'rounds'
+            ])
+            ->filter($request->only(['group', 'search', 'presentationType', 'finalStatus']))
             ->latest()
             ->cursor();
 

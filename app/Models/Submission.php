@@ -107,6 +107,13 @@ class Submission extends Model
         return $query->where('status', SubmissionStatus::REJECTED);
     }
 
+    public function scopeFinalSubmitted(Builder $query): Builder
+    {
+        return $query->whereHas('rounds', fn ($q) =>
+            $q->where('round_type', SubmissionRoundType::FINAL)
+        );
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'submitted_by', 'id');
@@ -211,6 +218,19 @@ class Submission extends Model
                 $q->whereHas('user.profile', fn ($q) =>
                     $q->where('presentation_type', $type)
                 );
+            })
+            ->when($filters['finalStatus'] ?? null, function ($q, $status) {
+                if ($status === 'done') {
+                    $q->whereHas('rounds', fn ($q) =>
+                        $q->where('round_type', SubmissionRoundType::FINAL)
+                    );
+                }
+
+                if ($status === 'pending') {
+                    $q->whereDoesntHave('rounds', fn ($q) =>
+                        $q->where('round_type', SubmissionRoundType::FINAL)
+                    );
+                }
             });
     }
 }

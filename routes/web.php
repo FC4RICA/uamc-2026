@@ -108,6 +108,13 @@ Route::prefix('admin')
             ->prefix('/submissions')
             ->name('submission.')
             ->group(function () {
+                Route::prefix('/accepted')
+                    ->name('accepted.')
+                    ->group(function () {
+                        Route::get('/', 'indexFinal')->name('index');
+                        Route::get('/export', 'exportFinal')->name('export');
+                    });
+                
                 Route::get('/', 'index')->name('index');
                 Route::get('/export', 'export')->name('export');
                 Route::get('/{submission}', 'show')->name('show');
