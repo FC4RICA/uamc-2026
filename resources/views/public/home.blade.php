@@ -5,27 +5,46 @@
 
 @section('content')
     <div class="container mt-4 mb-5">
-        {{-- Sponsors --}}
         <div class="text-center my-2">
             <h1 class="text-center"><strong>ประชาสัมพันธ์</strong></h1>
             <hr class="separator" />
+        </div>
 
-            {{-- <div class="presentation-list mb-3 text-left">
-            <h2 class="font-weight-bold">ประกาศผล</h2>
-            <ul>
-                <li>
-                    รางวัลการนำเสนอผลงานแบบบรรยาย
-                    <a href="{{ asset('download/uamc2021-oral-award.pdf') }}" class="btn btn-warning" target="_blank" rel="noopener noreferrer">
-                        ดูรายชื่อผลงาน
+        <div class="alert alert-light shadow-sm mb-5">
+            <h3 class="alert-heading fw-bold">
+                ประกาศตารางการนำเสนอผลงาน
+            </h3>
+
+            <p class="text-muted mb-4">
+                ตารางการนำเสนอผลงานสำหรับการประชุมวิชาการ
+                The 14th Undergraduate in Applied Mathematics Conference
+            </p>
+
+            <div class="list-group">
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>การนำเสนอแบบบรรยาย (Oral Presentation)</strong><br>
+                    </div>
+
+                    <a href="{{ asset('file/oral-presentation-schedule.pdf') }}"
+                        class="btn btn-primary btn-sm"
+                        target="_blank">
+                        <i class="fa fa-file-pdf"></i> ดาวน์โหลด PDF
                     </a>
-                </li>
-                <li>
-                    รางวัลการนำเสนอผลงานแบบโปสเตอร์
-                    <a href="{{ asset('download/uamc2021-poster-award.pdf') }}" class="btn btn-warning" target="_blank" rel="noopener noreferrer">
-                        ดูรายชื่อผลงาน
+                </div>
+
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>การนำเสนอแบบโปสเตอร์ (Poster Presentation)</strong><br>
+                    </div>
+
+                    <a href="{{ asset('file/poster-presentation-schedule.pdf') }}"
+                        class="btn btn-primary btn-sm"
+                        target="_blank">
+                        <i class="fa fa-file-pdf"></i> ดาวน์โหลด PDF
                     </a>
-                </li>
-            </ul>--}}
+                </div>
+            </div>
         </div>
 
         {{-- <div class="presentation-list mb-3">
@@ -44,6 +63,7 @@
         {{-- Poster --}}
         {{-- <img class="img-fluid" src="{{ asset('img/UAMC2026.png') }}" style="max-height: 50rem;" /> --}}
 
+        {{-- Sponsors --}}
         <div class="row my-5">
             <h1 class="col-12 text-center fw-bold mb-4">ขอบคุณผู้สนับสนุน</h1>
             <div class="col-4">
