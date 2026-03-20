@@ -240,7 +240,7 @@ class User extends Authenticatable
 
     public function hasAcceptedSubmission(): bool
     {
-        return $this->submission->accepted()->exists();
+        return $this->submission?->accepted()->exists() ?? false;
     }
 
     public function canSubmitFinal(): bool
