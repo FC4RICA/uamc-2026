@@ -64,8 +64,11 @@
         {{-- <img class="img-fluid" src="{{ asset('img/UAMC2026.png') }}" style="max-height: 50rem;" /> --}}
 
         {{-- Sponsors --}}
-        <div class="row my-5">
+        <div class="row my-5 justify-content-center g-4">
             <h1 class="col-12 text-center fw-bold mb-4">ขอบคุณผู้สนับสนุน</h1>
+            <div class="col-4">
+                <img class="img-fluid rounded-4 img-thumbnail" src="{{ asset('img/miraah-logo.jpg') }}"/>
+            </div>
             <div class="col-4">
                 <img class="img-fluid rounded-4" src="{{ asset('img/dhipaya-logo.jpg') }}"/>
             </div>
@@ -73,7 +76,10 @@
                 <img class="img-fluid rounded-4" src="{{ asset('img/sift-logo.png') }}" style="background-color: #bf0d3e;"/>
             </div>
             <div class="col-4">
-                <img class="img-fluid rounded-4 img-thumbnail" src="{{ asset('img/miraah-logo.jpg') }}"/>
+                <img class="img-fluid rounded-4 img-thumbnail" src="{{ asset('img/nd-travel-logo.jpg') }}"/>
+            </div>
+            <div class="col-4">
+                <img class="img-fluid rounded-4 img-thumbnail" src="{{ asset('img/lactasoy-logo.png') }}"/>
             </div>
         </div>
 
