@@ -7,7 +7,7 @@
     <div class="container mb-5" style="margin-top: 2rem;">
         <div class="row">
             <div class="col-12 text-center">
-                <h1 class="text-center"><strong>เข้าระบบส่งบทคัดย่อ</strong></h1>
+                <h1 class="text-center"><strong>เข้าสู่ระบบ</strong></h1>
             </div>
         </div>
         <hr class="separator">

@@ -6,5 +6,5 @@ document.addEventListener('DOMContentLoaded', () => {
     attachLoadingOnSubmit('extended-abstract-form', '#submit-extended-abstract');
     attachLoadingOnSubmit('poster-form', '#submit-poster');
     attachLoadingOnSubmit('recommendation-letter-form', '#submit-recommendation-letter');
-    attachLoadingOnSubmit('publication-consent-form', '#submit-publication-consent');
+    attachLoadingOnSubmit('revised-abstract-form', '#submit-revised-abstract');
 });

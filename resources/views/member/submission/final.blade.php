@@ -32,7 +32,7 @@
                     </p>
 
                     <div class="form-group mt-5">
-                        <label>บทคัดย่อแบบขยาย (PDF)</label>
+                        <label>บทคัดย่อแบบขยาย (PDF)*</label>
                         <input type="file" name="extended_abstract"
                             class="form-control @error('extended_abstract') is-invalid @enderror"
                             onchange="onInputFileChangeLabel(this.id, this.value)" required>
@@ -56,7 +56,7 @@
                     </p>
 
                     <div class="form-group mt-5">
-                        <label>โปสเตอร์ (PDF)</label>
+                        <label>โปสเตอร์ (PDF)*</label>
                         <input type="file" name="poster"
                             class="form-control @error('poster') is-invalid @enderror"
                             onchange="onInputFileChangeLabel(this.id, this.value)" required>
@@ -67,7 +67,7 @@
                 @endif
 
                 <div class="form-group">
-                    <label>หนังสือรับรองจากอาจารย์ที่ปรึกษา (PDF)</label>
+                    <label>หนังสือรับรองจากอาจารย์ที่ปรึกษา (PDF)*</label>
                     <input type="file" name="recommendation_letter"
                         class="form-control @error('recommendation_letter') is-invalid @enderror"
                         onchange="onInputFileChangeLabel(this.id, this.value)" required>
@@ -76,15 +76,17 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label>หนังสือยินยอมเผยแพร่ผลงาน (PDF)</label>
-                    <input type="file" name="publication_consent"
-                        class="form-control @error('publication_consent') is-invalid @enderror"
-                        onchange="onInputFileChangeLabel(this.id, this.value)" required>
-                    @error('publication_consent')
-                        <label class="error">{{ $message }}</label>
-                    @enderror
-                </div>
+                @if ($user->isOral())
+                    <div class="form-group">
+                        <label>บทคัดย่อฉบับแก้ไข (PDF) <i>(ถ้ามี)</i></label>
+                        <input type="file" name="revised_abstract"
+                            class="form-control @error('revised_abstract') is-invalid @enderror"
+                            onchange="onInputFileChangeLabel(this.id, this.value)">
+                        @error('revised_abstract')
+                            <label class="error">{{ $message }}</label>
+                        @enderror
+                    </div>
+                @endif
 
                 <div class="text-center">
                     <button id="submit-final-submission" class="btn btn-warning" type="submit">
@@ -125,16 +127,18 @@
                 </div>
             </div>
 
-            <div class="mb-5">
-                <label>หนังสือยินยอมเผยแพร่ผลงาน</label>
-                <div class="mt-1 mb-2 d-flex gap-3">
-                    @foreach ($finalRound->publicationConsentFiles as $file)
-                        <x-submission-file-card :file="$file" />
-                    @endforeach
+            @if ($user->isOral() && $finalRound->revisedAbstractFiles()->exists())
+                <div class="mb-3">
+                    <label>บทคัดย่อฉบับแก้ไข</label>
+                    <div class="mt-1 mb-2 d-flex gap-3">
+                        @foreach ($finalRound->revisedAbstractFiles as $file)
+                            <x-submission-file-card :file="$file" />
+                        @endforeach
+                    </div>
                 </div>
-            </div>
+            @endif
 
-            <h4 class="fw-bold">อัปโหลดไฟล์ใหม่ (สำหรับการแก้ไข)</h4>
+            <h4 class="fw-bold mt-5">อัปโหลดไฟล์ใหม่ (สำหรับการแก้ไข)</h4>
 
             @if ($user->isOral())
                 <form id="extended-abstract-form" action='{{ route('member.submission.final.update') }}' method="POST"
@@ -203,26 +207,32 @@
                 </div>
             </form>
 
-            <form id="publication-consent-form" action='{{ route('member.submission.final.update') }}' method="POST"
-                enctype="multipart/form-data" name="publication-consent-form" class="mt-4 row align-items-end">
-                @csrf
-                @method('PUT')
-                <div class="form-group mb-0 col-12 col-md-6">
-                    <label>หนังสือยินยอมเผยแพร่ผลงาน (PDF)</label>
-                    <input type="file" name="publication_consent"
-                        class="form-control @error('publication_consent') is-invalid @enderror"
-                        onchange="onInputFileChangeLabel(this.id, this.value)" required>
-                    @error('publication_consent')
-                        <label class="error">{{ $message }}</label>
-                    @enderror
-                </div>
+            @if ($user->isOral())
+                <form id="revised-abstract-form" action='{{ route('member.submission.final.update') }}' method="POST"
+                    enctype="multipart/form-data" name="revised-abstract-form" class="mt-4 row align-items-end">
+                    @csrf
+                    @method('PUT')
+                    <div class="form-group mb-0 col-12 col-md-6">
+                        <label>บทคัดย่อฉบับแก้ไข (PDF)</label>
+                        <input type="file" name="revised_abstract"
+                            class="form-control @error('revised_abstract') is-invalid @enderror"
+                            onchange="onInputFileChangeLabel(this.id, this.value)" required>
+                        @error('revised_abstract')
+                            <label class="error">{{ $message }}</label>
+                        @enderror
+                    </div>
 
-                <div class="col-6 mt-2">
-                    <button id="submit-publication-consent" class="btn btn-warning" type="submit">
-                        อัพโหลดไฟล์หนังสือรับรองใหม่
-                    </button>
-                </div>
-            </form>
+                    <div class="col-6 mt-2">
+                        <button id="submit-revised-abstract" class="btn btn-warning" type="submit">
+                            อัพโหลดไฟล์บทคัดย่อฉบับแก้ไข
+                        </button>
+                    </div>
+                </form>
+            @endif
         @endif
     </div>
 @endsection
+
+@push('scripts')
+    @vite('resources/js/pages/member/final.js')
+@endpush
