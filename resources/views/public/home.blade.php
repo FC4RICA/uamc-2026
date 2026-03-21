@@ -64,7 +64,7 @@
         {{-- <img class="img-fluid" src="{{ asset('img/UAMC2026.png') }}" style="max-height: 50rem;" /> --}}
 
         {{-- Sponsors --}}
-        <div class="row my-5 justify-content-center g-4">
+        <div class="row my-5 justify-content-center g-2 g-lg-4">
             <h1 class="col-12 text-center fw-bold mb-4">ขอบคุณผู้สนับสนุน</h1>
             <div class="col-4">
                 <img class="img-fluid rounded-4 img-thumbnail" src="{{ asset('img/miraah-logo.jpg') }}"/>
