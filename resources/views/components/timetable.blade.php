@@ -30,7 +30,23 @@
             </tr>
             <tr>
                 <td class="text-center">09.00 – 12.00 น.</td>
-                <td>นำเสนอผลงานแบบบรรยายและแบบโปสเตอร์</td>
+                <td>
+                    นำเสนอผลงานแบบบรรยายและแบบโปสเตอร์<br>
+                    <strong>ผลงานแบบบรรยาย</strong><br>
+                    - กลุ่ม 1 : Pure Mathematics (ห้อง INNONEX)<br>
+                    - กลุ่ม 2 : Sustainable Environment, Agriculture, and Climate (ห้อง SCL607)<br>
+                    - กลุ่ม 3 : Economy, Finance, and Industry Analytics (ห้อง SCL600)<br>
+                    - กลุ่ม 4 : Health, Safety, and Social Well-being (ห้อง SCL602)<br>
+                    - กลุ่ม 5 : Education, Digital Infrastructure, and Intelligent Systems (ห้อง SCL100)<br>
+                    - กลุ่ม 6 : Actuarial Science & Risk Management (ห้อง SCi CONNECT)<br>
+                    - กลุ่ม 7 : Quantitative Finance & Business Decision Making (ห้อง SI 212-214)<br>
+                    - กลุ่ม 8 : Mathematical Modeling & Systems Optimization (ห้อง SCL124)<br>
+
+                    <strong>ผลงานแบบโปสเตอร์</strong><br>
+                    - กลุ่ม 1 : Mathematical for Industry<br>
+                    - กลุ่ม 2 : Data Science/ AI/ mathematical Modelling<br>
+                    (จัดแสดงบริเวณ Science Learning Space)
+                </td>
             </tr>
             <tr>
                 <td class="text-center">12.00 – 13.00 น.</td>
