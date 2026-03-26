@@ -10,7 +10,17 @@
             <hr class="separator" />
         </div>
 
-        <div class="alert alert-light shadow-sm mb-5">
+        <h2 class="alert-heading fw-bold mt-5 text-center">
+            ประกาศตำแหน่งที่จอดรถและแผนผังห้องต่างๆ ในงาน
+        </h2>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8 border rounded">
+                <x-map-carousel />
+            </div>
+        </div>
+
+        <div class="alert alert-light shadow-sm my-5">
             <h3 class="alert-heading fw-bold">
                 ประกาศตารางการนำเสนอผลงาน
             </h3>
@@ -23,7 +33,8 @@
             <div class="list-group">
                 <div class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
-                        <strong>การนำเสนอแบบบรรยาย (Oral Presentation)</strong><br>
+                        <strong>การนำเสนอแบบบรรยาย (Oral Presentation)</strong>
+                        <span class="badge text-bg-primary">อัพเดต</span>
                     </div>
 
                     <a href="{{ asset('file/oral-presentation-schedule.pdf') }}"
@@ -35,7 +46,7 @@
 
                 <div class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
-                        <strong>การนำเสนอแบบโปสเตอร์ (Poster Presentation)</strong><br>
+                        <strong>การนำเสนอแบบโปสเตอร์ (Poster Presentation)</strong>
                     </div>
 
                     <a href="{{ asset('file/poster-presentation-schedule.pdf') }}"
