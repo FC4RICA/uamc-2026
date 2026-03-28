@@ -10,6 +10,22 @@
             <hr class="separator" />
         </div>
 
+        <div class="alert alert-light shadow-sm my-5">
+            <h3 class="alert-heading fw-bold">
+                ประกาศการอัพโหลดไฟล์นำเสนอสำหรับผู้นำเสนอแบบบรรยาย (Oral Presentation)
+            </h3>
+
+            <div class="list-group-item d-flex justify-content-between align-items-center">
+                <p class="text-muted mb-0">
+                    ข้อปฏิบัติในการอัพโหลดไฟล์นำเสนอแบบบรรยาย
+                </p>
+
+                <a class="btn btn-primary" href="{{ route("public.upload-presentation") }}">
+                    รายละเอียดเพิ่มเติม >
+                </a>
+            </div>
+        </div>
+
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10">
                 <div class="ratio ratio-4x3">

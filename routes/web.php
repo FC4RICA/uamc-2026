@@ -22,6 +22,8 @@ Route::name('public.')
         Route::view('/about', 'public.about')->name('about');
         Route::view('/rules', 'public.rules')->name('rules');
         Route::view('/templates', 'public.form-template')->name('templates');
+
+        Route::view('/upload-presentation', 'public.oral-presentation-upload')->name('upload-presentation');
     });
 
 Route::middleware(['web', 'guest'])
