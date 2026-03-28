@@ -10,6 +10,15 @@
             <hr class="separator" />
         </div>
 
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10">
+                <div class="ratio ratio-4x3">
+                    <iframe src="https://heyzine.com/flip-book/01e7eeccd1.html" frameborder="0" class="w-100"></iframe>
+                </div>
+            </div>
+        </div>
+        
+
         <h2 class="alert-heading fw-bold mt-5 text-center">
             ประกาศตำแหน่งที่จอดรถและแผนผังห้องต่างๆ ในงาน
         </h2>
