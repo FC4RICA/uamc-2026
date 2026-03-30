@@ -19,9 +19,10 @@
                 <div class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
                         <strong>รางวัลการนำเสนอผลงานแบบบรรยาย (Oral Presentation)</strong>
+                        <span class="badge text-bg-primary">อัพเดต</span>
                     </div>
 
-                    <a href="{{ asset('file/ประกาศผลการตัดสินผลงานแบบบรรยาย.pdf') }}"
+                    <a href="{{ asset('file/ประกาศผลการตัดสินผลงานแบบบรรยาย(แก้ไข30-3-69).pdf') }}"
                         class="btn btn-primary btn-sm"
                         target="_blank">
                         <i class="fa fa-file-pdf"></i> ดาวน์โหลด PDF
@@ -31,9 +32,10 @@
                 <div class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
                         <strong>รางวัลการนำเสนอผลงานแบบโปสเตอร์ (Poster Presentation)</strong>
+                        <span class="badge text-bg-primary">อัพเดต</span>
                     </div>
 
-                    <a href="{{ asset('file/ประกาศผลการตัดสินผลงานแบบโปสเตอร์.pdf') }}"
+                    <a href="{{ asset('file/ประกาศผลการตัดสินผลงานแบบโปสเตอร์(แก้ไข30-3-69).pdf') }}"
                         class="btn btn-primary btn-sm"
                         target="_blank">
                         <i class="fa fa-file-pdf"></i> ดาวน์โหลด PDF
