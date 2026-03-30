@@ -11,6 +11,38 @@
         </div>
 
         <div class="alert alert-light shadow-sm my-5">
+            <h3 class="alert-heading fw-bold mb-4">
+                ประกาศรางวัลการนำเสนอผลงาน ในการประชุมวิชาการระดับปริญญาตรีสาขาวิชาคณิตศาสตร์ประยุกต์ ครั้งที่ 14 ประจำปี 2569 (UAMC2026)
+            </h3>
+
+            <div class="list-group">
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>รางวัลการนำเสนอผลงานแบบบรรยาย (Oral Presentation)</strong>
+                    </div>
+
+                    <a href="{{ asset('file/ประกาศผลการตัดสินผลงานแบบบรรยาย.pdf') }}"
+                        class="btn btn-primary btn-sm"
+                        target="_blank">
+                        <i class="fa fa-file-pdf"></i> ดาวน์โหลด PDF
+                    </a>
+                </div>
+
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>รางวัลการนำเสนอผลงานแบบโปสเตอร์ (Poster Presentation)</strong>
+                    </div>
+
+                    <a href="{{ asset('file/ประกาศผลการตัดสินผลงานแบบโปสเตอร์.pdf') }}"
+                        class="btn btn-primary btn-sm"
+                        target="_blank">
+                        <i class="fa fa-file-pdf"></i> ดาวน์โหลด PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {{-- <div class="alert alert-light shadow-sm my-5">
             <h3 class="alert-heading fw-bold">
                 ประกาศการอัพโหลดไฟล์นำเสนอสำหรับผู้นำเสนอแบบบรรยาย (Oral Presentation)
             </h3>
@@ -24,7 +56,7 @@
                     รายละเอียดเพิ่มเติม >
                 </a>
             </div>
-        </div>
+        </div> --}}
 
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10">
@@ -82,22 +114,6 @@
                 </div>
             </div>
         </div>
-
-        {{-- <div class="presentation-list mb-3">
-            <img class="img-fluid mb-3 shadow" src="img/book-of-abstract.png" style="max-height: 50rem;" /><br/><br/>
-            <a href="{{ asset('download/book-of-abstract.pdf') }}" class="btn btn-warning" target="_blank" rel="noopener noreferrer">
-                Book of abstract
-            </a>
-            <a href="{{ asset('download/handbook/handbook.pdf') }}" class="btn btn-warning" target="_blank" rel="noopener noreferrer">
-                คู่มือการประชุม
-            </a>
-            <a href="{{ asset('download/handbook/zoom-conference-handbook.pdf') }}" class="btn btn-warning" target="_blank" rel="noopener noreferrer">
-                คู่มือการใช้งานโปรแกรม Zoom
-            </a>
-        </div> --}}
-
-        {{-- Poster --}}
-        {{-- <img class="img-fluid" src="{{ asset('img/UAMC2026.png') }}" style="max-height: 50rem;" /> --}}
 
         {{-- Sponsors --}}
         <div class="row my-5 justify-content-center g-2 g-lg-4">
